@@ -33,8 +33,8 @@ public class Level {
 			if (block.getState().equals(BlockState.ALIVE) && block.isHit(ball)) {
 				ball.bounce(block);
 				block.onHit();
-				particles.add(new SimpleExplosion(30, block.getX() + 0.5f
-						* IBlock.width, ball.getY() + 0.5f * IBlock.height,
+				particles.add(new SimpleExplosion(20, block.getX() + 0.5f
+						* IBlock.width, block.getY() - 0.5f * IBlock.height,
 						1.0f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f));
 			} else if (block.getState().equals(BlockState.DEAD)) {
 				blocks.remove(block);

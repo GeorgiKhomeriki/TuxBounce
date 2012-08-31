@@ -1,5 +1,7 @@
 package particles;
 
+import org.lwjgl.opengl.Display;
+
 public class SimpleExplosion extends Particles {
 	private static final String texture = "resources/images/ball.png";
 	private static final float minDx = -40.0f;
@@ -10,10 +12,10 @@ public class SimpleExplosion extends Particles {
 	private static final float maxAx = 0.0f;
 	private static final float minAy = -0.5f;
 	private static final float maxAy = -3.0f;
-	private static final float minWidth = 10.0f;
-	private static final float maxWidth = 10.0f;
-	private static final float minHeight = 10.0f;
-	private static final float maxHeight = 10.0f;
+	private static final float minWidth = Display.getWidth() / 100.0f;
+	private static final float maxWidth = minWidth;
+	private static final float minHeight = minWidth;
+	private static final float maxHeight = minWidth;
 	private static final int minLife = 50;
 	private static final int maxLife = 150;
 	private static final boolean doFade = false;
