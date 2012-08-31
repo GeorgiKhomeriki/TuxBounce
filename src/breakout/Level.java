@@ -26,7 +26,7 @@ public class Level {
 		}
 	}
 
-	public void update(float delta, Ball ball) {
+	public void update(float delta, Paddle paddle, Ball ball) {
 		// update blocks
 		for (int i = 0; i < blocks.size(); i++) {
 			IBlock block = blocks.get(i);
@@ -48,7 +48,7 @@ public class Level {
 		for (int i = 0; i < particles.size(); i++) {
 			Particles p = particles.get(i);
 			if (p.isAlive()) {
-				p.update(delta);
+				p.update(delta, paddle);
 			} else {
 				particles.remove(i);
 				i--;

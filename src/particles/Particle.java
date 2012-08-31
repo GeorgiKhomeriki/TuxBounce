@@ -2,13 +2,15 @@ package particles;
 
 import static org.lwjgl.opengl.GL11.GL_QUADS;
 import static org.lwjgl.opengl.GL11.glBegin;
+import static org.lwjgl.opengl.GL11.glColor4f;
 import static org.lwjgl.opengl.GL11.glEnd;
 import static org.lwjgl.opengl.GL11.glTexCoord2f;
 import static org.lwjgl.opengl.GL11.glVertex2f;
-import static org.lwjgl.opengl.GL11.glColor4f;
 
 import org.lwjgl.opengl.Display;
 import org.newdawn.slick.opengl.Texture;
+
+import breakout.Paddle;
 
 public class Particle {
 	private Texture texture;
@@ -78,8 +80,14 @@ public class Particle {
 
 	public boolean isAlive() {
 		// return age < life;
-		return x >= 0 && x <= Display.getWidth() && y >= 0
-				&& y <= Display.getHeight();
+		return x >= 0 && x <= Display.getWidth() && y >= 0;
+	}
+
+	public boolean hasHitPaddle(Paddle paddle) {
+		return x < paddle.getX() + paddle.getWidth()
+				&& x + width > paddle.getX()
+				&& y - height < paddle.getY() + paddle.getHeight()
+				&& y > paddle.getHeight();
 	}
 
 	public void setColor(float R, float G, float B, float alpha) {

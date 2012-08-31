@@ -101,7 +101,7 @@ public class GameState implements IGameState {
 		
 		ball.update(delta, paddle);
 		
-		level.update(delta, ball);
+		level.update(delta, paddle, ball);
 	}
 
 }

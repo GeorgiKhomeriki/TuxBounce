@@ -9,6 +9,8 @@ import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;
 import org.newdawn.slick.util.ResourceLoader;
 
+import breakout.Paddle;
+
 public class Particles {
 	private List<Particle> particles;
 	private Random random;
@@ -135,14 +137,16 @@ public class Particles {
 			int life = minLife + random.nextInt(maxLife - minLife);
 			particles.add(new Particle(this.texture, x, y, dx, dy, ax, ay,
 					width, height, life, startR, startG, startB));
-
 		}
 	}
 
-	public void update(float delta) {
+	public void update(float delta, Paddle paddle) {
 		for (int i = 0; i < particles.size(); i++) {
 			Particle particle = particles.get(i);
-			if (particle.isAlive()) {
+			if(particle.hasHitPaddle(paddle)) {
+				particles.remove(i);
+				i--;
+			} else if (particle.isAlive()) {
 				particle.update(delta);
 				float lifeRatio = (float) (particle.getLife() - particle
 						.getAge()) / (float) particle.getLife();
