@@ -59,7 +59,7 @@ public class Particle {
 		age++;
 	}
 
-	public void draw() {
+	public void render() {
 		texture.bind();
 		glColor4f(R, G, B, alpha);
 		glBegin(GL_QUADS);

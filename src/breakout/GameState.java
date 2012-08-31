@@ -12,13 +12,11 @@ import static org.lwjgl.opengl.GL11.glVertex2f;
 
 import java.io.IOException;
 
-
 import org.lwjgl.opengl.Display;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;
 import org.newdawn.slick.util.ResourceLoader;
-
 
 import engine.IGameState;
 

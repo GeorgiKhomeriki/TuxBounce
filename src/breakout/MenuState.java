@@ -21,7 +21,8 @@ public class MenuState implements IGameState {
 
 	@Override
 	public void init() {
-		explosion = new SimpleExplosion(400.0f, 300.0f);
+		explosion = new SimpleExplosion(30, 400.0f, 300.0f, 1.0f, 1.0f, 0.0f,
+				1.0f, 0.0f, 0.0f);
 	}
 
 	@Override
@@ -38,13 +39,13 @@ public class MenuState implements IGameState {
 	public void render(int delta) {
 		glLoadIdentity();
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		explosion.draw();
+		explosion.render();
 	}
 
 	@Override
 	public void update(int delta) {
 		explosion.update(delta);
-		if(Keyboard.isKeyDown(Keyboard.KEY_SPACE)) {
+		if (Keyboard.isKeyDown(Keyboard.KEY_SPACE)) {
 			explosion.reset();
 		}
 	}

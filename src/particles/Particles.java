@@ -55,8 +55,8 @@ public class Particles {
 			float minY, float maxY, float minDx, float maxDx, float minDy,
 			float maxDy, float minAx, float maxAx, float minAy, float maxAy,
 			float minWidth, float maxWidth, float minHeight, float maxHeight,
-			int minLife, int maxLife, boolean doFade, float startR, float endR,
-			float startG, float endG, float startB, float endB) {
+			int minLife, int maxLife, boolean doFade, float startR,
+			float startG, float startB, float endR, float endG, float endB) {
 		this.numParticles = numParticles;
 		this.minX = minX;
 		this.maxX = maxX;
@@ -78,10 +78,10 @@ public class Particles {
 		this.maxLife = maxLife;
 		this.doFade = doFade;
 		this.startR = startR;
-		this.endR = endR;
 		this.startG = startG;
-		this.endG = endG;
 		this.startB = startB;
+		this.endR = endR;
+		this.endG = endG;
 		this.endB = endB;
 
 		try {
@@ -120,13 +120,15 @@ public class Particles {
 			Particle particle = particles.get(i);
 			if (particle.isAlive()) {
 				particle.update(delta);
+				float lifeRatio = (float) (particle.getLife() - particle
+						.getAge()) / (float) particle.getLife();
+				float R = startR + (1.0f - lifeRatio) * (endR - startR);
+				float G = startG + (1.0f - lifeRatio) * (endG - startG);
+				float B = startB + (1.0f - lifeRatio) * (endB - startB);
 				if (doFade) {
-					float lifeRatio = (float) (particle.getLife() - particle
-							.getAge()) / (float) particle.getLife();
-					float R = 0.0f;
-					float G = 0.0f;
-					float B = 0.0f;
 					particle.setColor(R, G, B, lifeRatio);
+				} else {
+					particle.setColor(R, G, B, 1.0f);
 				}
 			} else {
 				particles.remove(i);
@@ -135,10 +137,14 @@ public class Particles {
 		}
 	}
 
-	public void draw() {
+	public void render() {
 		for (Particle particle : particles) {
-			particle.draw();
+			particle.render();
 		}
+	}
+	
+	public boolean isAlive() {
+		return !particles.isEmpty();
 	}
 
 }
