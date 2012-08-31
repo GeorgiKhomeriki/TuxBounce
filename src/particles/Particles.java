@@ -51,12 +51,43 @@ public class Particles {
 				1.0f, 1.0f, 1.0f, 1.0f);
 	}
 
+	public Particles(int numParticles, Texture texture, float minX, float maxX,
+			float minY, float maxY, float minDx, float maxDx, float minDy,
+			float maxDy, float minAx, float maxAx, float minAy, float maxAy,
+			float minWidth, float maxWidth, float minHeight, float maxHeight,
+			int minLife, int maxLife, boolean doFade, float startR,
+			float startG, float startB, float endR, float endG, float endB) {
+		this.texture = texture;
+		setVars(numParticles, minX, maxX, minY, maxY, minDx, maxDx, minDy,
+				maxDy, minAx, maxAx, minAy, maxAy, minWidth, maxWidth,
+				minHeight, maxHeight, minLife, maxLife, doFade, startR, startG,
+				startB, endR, endG, endB);
+	}
+
 	public Particles(int numParticles, String texture, float minX, float maxX,
 			float minY, float maxY, float minDx, float maxDx, float minDy,
 			float maxDy, float minAx, float maxAx, float minAy, float maxAy,
 			float minWidth, float maxWidth, float minHeight, float maxHeight,
 			int minLife, int maxLife, boolean doFade, float startR,
 			float startG, float startB, float endR, float endG, float endB) {
+		try {
+			this.texture = TextureLoader.getTexture("PNG",
+					ResourceLoader.getResourceAsStream(texture));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		setVars(numParticles, minX, maxX, minY, maxY, minDx, maxDx, minDy,
+				maxDy, minAx, maxAx, minAy, maxAy, minWidth, maxWidth,
+				minHeight, maxHeight, minLife, maxLife, doFade, startR, startG,
+				startB, endR, endG, endB);
+	}
+
+	private void setVars(int numParticles, float minX, float maxX, float minY,
+			float maxY, float minDx, float maxDx, float minDy, float maxDy,
+			float minAx, float maxAx, float minAy, float maxAy, float minWidth,
+			float maxWidth, float minHeight, float maxHeight, int minLife,
+			int maxLife, boolean doFade, float startR, float startG,
+			float startB, float endR, float endG, float endB) {
 		this.numParticles = numParticles;
 		this.minX = minX;
 		this.maxX = maxX;
@@ -83,14 +114,7 @@ public class Particles {
 		this.endR = endR;
 		this.endG = endG;
 		this.endB = endB;
-
-		try {
-			this.texture = TextureLoader.getTexture("PNG",
-					ResourceLoader.getResourceAsStream(texture));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		random = new Random();
+		this.random = new Random();
 
 		reset();
 	}
@@ -142,7 +166,7 @@ public class Particles {
 			particle.render();
 		}
 	}
-	
+
 	public boolean isAlive() {
 		return !particles.isEmpty();
 	}

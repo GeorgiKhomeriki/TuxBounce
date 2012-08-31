@@ -33,9 +33,9 @@ public class Level {
 			if (block.getState().equals(BlockState.ALIVE) && block.isHit(ball)) {
 				ball.bounce(block);
 				block.onHit();
-				particles.add(new SimpleExplosion(20, block.getX() + 0.5f
-						* IBlock.width, block.getY() - 0.5f * IBlock.height,
-						1.0f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f));
+				particles.add(new SimpleExplosion(20, block.getTexture(), block
+						.getX() + 0.5f * IBlock.width, block.getY() - 0.5f
+						* IBlock.height, 0.4f, 0.4f, 0.4f, 1.0f, 1.0f, 1.0f));
 			} else if (block.getState().equals(BlockState.DEAD)) {
 				blocks.remove(block);
 				i--;

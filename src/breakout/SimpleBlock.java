@@ -58,7 +58,7 @@ public class SimpleBlock implements IBlock {
 	@Override
 	public void update(float delta) {
 		if(state.equals(BlockState.DYING)) {
-			opacity -= 0.05f;
+			opacity -= 1.0f/delta;
 		}
 		
 		if(opacity <= 0.0f) {
@@ -104,5 +104,9 @@ public class SimpleBlock implements IBlock {
 	public BlockState getState() {
 		return state;
 	}
-
+	
+	@Override
+	public Texture getTexture() {
+		return texture;
+	}
 }

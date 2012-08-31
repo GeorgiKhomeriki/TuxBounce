@@ -1,9 +1,10 @@
 package particles;
 
 import org.lwjgl.opengl.Display;
+import org.newdawn.slick.opengl.Texture;
 
 public class SimpleExplosion extends Particles {
-	private static final String texture = "resources/images/ball.png";
+	// private static final String texture = "resources/images/ball.png";
 	private static final float minDx = -40.0f;
 	private static final float maxDx = 40.0f;
 	private static final float minDy = 40.0f;
@@ -20,8 +21,25 @@ public class SimpleExplosion extends Particles {
 	private static final int maxLife = 150;
 	private static final boolean doFade = false;
 
-	public SimpleExplosion(int numParticles, float x, float y, float startR,
-			float startG, float startB, float endR, float endG, float endB) {
+	public SimpleExplosion(int numParticles, Texture texture, float x, float y) {
+		super(numParticles, texture, x, x, y, y, minDx, maxDx, minDy, maxDy,
+				minAx, maxAx, minAy, maxAy, minWidth, maxWidth, minHeight,
+				maxHeight, minLife, maxLife, doFade, 1.0f, 1.0f, 1.0f, 1.0f,
+				1.0f, 1.0f);
+	}
+
+	public SimpleExplosion(int numParticles, Texture texture, float x, float y,
+			float startR, float startG, float startB, float endR, float endG,
+			float endB) {
+		super(numParticles, texture, x, x, y, y, minDx, maxDx, minDy, maxDy,
+				minAx, maxAx, minAy, maxAy, minWidth, maxWidth, minHeight,
+				maxHeight, minLife, maxLife, doFade, startR, startG, startB,
+				endR, endG, endB);
+	}
+
+	public SimpleExplosion(int numParticles, String texture, float x, float y,
+			float startR, float startG, float startB, float endR, float endG,
+			float endB) {
 		super(numParticles, texture, x, x, y, y, minDx, maxDx, minDy, maxDy,
 				minAx, maxAx, minAy, maxAy, minWidth, maxWidth, minHeight,
 				maxHeight, minLife, maxLife, doFade, startR, startG, startB,

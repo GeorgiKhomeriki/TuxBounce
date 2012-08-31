@@ -21,8 +21,8 @@ public class MenuState implements IGameState {
 
 	@Override
 	public void init() {
-		explosion = new SimpleExplosion(30, 400.0f, 300.0f, 1.0f, 1.0f, 0.0f,
-				1.0f, 0.0f, 0.0f);
+		explosion = new SimpleExplosion(30, "resources/images/ball.png",
+				400.0f, 300.0f, 1.0f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f);
 	}
 
 	@Override

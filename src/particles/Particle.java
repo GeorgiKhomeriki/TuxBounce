@@ -7,6 +7,7 @@ import static org.lwjgl.opengl.GL11.glTexCoord2f;
 import static org.lwjgl.opengl.GL11.glVertex2f;
 import static org.lwjgl.opengl.GL11.glColor4f;
 
+import org.lwjgl.opengl.Display;
 import org.newdawn.slick.opengl.Texture;
 
 public class Particle {
@@ -28,7 +29,8 @@ public class Particle {
 
 	public Particle(Texture texture, float x, float y, float dx, float dy,
 			float ax, float ay, float width, float height, int life) {
-		this(texture, x, y, dx, dy, ax, ay, width, height, life, 1.0f, 1.0f, 1.0f);
+		this(texture, x, y, dx, dy, ax, ay, width, height, life, 1.0f, 1.0f,
+				1.0f);
 	}
 
 	public Particle(Texture texture, float x, float y, float dx, float dy,
@@ -75,9 +77,11 @@ public class Particle {
 	}
 
 	public boolean isAlive() {
-		return age < life;
+		// return age < life;
+		return x >= 0 && x <= Display.getWidth() && y >= 0
+				&& y <= Display.getHeight();
 	}
-	
+
 	public void setColor(float R, float G, float B, float alpha) {
 		this.R = R;
 		this.G = G;

@@ -1,6 +1,7 @@
 package breakout;
 
 import org.lwjgl.opengl.Display;
+import org.newdawn.slick.opengl.Texture;
 
 
 
@@ -41,5 +42,7 @@ public interface IBlock {
 	public void setY(float y);
 	
 	public BlockState getState();
+	
+	public Texture getTexture();
 	
 }

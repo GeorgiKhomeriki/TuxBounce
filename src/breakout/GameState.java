@@ -49,7 +49,7 @@ public class GameState implements IGameState {
 	
 	private void loadTextures() throws IOException {
 		bgTexture = TextureLoader.getTexture("PNG", ResourceLoader
-				.getResourceAsStream("resources/images/sunsetintheswamp.png"));
+				.getResourceAsStream("resources/images/coldmountain.png"));
 	}
 
 	@Override
