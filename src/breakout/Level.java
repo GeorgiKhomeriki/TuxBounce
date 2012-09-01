@@ -1,7 +1,12 @@
 package breakout;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.newdawn.slick.opengl.Texture;
+import org.newdawn.slick.opengl.TextureLoader;
+import org.newdawn.slick.util.ResourceLoader;
 
 import particles.Particles;
 import particles.SimpleExplosion;
@@ -12,11 +17,29 @@ public class Level {
 	private List<Block> blocks;
 	private List<Particles> particles;
 	private List<Coin> coins;
+	private Texture[] coinTextures;
 
 	public Level(String file) {
 		blocks = LevelLoader.load(file);
 		particles = new ArrayList<Particles>();
 		coins = new ArrayList<Coin>();
+		loadCoinTextures();
+	}
+	
+	private void loadCoinTextures() {
+		coinTextures = new Texture[4];
+		try {
+			coinTextures[0] = TextureLoader.getTexture("PNG",
+					ResourceLoader.getResourceAsStream("resources/images/coinBlue.png"));
+			coinTextures[1] = TextureLoader.getTexture("PNG",
+					ResourceLoader.getResourceAsStream("resources/images/coinRed.png"));
+			coinTextures[2] = TextureLoader.getTexture("PNG",
+					ResourceLoader.getResourceAsStream("resources/images/coinGreen.png"));
+			coinTextures[3] = TextureLoader.getTexture("PNG",
+					ResourceLoader.getResourceAsStream("resources/images/coinGrey.png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void render() {
@@ -38,12 +61,8 @@ public class Level {
 			if (block.getState().equals(BlockState.ALIVE) && block.isHit(ball)) {
 				ball.bounce(block);
 				block.onHit();
-				particles.add(new SimpleExplosion(20, block.getTexture(), block
-						.getX() + 0.5f * Block.width, block.getY() - 0.5f
-						* Block.height, 0.4f, 0.4f, 0.4f, 1.0f, 1.0f, 1.0f));
-				
-				coins.add(new Coin(block.getTexture(), block.getX(), block
-						.getY(), Block.width, Block.height, 0.0f, -40.0f));
+				spawnParticles(block);
+				spawnCoin(block);
 			} else if (block.getState().equals(BlockState.DEAD)) {
 				blocks.remove(block);
 				i--;
@@ -74,5 +93,33 @@ public class Level {
 			}
 		}
 	}
+	
+	private void spawnParticles(Block block) {
+		particles.add(new SimpleExplosion(20, block.getTexture(), block
+				.getX() + 0.5f * Block.width, block.getY() - 0.5f
+				* Block.height, 0.4f, 0.4f, 0.4f, 1.0f, 1.0f, 1.0f));
+	}
 
+	private void spawnCoin(Block block) {
+		switch(block.getType()) {
+			case BLUE_FACE:
+				coins.add(new Coin(coinTextures[0], block.getX(), block
+						.getY(), Block.width, Block.height, 0.0f, -40.0f));
+				break;
+			case RED_FACE:
+				coins.add(new Coin(coinTextures[1], block.getX(), block
+						.getY(), Block.width, Block.height, 0.0f, -40.0f));
+				break;
+			case GREEN_FACE:
+				coins.add(new Coin(coinTextures[2], block.getX(), block
+						.getY(), Block.width, Block.height, 0.0f, -40.0f));
+				break;
+			case GREY_FACE:
+				coins.add(new Coin(coinTextures[3], block.getX(), block
+						.getY(), Block.width, Block.height, 0.0f, -40.0f));
+				break;
+		default:
+			break;
+		}
+	}
 }
