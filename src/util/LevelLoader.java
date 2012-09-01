@@ -8,15 +8,14 @@ import java.util.Scanner;
 
 import org.lwjgl.opengl.Display;
 
-import breakout.IBlock;
-import breakout.SimpleBlock;
-import breakout.IBlock.BlockType;
+import breakout.Block;
+import breakout.Block.BlockType;
 
 
 public class LevelLoader {
 
-	public static List<IBlock> load(String file) {
-		List<IBlock> blocks = new ArrayList<IBlock>();
+	public static List<Block> load(String file) {
+		List<Block> blocks = new ArrayList<Block>();
 
 		try {
 			Scanner s = new Scanner(new File(file));
@@ -27,8 +26,8 @@ public class LevelLoader {
 					int value = Integer.parseInt(parts[x]);
 					if (value != 0) {
 						BlockType type = getType(value);
-						IBlock block = new SimpleBlock(type, x * IBlock.width,
-								Display.getHeight() - y * IBlock.height);
+						Block block = new Block(type, x * Block.width,
+								Display.getHeight() - y * Block.height);
 						blocks.add(block);
 					}
 				}

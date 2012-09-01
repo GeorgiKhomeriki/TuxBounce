@@ -81,13 +81,13 @@ public class Ball {
 		y += dy / delta;
 	}
 	
-	public void bounce(IBlock block) {
+	public void bounce(Block block) {
 		if(Timer.getTime() - debounceStartTimeX > DEBOUNCE_TIME &&
-				(block.getX() < x + r || block.getX() + IBlock.width > x)) {
+				(block.getX() < x + r || block.getX() + Block.width > x)) {
 			dx = -dx;
 			debounceStartTimeX = Timer.getTime();
 		} if(Timer.getTime() - debounceStartTimeY > DEBOUNCE_TIME &&
-				(block.getY() - IBlock.height < y + r || block.getY() > y)) {
+				(block.getY() - Block.height < y + r || block.getY() > y)) {
 			dy = -dy;
 			debounceStartTimeY = Timer.getTime();
 		}

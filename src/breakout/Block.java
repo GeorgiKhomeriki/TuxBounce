@@ -9,6 +9,7 @@ import static org.lwjgl.opengl.GL11.glVertex2f;
 
 import java.io.IOException;
 
+import org.lwjgl.opengl.Display;
 import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;
 import org.newdawn.slick.util.ResourceLoader;
@@ -16,19 +17,39 @@ import org.newdawn.slick.util.ResourceLoader;
 
 import util.LevelLoader;
 
-public class SimpleBlock implements IBlock {
-
+public class Block {
+	public static final float width = Display.getWidth() / 20;
+	public static final float height = Display.getHeight() / 15;
+	
+	public enum BlockType {
+		RED,
+		PURPLE,
+		ORANGE,
+		GREY_FACE,
+		GREEN_FACE,
+		BLUE_FACE,
+		RED_FACE;
+	}
+	
+	public enum BlockState {
+		ALIVE,
+		DEAD,
+		DYING;
+	}
+	
 	private float x;
 	private float y;
 	private float opacity;
 	private Texture texture;
 	private BlockState state;
+	private BlockType type;
 
-	public SimpleBlock(BlockType type, float x, float y) {
+	public Block(BlockType type, float x, float y) {
 		this.x = x;
 		this.y = y;
 		this.opacity = 1.0f;
 		this.state = BlockState.ALIVE;
+		this.type = type;
 		try {
 			texture = TextureLoader.getTexture("PNG", ResourceLoader
 					.getResourceAsStream(LevelLoader.getTexture(type)));
@@ -37,7 +58,6 @@ public class SimpleBlock implements IBlock {
 		}
 	}
 
-	@Override
 	public void render() {
 		texture.bind();
 		
@@ -55,7 +75,6 @@ public class SimpleBlock implements IBlock {
 		glEnd();
 	}
 
-	@Override
 	public void update(float delta) {
 		if(state.equals(BlockState.DYING)) {
 			opacity -= 1.0f/delta;
@@ -66,12 +85,10 @@ public class SimpleBlock implements IBlock {
 		}
 	}
 
-	@Override
 	public void onHit() {
 		state = BlockState.DYING;
 	}
 
-	@Override
 	public boolean isHit(Ball ball) {
 		// RectA.X1 < RectB.X2 && RectA.X2 > RectB.X1 && RectA.Y1 < RectB.Y2 && RectA.Y2 > RectB.Y1
 		return x < ball.getX() + ball.getR() &&
@@ -80,33 +97,31 @@ public class SimpleBlock implements IBlock {
 				y > ball.getY();
 	}
 
-	@Override
 	public float getX() {
 		return x;
 	}
 
-	@Override
 	public void setX(float x) {
 		this.x = x;
 	}
 
-	@Override
 	public float getY() {
 		return y;
 	}
 
-	@Override
 	public void setY(float y) {
 		this.y = y;
 	}
 	
-	@Override
 	public BlockState getState() {
 		return state;
 	}
 	
-	@Override
 	public Texture getTexture() {
 		return texture;
+	}
+	
+	public BlockType getType() {
+		return type;
 	}
 }
