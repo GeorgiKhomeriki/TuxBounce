@@ -28,7 +28,6 @@ public class GameState implements IGameState {
 	private Level level;
 	private Paddle paddle;
 	private Ball ball;
-	private Hud hud;
 
 	@Override
 	public String getName() {
@@ -49,7 +48,6 @@ public class GameState implements IGameState {
 				Display.getWidth() / 30, Display.getWidth() / 8,
 				Display.getHeight() / 6);
 		level = new Level("resources/levels/level1.txt", Hud.height);
-		hud = new Hud();
 	}
 
 	private void loadTextures() throws IOException {
@@ -80,7 +78,7 @@ public class GameState implements IGameState {
 
 		level.render();
 		
-		hud.render();
+		Hud.get().render();
 	}
 
 	private void renderBackground(float delta) {
@@ -110,7 +108,7 @@ public class GameState implements IGameState {
 
 		level.update(delta, paddle, ball);
 		
-		hud.update(delta);
+		Hud.get().update(delta);
 	}
 
 }

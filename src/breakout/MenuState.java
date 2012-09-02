@@ -22,7 +22,7 @@ public class MenuState implements IGameState {
 
 	@Override
 	public void init() {
-		font = new Font("resources/fonts/bubblemad_8x8.png", 83);
+		font = new Font("resources/fonts/bubblemad_8x8.png", 83, 8);
 	}
 
 	@Override

@@ -9,7 +9,7 @@ public class Texts {
 	private Font font;
 
 	public Texts() {
-		font = new Font("resources/fonts/bubblemad_8x8.png", 83);
+		font = new Font("resources/fonts/bubblemad_8x8.png", 83, 8);
 		texts = new ArrayList<Text>();
 	}
 
