@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.lwjgl.opengl.Display;
 import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;
 import org.newdawn.slick.util.ResourceLoader;
@@ -28,18 +29,18 @@ public class Level {
 		texts = new Texts();
 		loadCoinTextures();
 	}
-	
+
 	private void loadCoinTextures() {
 		coinTextures = new Texture[4];
 		try {
-			coinTextures[0] = TextureLoader.getTexture("PNG",
-					ResourceLoader.getResourceAsStream("resources/images/coinBlue.png"));
-			coinTextures[1] = TextureLoader.getTexture("PNG",
-					ResourceLoader.getResourceAsStream("resources/images/coinRed.png"));
-			coinTextures[2] = TextureLoader.getTexture("PNG",
-					ResourceLoader.getResourceAsStream("resources/images/coinGreen.png"));
-			coinTextures[3] = TextureLoader.getTexture("PNG",
-					ResourceLoader.getResourceAsStream("resources/images/coinGrey.png"));
+			coinTextures[0] = TextureLoader.getTexture("PNG", ResourceLoader
+					.getResourceAsStream("resources/images/coinBlue.png"));
+			coinTextures[1] = TextureLoader.getTexture("PNG", ResourceLoader
+					.getResourceAsStream("resources/images/coinRed.png"));
+			coinTextures[2] = TextureLoader.getTexture("PNG", ResourceLoader
+					.getResourceAsStream("resources/images/coinGreen.png"));
+			coinTextures[3] = TextureLoader.getTexture("PNG", ResourceLoader
+					.getResourceAsStream("resources/images/coinGrey.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -58,20 +59,24 @@ public class Level {
 		texts.render();
 	}
 
-	public void update(float delta, Paddle paddle, Ball ball) {
+	public void update(float delta, Paddle paddle, List<Ball> balls) {
 		// update blocks
 		for (int i = 0; i < blocks.size(); i++) {
 			Block block = blocks.get(i);
-			if (block.getState().equals(BlockState.ALIVE) && block.isHit(ball)) {
-				ball.bounce(block);
-				block.onHit();
-				spawnParticles(block);
-				spawnCoin(block);
-			} else if (block.getState().equals(BlockState.DEAD)) {
-				blocks.remove(block);
-				i--;
-			} else {
-				block.update(delta);
+			for(Ball ball : balls) {
+				if (block.getState().equals(BlockState.ALIVE)
+						&& block.isHit(ball)) {
+					ball.bounce(block);
+					block.onHit();
+					spawnParticles(block);
+					spawnCoin(block);
+				} else if (block.getState().equals(BlockState.DEAD)) {
+					blocks.remove(block);
+					i--;
+					break;
+				} else {
+					block.update(delta);
+				}
 			}
 		}
 
@@ -90,9 +95,12 @@ public class Level {
 		for (int i = 0; i < coins.size(); i++) {
 			Coin c = coins.get(i);
 			if (c.isAlive()) {
-				if(c.isHit(paddle)) {
+				if (c.isHit(paddle)) {
 					Hud.get().addPoints(10);
 					texts.add("+10", c.getX(), c.getY(), 30, true);
+					balls.add(new Ball(Display.getWidth() / 2, Display
+							.getHeight() / 2, Display.getWidth() / 30, Display
+							.getWidth() / 8, Display.getHeight() / 6));
 					coins.remove(i);
 					i--;
 				} else {
@@ -103,35 +111,35 @@ public class Level {
 				i--;
 			}
 		}
-		
+
 		// update texts
 		texts.update(delta);
 	}
-	
+
 	private void spawnParticles(Block block) {
-		particles.add(new SimpleExplosion(5, block.getTexture(), block
-				.getX() + 0.5f * Block.width, block.getY() - 0.5f
-				* Block.height, 0.4f, 0.4f, 0.4f, 1.0f, 1.0f, 1.0f));
+		particles.add(new SimpleExplosion(5, block.getTexture(), block.getX()
+				+ 0.5f * Block.width, block.getY() - 0.5f * Block.height, 0.4f,
+				0.4f, 0.4f, 1.0f, 1.0f, 1.0f));
 	}
 
 	private void spawnCoin(Block block) {
-		switch(block.getType()) {
-			case BLUE_FACE:
-				coins.add(new Coin(coinTextures[0], block.getX(), block
-						.getY(), Block.width, Block.height, 0.0f, -40.0f));
-				break;
-			case RED_FACE:
-				coins.add(new Coin(coinTextures[1], block.getX(), block
-						.getY(), Block.width, Block.height, 0.0f, -40.0f));
-				break;
-			case GREEN_FACE:
-				coins.add(new Coin(coinTextures[2], block.getX(), block
-						.getY(), Block.width, Block.height, 0.0f, -40.0f));
-				break;
-			case GREY_FACE:
-				coins.add(new Coin(coinTextures[3], block.getX(), block
-						.getY(), Block.width, Block.height, 0.0f, -40.0f));
-				break;
+		switch (block.getType()) {
+		case BLUE_FACE:
+			coins.add(new Coin(coinTextures[0], block.getX(), block.getY(),
+					Block.width, Block.height, 0.0f, -40.0f));
+			break;
+		case RED_FACE:
+			coins.add(new Coin(coinTextures[1], block.getX(), block.getY(),
+					Block.width, Block.height, 0.0f, -40.0f));
+			break;
+		case GREEN_FACE:
+			coins.add(new Coin(coinTextures[2], block.getX(), block.getY(),
+					Block.width, Block.height, 0.0f, -40.0f));
+			break;
+		case GREY_FACE:
+			coins.add(new Coin(coinTextures[3], block.getX(), block.getY(),
+					Block.width, Block.height, 0.0f, -40.0f));
+			break;
 		default:
 			break;
 		}

@@ -11,6 +11,8 @@ import static org.lwjgl.opengl.GL11.glTexCoord2f;
 import static org.lwjgl.opengl.GL11.glVertex2f;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.lwjgl.opengl.Display;
 import org.newdawn.slick.Color;
@@ -27,7 +29,7 @@ public class GameState implements IGameState {
 	private Texture bgTexture;
 	private Level level;
 	private Paddle paddle;
-	private Ball ball;
+	private List<Ball> balls;
 
 	@Override
 	public String getName() {
@@ -44,10 +46,11 @@ public class GameState implements IGameState {
 
 		paddle = new Paddle(100, 10, Display.getWidth() / 6,
 				Display.getHeight() / 20);
-		ball = new Ball(Display.getWidth() / 2, Display.getHeight() / 2,
-				Display.getWidth() / 30, Display.getWidth() / 8,
-				Display.getHeight() / 6);
 		level = new Level("resources/levels/level1.txt", Hud.height);
+		balls = new ArrayList<Ball>();
+		balls.add(new Ball(Display.getWidth() / 2, Display.getHeight() / 2,
+				Display.getWidth() / 30, Display.getWidth() / 8, Display
+						.getHeight() / 6));
 	}
 
 	private void loadTextures() throws IOException {
@@ -74,10 +77,12 @@ public class GameState implements IGameState {
 
 		paddle.render();
 
-		ball.render();
+		for (Ball ball : balls) {
+			ball.render();
+		}
 
 		level.render();
-		
+
 		Hud.get().render();
 	}
 
@@ -104,10 +109,12 @@ public class GameState implements IGameState {
 	public void update(int delta) {
 		paddle.update(delta);
 
-		ball.update(delta, paddle);
+		for (Ball ball : balls) {
+			ball.update(delta, paddle);
+		}
 
-		level.update(delta, paddle, ball);
-		
+		level.update(delta, paddle, balls);
+
 		Hud.get().update(delta);
 	}
 
