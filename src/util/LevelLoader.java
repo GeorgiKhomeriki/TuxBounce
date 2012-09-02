@@ -14,7 +14,7 @@ import breakout.Block.BlockType;
 
 public class LevelLoader {
 
-	public static List<Block> load(String file) {
+	public static List<Block> load(String file, float offset) {
 		List<Block> blocks = new ArrayList<Block>();
 
 		try {
@@ -27,7 +27,7 @@ public class LevelLoader {
 					if (value != 0) {
 						BlockType type = getType(value);
 						Block block = new Block(type, x * Block.width,
-								Display.getHeight() - y * Block.height);
+								Display.getHeight() - offset - y * Block.height);
 						blocks.add(block);
 					}
 				}

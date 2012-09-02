@@ -64,7 +64,7 @@ public class Ball {
 		}
 
 		if (time - debounceStartTimeY > DEBOUNCE_TIME) {
-			if(y < 0 || y + r > Display.getHeight()) {
+			if(y < 0 || y + r > Display.getHeight() - Hud.height) {
 				dy = -dy;
 				debounceStartTimeY = time;
 			}

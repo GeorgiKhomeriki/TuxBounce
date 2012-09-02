@@ -21,8 +21,8 @@ public class Level {
 	private Texture[] coinTextures;
 	private Texts texts;
 
-	public Level(String file) {
-		blocks = LevelLoader.load(file);
+	public Level(String file, float offset) {
+		blocks = LevelLoader.load(file, offset);
 		particles = new ArrayList<Particles>();
 		coins = new ArrayList<Coin>();
 		texts = new Texts();
