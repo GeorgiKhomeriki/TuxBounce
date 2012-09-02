@@ -12,17 +12,20 @@ import particles.Particles;
 import particles.SimpleExplosion;
 import util.LevelLoader;
 import breakout.Block.BlockState;
+import engine.Texts;
 
 public class Level {
 	private List<Block> blocks;
 	private List<Particles> particles;
 	private List<Coin> coins;
 	private Texture[] coinTextures;
+	private Texts texts;
 
 	public Level(String file) {
 		blocks = LevelLoader.load(file);
 		particles = new ArrayList<Particles>();
 		coins = new ArrayList<Coin>();
+		texts = new Texts();
 		loadCoinTextures();
 	}
 	
@@ -52,6 +55,7 @@ public class Level {
 		for (Coin c : coins) {
 			c.render();
 		}
+		texts.render();
 	}
 
 	public void update(float delta, Paddle paddle, Ball ball) {
@@ -63,6 +67,7 @@ public class Level {
 				block.onHit();
 				spawnParticles(block);
 				spawnCoin(block);
+				texts.add("!HIT", block.getX(), block.getY(), 20);
 			} else if (block.getState().equals(BlockState.DEAD)) {
 				blocks.remove(block);
 				i--;
@@ -92,10 +97,13 @@ public class Level {
 				i--;
 			}
 		}
+		
+		// update texts
+		texts.update(delta);
 	}
 	
 	private void spawnParticles(Block block) {
-		particles.add(new SimpleExplosion(20, block.getTexture(), block
+		particles.add(new SimpleExplosion(5, block.getTexture(), block
 				.getX() + 0.5f * Block.width, block.getY() - 0.5f
 				* Block.height, 0.4f, 0.4f, 0.4f, 1.0f, 1.0f, 1.0f));
 	}
