@@ -20,12 +20,11 @@ import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;
 import org.newdawn.slick.util.ResourceLoader;
 
-import breakout.Block.BlockState;
-
 import particles.Particles;
 import particles.SimpleExplosion;
 import util.LevelLoader;
-
+import breakout.Block.BlockState;
+import breakout.Block.BlockType;
 import engine.IGameState;
 import engine.Texts;
 
@@ -126,16 +125,12 @@ public class GameState implements IGameState {
 		bgTexture.bind();
 		Color.white.bind();
 		glBegin(GL_QUADS);
-
 		glTexCoord2f(0.0f, bgTexture.getHeight());
 		glVertex2f(0.0f, 0.0f);
-
 		glTexCoord2f(bgTexture.getWidth(), bgTexture.getHeight());
 		glVertex2f(Display.getWidth(), 0.0f);
-
 		glTexCoord2f(bgTexture.getWidth(), 0.0f);
 		glVertex2f(Display.getWidth(), Display.getHeight());
-
 		glTexCoord2f(0.0f, 0.0f);
 		glVertex2f(0.0f, Display.getHeight());
 		glEnd();
@@ -143,8 +138,10 @@ public class GameState implements IGameState {
 
 	@Override
 	public void update(int delta) {
+		// update paddle
 		paddle.update(delta);
 
+		// update balls
 		for (Ball ball : balls) {
 			ball.update(delta, paddle);
 		}
@@ -152,21 +149,16 @@ public class GameState implements IGameState {
 		// update blocks
 		for (int i = 0; i < blocks.size(); i++) {
 			Block block = blocks.get(i);
-			// TODO: this iterartion sucks!
-			for (Ball ball : balls) {
-				if (block.getState().equals(BlockState.ALIVE)
-						&& block.isHit(ball)) {
-					ball.bounce(block);
-					block.onHit();
-					spawnParticles(block);
-					spawnCoin(block);
-				} else if (block.getState().equals(BlockState.DEAD)) {
-					blocks.remove(block);
-					i--;
-					break;
-				} else {
-					block.update(delta);
-				}
+			if (block.getState().equals(BlockState.ALIVE) && block.isHit(balls)) {
+				block.onHit();
+				spawnParticles(block);
+				spawnCoin(block);
+			} else if (block.getState().equals(BlockState.DEAD)) {
+				blocks.remove(block);
+				i--;
+				break;
+			} else {
+				block.update(delta);
 			}
 		}
 
@@ -188,9 +180,7 @@ public class GameState implements IGameState {
 				if (c.isHit(paddle)) {
 					Hud.get().addPoints(10);
 					texts.add("+10", c.getX(), c.getY(), 30, true);
-					balls.add(new Ball(Display.getWidth() / 2, Display
-							.getHeight() / 2, Display.getWidth() / 30, Display
-							.getWidth() / 8, Display.getHeight() / 6));
+					doPowerup(c.getType());
 					coins.remove(i);
 					i--;
 				} else {
@@ -205,7 +195,20 @@ public class GameState implements IGameState {
 		// update texts
 		texts.update(delta);
 
+		// update HUD
 		Hud.get().update(delta);
+	}
+
+	private void doPowerup(BlockType type) {
+		switch (type) {
+		case GREY_FACE:
+			balls.add(new Ball(Display.getWidth() / 2, Display.getHeight() / 2,
+					Display.getWidth() / 30, Display.getWidth() / 8, Display
+							.getHeight() / 6));
+			break;
+		default:
+			break;
+		}
 	}
 
 	private void spawnParticles(Block block) {
@@ -215,22 +218,23 @@ public class GameState implements IGameState {
 	}
 
 	private void spawnCoin(Block block) {
-		switch (block.getType()) {
+		BlockType type = block.getType();
+		switch (type) {
 		case BLUE_FACE:
-			coins.add(new Coin(coinTextures[0], block.getX(), block.getY(),
-					Block.width, Block.height, 0.0f, -40.0f));
+			coins.add(new Coin(coinTextures[0], type, block.getX(), block
+					.getY(), Block.width, Block.height, 0.0f, -40.0f));
 			break;
 		case RED_FACE:
-			coins.add(new Coin(coinTextures[1], block.getX(), block.getY(),
-					Block.width, Block.height, 0.0f, -40.0f));
+			coins.add(new Coin(coinTextures[1], type, block.getX(), block
+					.getY(), Block.width, Block.height, 0.0f, -40.0f));
 			break;
 		case GREEN_FACE:
-			coins.add(new Coin(coinTextures[2], block.getX(), block.getY(),
-					Block.width, Block.height, 0.0f, -40.0f));
+			coins.add(new Coin(coinTextures[2], type, block.getX(), block
+					.getY(), Block.width, Block.height, 0.0f, -40.0f));
 			break;
 		case GREY_FACE:
-			coins.add(new Coin(coinTextures[3], block.getX(), block.getY(),
-					Block.width, Block.height, 0.0f, -40.0f));
+			coins.add(new Coin(coinTextures[3], type, block.getX(), block
+					.getY(), Block.width, Block.height, 0.0f, -40.0f));
 			break;
 		default:
 			break;

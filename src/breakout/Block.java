@@ -8,35 +8,27 @@ import static org.lwjgl.opengl.GL11.glTexCoord2f;
 import static org.lwjgl.opengl.GL11.glVertex2f;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.lwjgl.opengl.Display;
 import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;
 import org.newdawn.slick.util.ResourceLoader;
 
-
 import util.LevelLoader;
 
 public class Block {
 	public static final float width = Display.getWidth() / 20;
 	public static final float height = Display.getHeight() / 15;
-	
+
 	public enum BlockType {
-		RED,
-		PURPLE,
-		ORANGE,
-		GREY_FACE,
-		GREEN_FACE,
-		BLUE_FACE,
-		RED_FACE;
+		RED, PURPLE, ORANGE, GREY_FACE, GREEN_FACE, BLUE_FACE, RED_FACE;
 	}
-	
+
 	public enum BlockState {
-		ALIVE,
-		DEAD,
-		DYING;
+		ALIVE, DEAD, DYING;
 	}
-	
+
 	private float x;
 	private float y;
 	private float opacity;
@@ -60,9 +52,9 @@ public class Block {
 
 	public void render() {
 		texture.bind();
-		
+
 		glColor4f(1.0f, 1.0f, 1.0f, opacity);
-		
+
 		glBegin(GL_QUADS);
 		glTexCoord2f(0.0f, 0.0f);
 		glVertex2f(x, y);
@@ -76,11 +68,11 @@ public class Block {
 	}
 
 	public void update(float delta) {
-		if(state.equals(BlockState.DYING)) {
-			opacity -= 1.0f/delta;
+		if (state.equals(BlockState.DYING)) {
+			opacity -= 1.0f / delta;
 		}
-		
-		if(opacity <= 0.0f) {
+
+		if (opacity <= 0.0f) {
 			state = BlockState.DEAD;
 		}
 	}
@@ -89,12 +81,16 @@ public class Block {
 		state = BlockState.DYING;
 	}
 
-	public boolean isHit(Ball ball) {
-		// RectA.X1 < RectB.X2 && RectA.X2 > RectB.X1 && RectA.Y1 < RectB.Y2 && RectA.Y2 > RectB.Y1
-		return x < ball.getX() + ball.getR() &&
-				x + width > ball.getX() &&
-				y - height < ball.getY() + ball.getR() &&
-				y > ball.getY();
+	public boolean isHit(List<Ball> balls) {
+		for (Ball ball : balls) {
+			if (x < ball.getX() + ball.getR() && x + width > ball.getX()
+					&& y - height < ball.getY() + ball.getR()
+					&& y > ball.getY()) {
+				ball.bounce(this);
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public float getX() {
@@ -112,15 +108,15 @@ public class Block {
 	public void setY(float y) {
 		this.y = y;
 	}
-	
+
 	public BlockState getState() {
 		return state;
 	}
-	
+
 	public Texture getTexture() {
 		return texture;
 	}
-	
+
 	public BlockType getType() {
 		return type;
 	}
