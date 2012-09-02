@@ -1,9 +1,8 @@
 package engine;
 
+import static org.lwjgl.opengl.GL11.*;
 import java.util.ArrayList;
 import java.util.List;
-
-import org.newdawn.slick.Color;
 
 public class Texts {
 	private List<Text> texts;
@@ -18,23 +17,23 @@ public class Texts {
 		texts.add(new Text(text, x, y));
 	}
 
-	public void add(String text, float x, float y, int life) {
-		texts.add(new Text(text, x, y, life));
+	public void add(String text, float x, float y, int life, boolean doFade) {
+		texts.add(new Text(text, x, y, life, doFade));
 	}
-	
+
 	public void render() {
-		Color.white.bind();
 		for (Text t : texts) {
-			if(t.isAlive()) {
-				font.drawText(t.getText(), t.getX(), t.getY());
-			}
+			float alpha = t.isDoFade() ? ((float) t.getLife() - (float) t
+					.getAge()) / (float) t.getLife() : 1.0f;
+			glColor4f(1.0f, 1.0f, 1.0f, alpha);
+			font.drawText(t.getText(), t.getX(), t.getY());
 		}
 	}
 
 	public void update(float delta) {
-		for(int i = 0; i < texts.size(); i++) {
+		for (int i = 0; i < texts.size(); i++) {
 			Text t = texts.get(i);
-			if(t.isAlive()) {
+			if (t.isAlive()) {
 				t.update(delta);
 			} else {
 				texts.remove(i);

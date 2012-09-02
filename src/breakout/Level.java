@@ -67,7 +67,6 @@ public class Level {
 				block.onHit();
 				spawnParticles(block);
 				spawnCoin(block);
-				texts.add("!HIT", block.getX(), block.getY(), 20);
 			} else if (block.getState().equals(BlockState.DEAD)) {
 				blocks.remove(block);
 				i--;
@@ -80,7 +79,7 @@ public class Level {
 		for (int i = 0; i < particles.size(); i++) {
 			Particles p = particles.get(i);
 			if (p.isAlive()) {
-				p.update(delta, paddle);
+				p.update(delta, paddle, texts);
 			} else {
 				particles.remove(i);
 				i--;

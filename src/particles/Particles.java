@@ -10,6 +10,7 @@ import org.newdawn.slick.opengl.TextureLoader;
 import org.newdawn.slick.util.ResourceLoader;
 
 import breakout.Paddle;
+import engine.Texts;
 
 public class Particles {
 	private List<Particle> particles;
@@ -140,12 +141,13 @@ public class Particles {
 		}
 	}
 
-	public void update(float delta, Paddle paddle) {
+	public void update(float delta, Paddle paddle, Texts texts) {
 		for (int i = 0; i < particles.size(); i++) {
 			Particle particle = particles.get(i);
 			if(particle.hasHitPaddle(paddle)) {
 				particles.remove(i);
 				i--;
+				texts.add("+1", particle.getX(), particle.getY(), 30, true);
 			} else if (particle.isAlive()) {
 				particle.update(delta);
 				float lifeRatio = (float) (particle.getLife() - particle

@@ -39,7 +39,7 @@ public class MenuState implements IGameState {
 	public void render(int delta) {
 		glLoadIdentity();
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		font.drawText("TEST GELA", Display.getWidth() / 2.0f,
+		font.drawText("TEST GELA!", Display.getWidth() / 2.0f,
 				Display.getHeight() / 2.0f);
 	}
 

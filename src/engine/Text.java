@@ -7,6 +7,7 @@ public class Text {
 	private int life;
 	private int age;
 	private boolean infinite;
+	private boolean doFade;
 	
 	public Text(String text, float x, float y) {
 		this.text = text;
@@ -15,13 +16,14 @@ public class Text {
 		this.infinite = true;
 	}
 
-	public Text(String text, float x, float y, int life) {
+	public Text(String text, float x, float y, int life, boolean doFade) {
 		this.text = text;
 		this.x = x;
 		this.y = y;
 		this.life = life;
 		this.age = 0;
 		this.infinite = false;
+		this.doFade = doFade;
 	}
 	
 	public void update(float delta) {
@@ -78,6 +80,14 @@ public class Text {
 
 	public void setInfinite(boolean infinite) {
 		this.infinite = infinite;
+	}
+
+	public boolean isDoFade() {
+		return doFade;
+	}
+
+	public void setDoFade(boolean doFade) {
+		this.doFade = doFade;
 	}
 
 }
