@@ -84,6 +84,10 @@ public class Hud {
 		}
 		lineColor += lineColorDelta / delta;
 	}
+	
+	public void reset() {
+		score = 0;
+	}
 
 	public static Hud get() {
 		if (instance == null) {

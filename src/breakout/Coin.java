@@ -30,16 +30,21 @@ public class Coin {
 		this.dy = dy;
 	}
 	
-	public void update(float delta, Paddle paddle) {
+	public void update(float delta) {
 		x += dx / delta;
 		y += dy / delta;
 	}
 	
+	public boolean isHit(Paddle paddle) {
+		return x < paddle.getX() + paddle.getWidth() &&
+				x + width > paddle.getX() &&
+				y - height < paddle.getY() + paddle.getHeight() &&
+				y > paddle.getY();
+	}
+	
 	public void render() {
 		texture.bind();
-		
 		glColor3f(1.0f, 1.0f, 1.0f);
-		
 		glBegin(GL_QUADS);
 		glTexCoord2f(0.0f, 0.0f);
 		glVertex2f(x, y);
@@ -55,4 +60,21 @@ public class Coin {
 	public boolean isAlive() {
 		return x >= 0 && x <= Display.getWidth() && y >= 0;
 	}
+
+	public float getX() {
+		return x;
+	}
+
+	public void setX(float x) {
+		this.x = x;
+	}
+
+	public float getY() {
+		return y;
+	}
+
+	public void setY(float y) {
+		this.y = y;
+	}
+
 }

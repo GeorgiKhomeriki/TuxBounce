@@ -90,7 +90,14 @@ public class Level {
 		for (int i = 0; i < coins.size(); i++) {
 			Coin c = coins.get(i);
 			if (c.isAlive()) {
-				c.update(delta, paddle);
+				if(c.isHit(paddle)) {
+					Hud.get().addPoints(10);
+					texts.add("+10", c.getX(), c.getY(), 30, true);
+					coins.remove(i);
+					i--;
+				} else {
+					c.update(delta);
+				}
 			} else {
 				coins.remove(i);
 				i--;
