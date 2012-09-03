@@ -1,13 +1,13 @@
 sticky ball start - DONE
 lives - DONE
+ball fall event - DONE
 powerups - DONE
 
 ball-to-ball collision
 show powerup description text
-ball fall/lose event
 levels / worlds
 win scenario
-lose scenario
+lose scenario (game-over)
 main menu
 options menu
 credits
@@ -16,3 +16,4 @@ sound effects
 music
 disappearing ball bug
 font edges bug
+highscore
