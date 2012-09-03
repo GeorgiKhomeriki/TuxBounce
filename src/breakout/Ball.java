@@ -9,6 +9,7 @@ import static org.lwjgl.opengl.GL11.glVertex2f;
 import java.io.IOException;
 
 
+import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;
@@ -26,6 +27,7 @@ public class Ball {
 	private Texture texture;
 	private long debounceStartTimeX;
 	private long debounceStartTimeY;
+	private boolean sticky;
 
 	public Ball(float x, float y, float r, float dx, float dy) {
 		this.x = x;
@@ -33,6 +35,7 @@ public class Ball {
 		this.r = r;
 		this.dx = dx;
 		this.dy = dy;
+		this.sticky = true;
 
 		try {
 			texture = TextureLoader.getTexture("PNG", ResourceLoader
@@ -57,28 +60,36 @@ public class Ball {
 	}
 
 	public void update(float delta, Paddle paddle) {
-		long time = Timer.getTime();
-		if (time - debounceStartTimeX > DEBOUNCE_TIME && (x < 0 || x + r > Display.getWidth())) {
-			dx = -dx;
-			debounceStartTimeX = Timer.getTime();
-		}
-
-		if (time - debounceStartTimeY > DEBOUNCE_TIME) {
-			if(y < 0 || y + r > Display.getHeight() - Hud.height) {
-				dy = -dy;
-				debounceStartTimeY = time;
+		if(sticky) {
+			x = paddle.getX() + paddle.getWidth() / 2.0f - r / 2.0f;
+			y = paddle.getY() + paddle.getHeight();
+			if(Mouse.isButtonDown(0)) {
+				sticky = false;
 			}
-			if (y <= paddle.getY() + paddle.getHeight()
-					&& x > paddle.getX()
-					&& x < paddle.getX() + paddle.getWidth()) {
-				dx = ((x + 0.5f * r) - (paddle.getX() + 0.5f * paddle.getWidth())) * 3.0f;
-				dy = -dy;
-				debounceStartTimeY = time;
+		} else {
+			long time = Timer.getTime();
+			if (time - debounceStartTimeX > DEBOUNCE_TIME && (x < 0 || x + r > Display.getWidth())) {
+				dx = -dx;
+				debounceStartTimeX = Timer.getTime();
 			}
+	
+			if (time - debounceStartTimeY > DEBOUNCE_TIME) {
+				if(y + r > Display.getHeight() - Hud.height) {
+					dy = -dy;
+					debounceStartTimeY = time;
+				}
+				if (y <= paddle.getY() + paddle.getHeight()
+						&& x > paddle.getX()
+						&& x < paddle.getX() + paddle.getWidth()) {
+					dx = ((x + 0.5f * r) - (paddle.getX() + 0.5f * paddle.getWidth())) * 3.0f;
+					dy = -dy;
+					debounceStartTimeY = time;
+				}
+			}
+			
+			x += dx / delta;
+			y += dy / delta;
 		}
-		
-		x += dx / delta;
-		y += dy / delta;
 	}
 	
 	public void bounce(Block block) {
@@ -91,6 +102,10 @@ public class Ball {
 			dy = -dy;
 			debounceStartTimeY = Timer.getTime();
 		}
+	}
+	
+	public boolean isAlive() {
+		return y + r >= 0;
 	}
 
 	public float getX() {

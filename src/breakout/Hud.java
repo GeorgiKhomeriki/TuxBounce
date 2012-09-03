@@ -26,12 +26,18 @@ public class Hud {
 	private float lineColorDelta = 0.3f;
 
 	private int score;
+	private int lives;
 
 	public Hud() {
 		this.font = new Font("resources/fonts/kromasky_16x16.png", 59, 16);
 		this.lineColor = 0.5f;
 		this.lineColorDelta = 0.3f;
+		reset();
+	}
+	
+	public void reset() {
 		this.score = 0;
+		this.lives = 3;
 	}
 
 	public void render() {
@@ -66,15 +72,28 @@ public class Hud {
 
 	private void printText() {
 		glColor3f(1.0f, 1.0f, 1.0f);
-		String s = "" + score;
-		for (int i = s.length(); i < 6; i++) {
+		font.drawText("SCORE:" + addZeros(score, 6), 0.0f, displayHeight
+				- displayHeight / 17.0f);
+
+		font.drawText("LIVES:" + addZeros(lives, 3),
+				Display.getWidth() * 0.69f, displayHeight - displayHeight
+						/ 17.0f);
+	}
+
+	private String addZeros(int n, int numZeros) {
+		String s = "" + n;
+		for (int i = s.length(); i < numZeros; i++) {
 			s = "0" + s;
 		}
-		font.drawText("SCORE:" + s, 0.0f, displayHeight - displayHeight / 17.0f);
+		return s;
 	}
 
 	public void addPoints(int delta) {
 		score += delta;
+	}
+	
+	public void addLives(int delta) {
+		lives += delta;
 	}
 
 	public void update(float delta) {
@@ -83,10 +102,6 @@ public class Hud {
 			lineColorDelta = -lineColorDelta;
 		}
 		lineColor += lineColorDelta / delta;
-	}
-	
-	public void reset() {
-		score = 0;
 	}
 
 	public static Hud get() {

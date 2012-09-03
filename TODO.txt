@@ -1,0 +1,18 @@
+sticky ball start - DONE
+lives - DONE
+powerups - DONE
+
+ball-to-ball collision
+show powerup description text
+ball fall/lose event
+levels / worlds
+win scenario
+lose scenario
+main menu
+options menu
+credits
+document source
+sound effects
+music
+disappearing ball bug
+font edges bug

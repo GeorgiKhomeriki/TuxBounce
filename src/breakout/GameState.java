@@ -57,19 +57,16 @@ public class GameState implements IGameState {
 		paddle = new Paddle(100, 10, Display.getWidth() / 6,
 				Display.getHeight() / 20);
 		balls = new ArrayList<Ball>();
-		balls.add(new Ball(Display.getWidth() / 2, Display.getHeight() / 2,
-				Display.getWidth() / 30, Display.getWidth() / 8, Display
-						.getHeight() / 6));
-
 		blocks = LevelLoader.load("resources/levels/level1.txt", Hud.height);
 		particles = new ArrayList<Particles>();
 		coins = new ArrayList<Coin>();
 		texts = new Texts();
+		spawnBall();
 	}
 
 	private void loadTextures() throws IOException {
 		bgTexture = TextureLoader.getTexture("PNG", ResourceLoader
-				.getResourceAsStream("resources/images/coldmountain.png"));
+				.getResourceAsStream("resources/images/cloudsinthedesert.png"));
 		coinTextures = new Texture[4];
 		coinTextures[0] = TextureLoader.getTexture("PNG", ResourceLoader
 				.getResourceAsStream("resources/images/coinBlue.png"));
@@ -142,8 +139,18 @@ public class GameState implements IGameState {
 		paddle.update(delta);
 
 		// update balls
-		for (Ball ball : balls) {
-			ball.update(delta, paddle);
+		for (int i = 0; i < balls.size(); i++) {
+			Ball ball = balls.get(i);
+			if (ball.isAlive()) {
+				ball.update(delta, paddle);
+			} else {
+				balls.remove(i);
+				i--;
+				if (balls.isEmpty()) {
+					Hud.get().addLives(-1);
+					spawnBall();
+				}
+			}
 		}
 
 		// update blocks
@@ -180,7 +187,7 @@ public class GameState implements IGameState {
 				if (c.isHit(paddle)) {
 					Hud.get().addPoints(10);
 					texts.add("+10", c.getX(), c.getY(), 30, true);
-					doPowerup(c.getType());
+					doPowerup(c);
 					coins.remove(i);
 					i--;
 				} else {
@@ -199,21 +206,39 @@ public class GameState implements IGameState {
 		Hud.get().update(delta);
 	}
 
-	private void doPowerup(BlockType type) {
-		switch (type) {
+	private void doPowerup(Coin coin) {
+		switch (coin.getType()) {
 		case GREY_FACE:
-			balls.add(new Ball(Display.getWidth() / 2, Display.getHeight() / 2,
-					Display.getWidth() / 30, Display.getWidth() / 8, Display
-							.getHeight() / 6));
+			spawnBall();
+			break;
+		case RED_FACE:
+			Hud.get().addLives(1);
+			break;
+		case BLUE_FACE:
+			paddle.setWidth(paddle.getWidth() + Display.getWidth() / 60.0f);
+			break;
+		case GREEN_FACE:
+			spawnParticles(coin);
 			break;
 		default:
 			break;
 		}
 	}
 
+	private void spawnBall() {
+		balls.add(new Ball(Display.getWidth() / 2, Display.getHeight() / 2,
+				Display.getWidth() / 30, 0.0f, -Display.getHeight() / 6));
+	}
+
 	private void spawnParticles(Block block) {
 		particles.add(new SimpleExplosion(5, block.getTexture(), block.getX()
 				+ 0.5f * Block.width, block.getY() - 0.5f * Block.height, 0.4f,
+				0.4f, 0.4f, 1.0f, 1.0f, 1.0f));
+	}
+	
+	private void spawnParticles(Coin coin) {
+		particles.add(new SimpleExplosion(100, coin.getTexture(), coin.getX()
+				+ 0.5f * Block.width, coin.getY() - 0.5f * Block.height, 0.4f,
 				0.4f, 0.4f, 1.0f, 1.0f, 1.0f));
 	}
 

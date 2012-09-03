@@ -63,6 +63,10 @@ public class Coin {
 	public boolean isAlive() {
 		return x >= 0 && x <= Display.getWidth() && y >= 0;
 	}
+	
+	public Texture getTexture() {
+		return texture;
+	}
 
 	public BlockType getType() {
 		return type;
