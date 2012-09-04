@@ -2,7 +2,10 @@ sticky ball start - DONE
 lives - DONE
 ball fall event - DONE
 powerups - DONE
+disappearing ball bug - DONE
 
+sticky ball timer
+only extra ball when none already
 ball-to-ball collision
 show powerup description text
 levels / worlds
@@ -14,6 +17,6 @@ credits
 document source
 sound effects
 music
-disappearing ball bug
 font edges bug
+edge bounce bug
 highscore

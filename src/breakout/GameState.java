@@ -135,6 +135,8 @@ public class GameState implements IGameState {
 
 	@Override
 	public void update(int delta) {
+		if(delta != 16 && delta != 17)
+			System.out.println(delta + " " + balls.get(0).getX() + " " + balls.get(0).getY());
 		// update paddle
 		paddle.update(delta);
 

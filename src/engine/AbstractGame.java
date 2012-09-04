@@ -66,8 +66,10 @@ public abstract class AbstractGame {
 		lastFPS = Timer.getTime();
 
 		while (!Display.isCloseRequested()) {
-			update(getDelta());
-
+			int delta = getDelta();
+			if(delta > 0) {
+				update(delta);
+			}
 			updateFPS();
 			Display.update();
 			Display.sync(60);
