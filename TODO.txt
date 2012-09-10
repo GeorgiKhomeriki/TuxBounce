@@ -4,6 +4,7 @@ ball fall event - DONE
 powerups - DONE
 disappearing ball bug - DONE
 
+ball speedup
 sticky ball timer
 only extra ball when none already
 ball-to-ball collision
@@ -20,3 +21,4 @@ music
 font edges bug
 edge bounce bug
 highscore
+learn vim + eclim
