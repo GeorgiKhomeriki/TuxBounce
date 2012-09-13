@@ -66,7 +66,7 @@ public class GameState implements IGameState {
 
 	private void loadTextures() throws IOException {
 		bgTexture = TextureLoader.getTexture("PNG", ResourceLoader
-				.getResourceAsStream("resources/images/cloudsinthedesert.png"));
+				.getResourceAsStream("resources/images/coldmountain.png"));
 		coinTextures = new Texture[4];
 		coinTextures[0] = TextureLoader.getTexture("PNG", ResourceLoader
 				.getResourceAsStream("resources/images/coinBlue.png"));
