@@ -1,5 +1,6 @@
 package breakout;
 
+import static org.lwjgl.opengl.GL11.GL_LIGHTING;
 import static org.lwjgl.opengl.GL11.GL_LINES;
 import static org.lwjgl.opengl.GL11.GL_QUADS;
 import static org.lwjgl.opengl.GL11.GL_TEXTURE_2D;
@@ -41,8 +42,10 @@ public class Hud {
 	}
 
 	public void render() {
+		glDisable(GL_LIGHTING);
 		renderBackground();
 		printText();
+		glEnable(GL_LIGHTING);
 	}
 
 	private void renderBackground() {

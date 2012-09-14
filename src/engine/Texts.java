@@ -1,6 +1,7 @@
 package engine;
 
 import static org.lwjgl.opengl.GL11.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,12 +23,14 @@ public class Texts {
 	}
 
 	public void render() {
+		glDisable(GL_LIGHTING);
 		for (Text t : texts) {
 			float alpha = t.isDoFade() ? ((float) t.getLife() - (float) t
 					.getAge()) / (float) t.getLife() : 1.0f;
 			glColor4f(1.0f, 1.0f, 1.0f, alpha);
 			font.drawText(t.getText(), t.getX(), t.getY());
 		}
+		glEnable(GL_LIGHTING);
 	}
 
 	public void update(float delta) {

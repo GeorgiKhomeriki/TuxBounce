@@ -26,6 +26,7 @@ import util.LevelLoader;
 import breakout.Block.BlockState;
 import breakout.Block.BlockType;
 import engine.IGameState;
+import engine.Light;
 import engine.Texts;
 
 public class GameState implements IGameState {
@@ -40,6 +41,7 @@ public class GameState implements IGameState {
 	private List<Coin> coins;
 	private Texture[] coinTextures;
 	private Texts texts;
+	private Light light;
 
 	@Override
 	public String getName() {
@@ -54,6 +56,7 @@ public class GameState implements IGameState {
 			e.printStackTrace();
 		}
 
+		light = new Light();
 		paddle = new Paddle(100, 10, Display.getWidth() / 6,
 				Display.getHeight() / 20);
 		balls = new ArrayList<Ball>();
@@ -119,24 +122,41 @@ public class GameState implements IGameState {
 	}
 
 	private void renderBackground(float delta) {
+		float screenWidth = Display.getWidth();
+		float screenHeight = Display.getHeight();
+		float texWidth = bgTexture.getWidth();
+		float texHeight = bgTexture.getHeight();
+		float blockSize = 40.0f;
 		bgTexture.bind();
 		Color.white.bind();
-		glBegin(GL_QUADS);
-		glTexCoord2f(0.0f, bgTexture.getHeight());
-		glVertex2f(0.0f, 0.0f);
-		glTexCoord2f(bgTexture.getWidth(), bgTexture.getHeight());
-		glVertex2f(Display.getWidth(), 0.0f);
-		glTexCoord2f(bgTexture.getWidth(), 0.0f);
-		glVertex2f(Display.getWidth(), Display.getHeight());
-		glTexCoord2f(0.0f, 0.0f);
-		glVertex2f(0.0f, Display.getHeight());
-		glEnd();
+		for (float x = 0; x < screenWidth; x += blockSize) {
+			float xi = x / blockSize;
+			for (float y = 0; y < screenHeight; y += blockSize) {
+				float yi = y / blockSize;
+				glBegin(GL_QUADS);
+				glTexCoord2f(texCoord(xi, screenWidth, texWidth, blockSize), texCoord(yi, screenHeight, texHeight, blockSize));
+				glVertex2f(x, y);
+				glTexCoord2f(texCoord(xi+1, screenWidth, texWidth, blockSize), texCoord(yi, screenHeight, texHeight, blockSize));
+				glVertex2f(x + blockSize, y);
+				glTexCoord2f(texCoord(xi+1, screenWidth, texWidth, blockSize), texCoord(yi+1, screenHeight, texHeight, blockSize));
+				glVertex2f(x + blockSize, y + blockSize);
+				glTexCoord2f(texCoord(xi, screenWidth, texWidth, blockSize), texCoord(yi+1, screenHeight, texHeight, blockSize));
+				glVertex2f(x, y + blockSize);
+				glEnd();
+			}
+		}
+	}
+	
+	private float texCoord(float i, float screenSize, float texSize, float blockSize) {
+		return texSize * i / (screenSize/ blockSize);
 	}
 
 	@Override
 	public void update(int delta) {
-		if(delta != 16 && delta != 17)
-			System.out.println(delta + " " + balls.get(0).getX() + " " + balls.get(0).getY());
+		if (delta != 16 && delta != 17)
+			System.out.println(delta + " " + balls.get(0).getX() + " "
+					+ balls.get(0).getY());
+
 		// update paddle
 		paddle.update(delta);
 
@@ -154,6 +174,9 @@ public class GameState implements IGameState {
 				}
 			}
 		}
+
+		// update light
+		light.update(paddle, balls);
 
 		// update blocks
 		for (int i = 0; i < blocks.size(); i++) {
@@ -237,7 +260,7 @@ public class GameState implements IGameState {
 				+ 0.5f * Block.width, block.getY() - 0.5f * Block.height, 0.4f,
 				0.4f, 0.4f, 1.0f, 1.0f, 1.0f));
 	}
-	
+
 	private void spawnParticles(Coin coin) {
 		particles.add(new SimpleExplosion(100, coin.getTexture(), coin.getX()
 				+ 0.5f * Block.width, coin.getY() - 0.5f * Block.height, 0.4f,
