@@ -60,7 +60,8 @@ public class GameState implements IGameState {
 		paddle = new Paddle(100, 10, Display.getWidth() / 6,
 				Display.getHeight() / 20);
 		balls = new ArrayList<Ball>();
-		blocks = LevelLoader.load("resources/levels/level-test.txt", Hud.height);
+		blocks = LevelLoader
+				.load("resources/levels/level-test.txt", Hud.height);
 		particles = new ArrayList<Particles>();
 		coins = new ArrayList<Coin>();
 		texts = new Texts();
@@ -133,22 +134,24 @@ public class GameState implements IGameState {
 			float xi = x / blockSize;
 			for (float y = 0; y < screenHeight; y += blockSize) {
 				float yi = y / blockSize;
+				float tx0 = texWidth * xi / (screenWidth / blockSize);
+				float tx1 = texWidth * (xi + 1) / (screenWidth / blockSize);
+				float ty0 = texHeight - texHeight * yi
+						/ (screenHeight / blockSize);
+				float ty1 = texHeight - texHeight * (yi + 1)
+						/ (screenHeight / blockSize);
 				glBegin(GL_QUADS);
-				glTexCoord2f(texCoord(xi, screenWidth, texWidth, blockSize), texCoord(yi, screenHeight, texHeight, blockSize));
+				glTexCoord2f(tx0, ty0);
 				glVertex2f(x, y);
-				glTexCoord2f(texCoord(xi+1, screenWidth, texWidth, blockSize), texCoord(yi, screenHeight, texHeight, blockSize));
+				glTexCoord2f(tx1, ty0);
 				glVertex2f(x + blockSize, y);
-				glTexCoord2f(texCoord(xi+1, screenWidth, texWidth, blockSize), texCoord(yi+1, screenHeight, texHeight, blockSize));
+				glTexCoord2f(tx1, ty1);
 				glVertex2f(x + blockSize, y + blockSize);
-				glTexCoord2f(texCoord(xi, screenWidth, texWidth, blockSize), texCoord(yi+1, screenHeight, texHeight, blockSize));
+				glTexCoord2f(tx0, ty1);
 				glVertex2f(x, y + blockSize);
 				glEnd();
 			}
 		}
-	}
-	
-	private float texCoord(float i, float screenSize, float texSize, float blockSize) {
-		return texSize * i / (screenSize/ blockSize);
 	}
 
 	@Override
@@ -240,7 +243,7 @@ public class GameState implements IGameState {
 			Hud.get().addLives(1);
 			break;
 		case BLUE_FACE:
-			paddle.setWidth(paddle.getWidth() + Display.getWidth() / 60.0f);
+			paddle.setWidth(paddle.getWidth() + Display.getWidth() / 40.0f);
 			break;
 		case GREEN_FACE:
 			spawnParticles(coin);
