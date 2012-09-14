@@ -6,6 +6,12 @@ import static org.lwjgl.opengl.GL11.GL_DIFFUSE;
 import static org.lwjgl.opengl.GL11.GL_FRONT;
 import static org.lwjgl.opengl.GL11.GL_LIGHT0;
 import static org.lwjgl.opengl.GL11.GL_LIGHT1;
+import static org.lwjgl.opengl.GL11.GL_LIGHT2;
+import static org.lwjgl.opengl.GL11.GL_LIGHT3;
+import static org.lwjgl.opengl.GL11.GL_LIGHT4;
+import static org.lwjgl.opengl.GL11.GL_LIGHT5;
+import static org.lwjgl.opengl.GL11.GL_LIGHT6;
+import static org.lwjgl.opengl.GL11.GL_LIGHT7;
 import static org.lwjgl.opengl.GL11.GL_LIGHTING;
 import static org.lwjgl.opengl.GL11.GL_LIGHT_MODEL_AMBIENT;
 import static org.lwjgl.opengl.GL11.GL_POSITION;
@@ -14,6 +20,8 @@ import static org.lwjgl.opengl.GL11.GL_SMOOTH;
 import static org.lwjgl.opengl.GL11.GL_SPECULAR;
 import static org.lwjgl.opengl.GL11.glColorMaterial;
 import static org.lwjgl.opengl.GL11.glEnable;
+import static org.lwjgl.opengl.GL11.glDisable;
+import static org.lwjgl.opengl.GL11.glIsEnabled;
 import static org.lwjgl.opengl.GL11.glLight;
 import static org.lwjgl.opengl.GL11.glLightModel;
 import static org.lwjgl.opengl.GL11.glMaterial;
@@ -29,29 +37,30 @@ import org.lwjgl.opengl.Display;
 import breakout.Ball;
 import breakout.Paddle;
 
-public class Light {
+public class Lights {
 	private FloatBuffer matSpecular;
 	private FloatBuffer lightPosition;
 	private FloatBuffer whiteLight;
 	private FloatBuffer lModelAmbient;
 
-	public Light() {
+	public Lights() {
 		initLightArrays();
 		glShadeModel(GL_SMOOTH);
 		glMaterial(GL_FRONT, GL_SPECULAR, matSpecular);
 		glMaterialf(GL_FRONT, GL_SHININESS, 50.0f);
-		glLight(GL_LIGHT0, GL_POSITION, lightPosition);
-		glLight(GL_LIGHT0, GL_SPECULAR, whiteLight);
-		glLight(GL_LIGHT0, GL_DIFFUSE, whiteLight);
-		glLight(GL_LIGHT1, GL_POSITION, lightPosition);
-		glLight(GL_LIGHT1, GL_SPECULAR, whiteLight);
-		glLight(GL_LIGHT1, GL_DIFFUSE, whiteLight);
+		enableLight(GL_LIGHT0);
+		enableLight(GL_LIGHT1);
 		glLightModel(GL_LIGHT_MODEL_AMBIENT, lModelAmbient);
 		glEnable(GL_LIGHTING);
-		glEnable(GL_LIGHT0);
-		glEnable(GL_LIGHT1);
 		glEnable(GL_COLOR_MATERIAL);
 		glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);
+	}
+	
+	private void enableLight(int GL_LIGHT) {
+		glLight(GL_LIGHT, GL_POSITION, lightPosition);
+		glLight(GL_LIGHT, GL_SPECULAR, whiteLight);
+		glLight(GL_LIGHT, GL_DIFFUSE, whiteLight);
+		glEnable(GL_LIGHT);
 	}
 
 	private void initLightArrays() {
@@ -71,9 +80,43 @@ public class Light {
 				paddle.getY() + paddle.getHeight() / 2.0f);
 		glLight(GL_LIGHT0, GL_POSITION, lightPosition);
 
-		Ball b = balls.get(0);
-		lightPosition.put(0, b.getX() + b.getR() / 2.0f).put(1,
-				b.getY() + b.getR() / 2.0f);
-		glLight(GL_LIGHT1, GL_POSITION, lightPosition);
+		int i=1;
+		for(; i < balls.size() + 1; i++) {
+			if(!glIsEnabled(getLight(i))) {
+				enableLight(getLight(i));
+			}
+			Ball b = balls.get(i - 1);
+			lightPosition.put(0, b.getX() + b.getR() / 2.0f).put(1,
+					b.getY() + b.getR() / 2.0f);
+			glLight(getLight(i), GL_POSITION, lightPosition);
+		}
+		for(; i < 8; i++) {
+			if(glIsEnabled(getLight(i))) {
+				glDisable(getLight(i));
+			}
+		}
+	}
+	
+	public int getLight(int i) {
+		switch(i) {
+		case 0:
+			return GL_LIGHT0;
+		case 1:
+			return GL_LIGHT1;
+		case 2:
+			return GL_LIGHT2;
+		case 3:
+			return GL_LIGHT3;
+		case 4:
+			return GL_LIGHT4;
+		case 5:
+			return GL_LIGHT5;
+		case 6:
+			return GL_LIGHT6;
+		case 7:
+			return GL_LIGHT7;
+		default:
+			return -1;
+		}
 	}
 }

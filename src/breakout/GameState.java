@@ -26,7 +26,7 @@ import util.LevelLoader;
 import breakout.Block.BlockState;
 import breakout.Block.BlockType;
 import engine.IGameState;
-import engine.Light;
+import engine.Lights;
 import engine.Texts;
 
 public class GameState implements IGameState {
@@ -41,7 +41,7 @@ public class GameState implements IGameState {
 	private List<Coin> coins;
 	private Texture[] coinTextures;
 	private Texts texts;
-	private Light light;
+	private Lights lights;
 
 	@Override
 	public String getName() {
@@ -56,11 +56,11 @@ public class GameState implements IGameState {
 			e.printStackTrace();
 		}
 
-		light = new Light();
+		lights = new Lights();
 		paddle = new Paddle(100, 10, Display.getWidth() / 6,
 				Display.getHeight() / 20);
 		balls = new ArrayList<Ball>();
-		blocks = LevelLoader.load("resources/levels/level1-1.txt", Hud.height);
+		blocks = LevelLoader.load("resources/levels/level-test.txt", Hud.height);
 		particles = new ArrayList<Particles>();
 		coins = new ArrayList<Coin>();
 		texts = new Texts();
@@ -176,7 +176,7 @@ public class GameState implements IGameState {
 		}
 
 		// update light
-		light.update(paddle, balls);
+		lights.update(paddle, balls);
 
 		// update blocks
 		for (int i = 0; i < blocks.size(); i++) {

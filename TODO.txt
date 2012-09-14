@@ -21,4 +21,4 @@ music
 font edges bug
 edge bounce bug
 highscore
-learn vim + eclim
+no ambient light?
