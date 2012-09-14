@@ -47,7 +47,7 @@ public class Paddle {
 		glEnd();
 	}
 	
-	public void update(float delta) {
+	public void update() {
 		x = Mouse.getX() - width/2;
 	}
 

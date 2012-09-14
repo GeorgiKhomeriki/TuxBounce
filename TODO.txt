@@ -1,9 +1,4 @@
-sticky ball start - DONE
-lives - DONE
-ball fall event - DONE
-powerups - DONE
-disappearing ball bug - DONE
-
+fix timing mistake
 ball speedup
 sticky ball timer
 only extra ball when none already
@@ -15,10 +10,10 @@ lose scenario (game-over)
 main menu
 options menu
 credits
-document source
 sound effects
 music
 font edges bug
 edge bounce bug
 highscore
 no ambient light?
+document source?

@@ -61,7 +61,7 @@ public class GameState implements IGameState {
 				Display.getHeight() / 20);
 		balls = new ArrayList<Ball>();
 		blocks = LevelLoader
-				.load("resources/levels/level-test.txt", Hud.height);
+				.load("resources/levels/level1-1.txt", Hud.height);
 		particles = new ArrayList<Particles>();
 		coins = new ArrayList<Coin>();
 		texts = new Texts();
@@ -97,7 +97,7 @@ public class GameState implements IGameState {
 		glLoadIdentity();
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		renderBackground(delta);
+		renderBackground();
 
 		paddle.render();
 
@@ -122,7 +122,7 @@ public class GameState implements IGameState {
 		Hud.get().render();
 	}
 
-	private void renderBackground(float delta) {
+	private void renderBackground() {
 		float screenWidth = Display.getWidth();
 		float screenHeight = Display.getHeight();
 		float texWidth = bgTexture.getWidth();
@@ -161,7 +161,7 @@ public class GameState implements IGameState {
 					+ balls.get(0).getY());
 
 		// update paddle
-		paddle.update(delta);
+		paddle.update();
 
 		// update balls
 		for (int i = 0; i < balls.size(); i++) {
@@ -243,7 +243,7 @@ public class GameState implements IGameState {
 			Hud.get().addLives(1);
 			break;
 		case BLUE_FACE:
-			paddle.setWidth(paddle.getWidth() + Display.getWidth() / 40.0f);
+			paddle.setWidth(paddle.getWidth() + Display.getWidth() / 60.0f);
 			break;
 		case GREEN_FACE:
 			spawnParticles(coin);

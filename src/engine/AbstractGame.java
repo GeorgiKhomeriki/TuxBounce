@@ -69,8 +69,8 @@ public abstract class AbstractGame {
 			int delta = getDelta();
 			if(delta > 0) {
 				update(delta);
+				updateFPS();
 			}
-			updateFPS();
 			Display.update();
 			Display.sync(60);
 		}
