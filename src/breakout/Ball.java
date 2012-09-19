@@ -81,6 +81,7 @@ public class Ball {
 				if (y <= paddle.getY() + paddle.getHeight()
 						&& x > paddle.getX()
 						&& x < paddle.getX() + paddle.getWidth()) {
+					//dx = (((x + 0.5f * r) - (paddle.getX() + 0.5f * paddle.getWidth()))) / 70.0f;
 					dx = ((x + 0.5f * r) - (paddle.getX() + 0.5f * paddle.getWidth())) * 3.0f;
 					dy = -dy;
 					debounceStartTimeY = time;

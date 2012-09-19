@@ -156,9 +156,9 @@ public class GameState implements IGameState {
 
 	@Override
 	public void update(int delta) {
-		if (delta != 16 && delta != 17)
-			System.out.println(delta + " " + balls.get(0).getX() + " "
-					+ balls.get(0).getY());
+//		if (delta != 16 && delta != 17)
+//			System.out.println(delta + " " + balls.get(0).getX() + " "
+//					+ balls.get(0).getY());
 
 		// update paddle
 		paddle.update();
@@ -240,6 +240,7 @@ public class GameState implements IGameState {
 			spawnBall();
 			break;
 		case RED_FACE:
+			texts.add("1UP", coin.getX(), coin.getY(), 30, true);
 			Hud.get().addLives(1);
 			break;
 		case BLUE_FACE:
@@ -255,6 +256,7 @@ public class GameState implements IGameState {
 
 	private void spawnBall() {
 		balls.add(new Ball(Display.getWidth() / 2, Display.getHeight() / 2,
+		//		Display.getWidth() / 30, -5.0f, -200.0f / Display.getHeight()));
 				Display.getWidth() / 30, 0.0f, -Display.getHeight() / 6));
 	}
 
