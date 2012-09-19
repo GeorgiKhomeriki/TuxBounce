@@ -88,8 +88,8 @@ public class Ball {
 				}
 			}
 			
-			x += dx / delta;
-			y += dy / delta;
+			x += dx * delta / 300;
+			y += dy * delta / 300;
 		}
 	}
 	
