@@ -19,6 +19,7 @@ import util.Timer;
 
 public class Ball {
 	private static final int DEBOUNCE_TIME = 200;
+	private static final int STICKY_TIME = 2000;
 	private float x;
 	private float y;
 	private float r;
@@ -28,6 +29,7 @@ public class Ball {
 	private long debounceStartTimeX;
 	private long debounceStartTimeY;
 	private boolean sticky;
+	private long stickyTimer;
 
 	public Ball(float x, float y, float r, float dx, float dy) {
 		this.x = x;
@@ -36,6 +38,7 @@ public class Ball {
 		this.dx = dx;
 		this.dy = dy;
 		this.sticky = true;
+		this.stickyTimer = 0l;
 
 		try {
 			texture = TextureLoader.getTexture("PNG", ResourceLoader
@@ -63,7 +66,8 @@ public class Ball {
 		if(sticky) {
 			x = paddle.getX() + paddle.getWidth() / 2.0f - r / 2.0f;
 			y = paddle.getY() + paddle.getHeight();
-			if(Mouse.isButtonDown(0)) {
+			stickyTimer += delta;
+			if(Mouse.isButtonDown(0) || stickyTimer > STICKY_TIME) {
 				sticky = false;
 			}
 		} else {
@@ -81,15 +85,14 @@ public class Ball {
 				if (y <= paddle.getY() + paddle.getHeight()
 						&& x > paddle.getX()
 						&& x < paddle.getX() + paddle.getWidth()) {
-					//dx = (((x + 0.5f * r) - (paddle.getX() + 0.5f * paddle.getWidth()))) / 70.0f;
 					dx = ((x + 0.5f * r) - (paddle.getX() + 0.5f * paddle.getWidth())) * 3.0f;
 					dy = -dy;
 					debounceStartTimeY = time;
 				}
 			}
 			
-			x += dx * delta / 300;
-			y += dy * delta / 300;
+			x += dx * delta / 300.0f;
+			y += dy * delta / 300.0f;
 		}
 	}
 	
@@ -107,6 +110,10 @@ public class Ball {
 	
 	public boolean isAlive() {
 		return y + r >= 0;
+	}
+	
+	public boolean isSticky() {
+		return sticky;
 	}
 
 	public float getX() {

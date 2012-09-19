@@ -1,7 +1,7 @@
+sticky ball timer - DONE
+only extra ball when none already - DONE
 fix timing mistake
 ball speedup
-sticky ball timer
-only extra ball when none already
 ball-to-ball collision
 show powerup description text
 levels / worlds

@@ -61,7 +61,7 @@ public class GameState implements IGameState {
 				Display.getHeight() / 20);
 		balls = new ArrayList<Ball>();
 		blocks = LevelLoader
-				.load("resources/levels/level1-1.txt", Hud.height);
+				.load("resources/levels/level-test.txt", Hud.height);
 		particles = new ArrayList<Particles>();
 		coins = new ArrayList<Coin>();
 		texts = new Texts();
@@ -156,9 +156,9 @@ public class GameState implements IGameState {
 
 	@Override
 	public void update(int delta) {
-		if (delta != 16 && delta != 17)
-			System.out.println(delta + " " + balls.get(0).getX() + " "
-					+ balls.get(0).getY());
+//		if (delta != 16 && delta != 17)
+//			System.out.println(delta + " " + balls.get(0).getX() + " "
+//					+ balls.get(0).getY());
 
 		// update paddle
 		paddle.update();
@@ -255,6 +255,10 @@ public class GameState implements IGameState {
 	}
 
 	private void spawnBall() {
+		for(Ball ball : balls) {
+			if(ball.isSticky())
+				return;
+		}
 		balls.add(new Ball(Display.getWidth() / 2, Display.getHeight() / 2,
 				Display.getWidth() / 30, 0.0f, -Display.getHeight() / 6));
 	}
