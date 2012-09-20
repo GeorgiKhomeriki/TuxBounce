@@ -61,7 +61,7 @@ public class GameState implements IGameState {
 				Display.getHeight() / 20);
 		balls = new ArrayList<Ball>();
 		blocks = LevelLoader
-				.load("resources/levels/level-test.txt", Hud.height);
+				.load("resources/levels/level1-1.txt", Hud.height);
 		particles = new ArrayList<Particles>();
 		coins = new ArrayList<Coin>();
 		texts = new Texts();

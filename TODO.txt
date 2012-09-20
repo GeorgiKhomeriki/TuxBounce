@@ -15,5 +15,6 @@ music
 font edges bug
 edge bounce bug
 highscore
+light size resolution dependent
 no ambient light?
 document source?
