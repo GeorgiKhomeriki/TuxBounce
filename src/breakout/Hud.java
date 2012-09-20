@@ -9,6 +9,7 @@ import static org.lwjgl.opengl.GL11.glColor3f;
 import static org.lwjgl.opengl.GL11.glColor4f;
 import static org.lwjgl.opengl.GL11.glDisable;
 import static org.lwjgl.opengl.GL11.glEnable;
+import static org.lwjgl.opengl.GL11.glIsEnabled;
 import static org.lwjgl.opengl.GL11.glEnd;
 import static org.lwjgl.opengl.GL11.glVertex2f;
 
@@ -42,10 +43,13 @@ public class Hud {
 	}
 
 	public void render() {
-		glDisable(GL_LIGHTING);
+		boolean isLightingEnabled = glIsEnabled(GL_LIGHTING);
+		if(isLightingEnabled)
+			glDisable(GL_LIGHTING);
 		renderBackground();
 		printText();
-		glEnable(GL_LIGHTING);
+		if(isLightingEnabled)
+			glEnable(GL_LIGHTING);
 	}
 
 	private void renderBackground() {

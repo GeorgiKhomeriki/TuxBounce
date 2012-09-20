@@ -23,14 +23,17 @@ public class Texts {
 	}
 
 	public void render() {
-		glDisable(GL_LIGHTING);
+		boolean isLightingEnabled = glIsEnabled(GL_LIGHTING);
+		if(isLightingEnabled)
+			glDisable(GL_LIGHTING);
 		for (Text t : texts) {
 			float alpha = t.isDoFade() ? ((float) t.getLife() - (float) t
 					.getAge()) / (float) t.getLife() : 1.0f;
 			glColor4f(1.0f, 1.0f, 1.0f, alpha);
 			font.drawText(t.getText(), t.getX(), t.getY());
 		}
-		glEnable(GL_LIGHTING);
+		if(isLightingEnabled)
+			glEnable(GL_LIGHTING);
 	}
 
 	public void update(float delta) {

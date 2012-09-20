@@ -41,7 +41,7 @@ public class GameState implements IGameState {
 	private List<Coin> coins;
 	private Texture[] coinTextures;
 	private Texts texts;
-	private Lights lights;
+	//private Lights lights;
 
 	@Override
 	public String getName() {
