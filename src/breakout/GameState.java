@@ -56,7 +56,7 @@ public class GameState implements IGameState {
 			e.printStackTrace();
 		}
 
-		lights = new Lights();
+		//lights = new Lights();
 		paddle = new Paddle(100, 10, Display.getWidth() / 6,
 				Display.getHeight() / 20);
 		balls = new ArrayList<Ball>();
@@ -156,9 +156,9 @@ public class GameState implements IGameState {
 
 	@Override
 	public void update(int delta) {
-//		if (delta != 16 && delta != 17)
-//			System.out.println(delta + " " + balls.get(0).getX() + " "
-//					+ balls.get(0).getY());
+		if (delta != 16 && delta != 17)
+			System.out.println(delta + " " + balls.get(0).getX() + " "
+					+ balls.get(0).getY());
 
 		// update paddle
 		paddle.update();
@@ -179,7 +179,7 @@ public class GameState implements IGameState {
 		}
 
 		// update light
-		lights.update(paddle, balls);
+		//lights.update(paddle, balls);
 
 		// update blocks
 		for (int i = 0; i < blocks.size(); i++) {

@@ -14,7 +14,7 @@ public class Main {
 		Game game = new Game("Awesome BreakOut", 640, 480, false);
 		game.addState(new GameState());
 		game.addState(new MenuState());
-		game.setCurrentState(GameState.name);
+		game.setCurrentState(MenuState.name);
 		game.start();
 	}
 
