@@ -52,86 +52,78 @@ public class Ball {
 	}
 
 	public void render() {
-//		texture.bind();
-//		glBegin(GL_QUADS);
-//		glTexCoord2f(0.0f, texture.getHeight());
-//		glVertex2f(x, y);
-//		glTexCoord2f(texture.getWidth(), texture.getHeight());
-//		glVertex2f(x + r, y);
-//		glTexCoord2f(texture.getWidth(), 0.0f);
-//		glVertex2f(x + r, y + r);
-//		glTexCoord2f(0.0f, 0.0f);
-//		glVertex2f(x, y + r);
-//		glEnd();
 		GL11.glLoadIdentity();
-		
 		glTranslatef(x, y, 0.0f);
 		GL11.glRotatef(angle, 0.0f, 0.0f, 1.0f);
 		texture.bind();
 		glBegin(GL_QUADS);
 		glTexCoord2f(0.0f, texture.getHeight());
-		glVertex2f(-0.5f*r, -0.5f*r);
+		glVertex2f(-0.5f * r, -0.5f * r);
 		glTexCoord2f(texture.getWidth(), texture.getHeight());
-		glVertex2f(0.5f*r, -0.5f*r);
+		glVertex2f(0.5f * r, -0.5f * r);
 		glTexCoord2f(texture.getWidth(), 0.0f);
-		glVertex2f(0.5f*r, 0.5f*r);
+		glVertex2f(0.5f * r, 0.5f * r);
 		glTexCoord2f(0.0f, 0.0f);
-		glVertex2f(-0.5f*r, 0.5f*r);
+		glVertex2f(-0.5f * r, 0.5f * r);
 		glEnd();
 		GL11.glLoadIdentity();
 	}
 
 	public void update(float delta, Paddle paddle) {
-		angle-=0.5f*dx;
-		if(sticky) {
-			x = paddle.getX() + paddle.getWidth() / 2.0f - r / 2.0f;
-			y = paddle.getY() + paddle.getHeight();
+		if (sticky) {
+			x = paddle.getX() + paddle.getWidth() / 2.0f;
+			y = paddle.getY() + paddle.getHeight() + 0.5f * r;
 			stickyTimer += delta;
-			if(Mouse.isButtonDown(0) || stickyTimer > STICKY_TIME) {
+			if (Mouse.isButtonDown(0) || stickyTimer > STICKY_TIME) {
 				sticky = false;
 			}
 		} else {
 			long time = Timer.getTime();
-			if (time - debounceStartTimeX > DEBOUNCE_TIME && (x < 0 || x + r > Display.getWidth())) {
+			if (time - debounceStartTimeX > DEBOUNCE_TIME
+					&& (x - 0.5f * r < 0 || x + 0.5f * r > Display.getWidth())) {
 				dx = -dx;
 				debounceStartTimeX = Timer.getTime();
 			}
-	
+
 			if (time - debounceStartTimeY > DEBOUNCE_TIME) {
-				if(y + r > Display.getHeight() - Hud.height) {
+				if (y + 0.5f * r > Display.getHeight() - Hud.height) {
 					dy = -dy;
 					debounceStartTimeY = time;
 				}
-				if (y <= paddle.getY() + paddle.getHeight()
-						&& x > paddle.getX()
+				if (y - 0.5f * r <= paddle.getY() + paddle.getHeight()
+						&& y > paddle.getY() && x > paddle.getX()
 						&& x < paddle.getX() + paddle.getWidth()) {
-					dx = ((x + 0.5f * r) - (paddle.getX() + 0.5f * paddle.getWidth())) * 3.0f;
+					dx = (x - (paddle.getX() + 0.5f * paddle.getWidth())) * 3.0f;
 					dy = -dy;
 					debounceStartTimeY = time;
 				}
 			}
-			
+
 			x += dx * delta / 300.0f;
 			y += dy * delta / 300.0f;
+			angle -= 0.1f * dx;
 		}
 	}
-	
+
 	public void bounce(Block block) {
-		if(Timer.getTime() - debounceStartTimeX > DEBOUNCE_TIME &&
-				(block.getX() < x + r || block.getX() + Block.width > x)) {
+		if (Timer.getTime() - debounceStartTimeX > DEBOUNCE_TIME
+				&& (block.getX() < x + 0.5f * r || block.getX() + Block.width > x
+						- 0.5f * r)) {
 			dx = -dx;
 			debounceStartTimeX = Timer.getTime();
-		} if(Timer.getTime() - debounceStartTimeY > DEBOUNCE_TIME &&
-				(block.getY() - Block.height < y + r || block.getY() > y)) {
+		}
+		if (Timer.getTime() - debounceStartTimeY > DEBOUNCE_TIME
+				&& (block.getY() - Block.height < y + 0.5f * r || block.getY() > y
+						- 0.5f * r)) {
 			dy = -dy;
 			debounceStartTimeY = Timer.getTime();
 		}
 	}
-	
+
 	public boolean isAlive() {
 		return y + r >= 0;
 	}
-	
+
 	public boolean isSticky() {
 		return sticky;
 	}

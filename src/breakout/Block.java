@@ -83,9 +83,10 @@ public class Block {
 
 	public boolean isHit(List<Ball> balls) {
 		for (Ball ball : balls) {
-			if (x < ball.getX() + ball.getR() && x + width > ball.getX()
-					&& y - height < ball.getY() + ball.getR()
-					&& y > ball.getY()) {
+			if (x < ball.getX() + 0.5f*ball.getR() 
+					&& x + width > ball.getX() - 0.5f*ball.getR()
+					&& y - height < ball.getY() + 0.5f*ball.getR()
+					&& y > ball.getY() - 0.5f*ball.getR()) {
 				ball.bounce(this);
 				return true;
 			}
