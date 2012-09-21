@@ -41,7 +41,7 @@ public class GameState implements IGameState {
 	private List<Coin> coins;
 	private Texture[] coinTextures;
 	private Texts texts;
-	//private Lights lights;
+	private Lights lights;
 
 	@Override
 	public String getName() {
@@ -259,8 +259,8 @@ public class GameState implements IGameState {
 			if(ball.isSticky())
 				return;
 		}
-		balls.add(new Ball(Display.getWidth() / 2, Display.getHeight() / 2,
-				Display.getWidth() / 30, 0.0f, -Display.getHeight() / 6));
+		balls.add(new Ball(Display.getWidth() / 2.0f, Display.getHeight() / 2.0f,
+				Display.getWidth() / 22.0f, 0.0f, -Display.getHeight() / 6));
 	}
 
 	private void spawnParticles(Block block) {

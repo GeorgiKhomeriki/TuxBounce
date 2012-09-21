@@ -4,13 +4,14 @@ import static org.lwjgl.opengl.GL11.GL_QUADS;
 import static org.lwjgl.opengl.GL11.glBegin;
 import static org.lwjgl.opengl.GL11.glEnd;
 import static org.lwjgl.opengl.GL11.glTexCoord2f;
+import static org.lwjgl.opengl.GL11.glTranslatef;
 import static org.lwjgl.opengl.GL11.glVertex2f;
 
 import java.io.IOException;
 
-
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
+import org.lwjgl.opengl.GL11;
 import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;
 import org.newdawn.slick.util.ResourceLoader;
@@ -30,6 +31,7 @@ public class Ball {
 	private long debounceStartTimeY;
 	private boolean sticky;
 	private long stickyTimer;
+	private float angle;
 
 	public Ball(float x, float y, float r, float dx, float dy) {
 		this.x = x;
@@ -39,30 +41,48 @@ public class Ball {
 		this.dy = dy;
 		this.sticky = true;
 		this.stickyTimer = 0l;
+		this.angle = 0.0f;
 
 		try {
 			texture = TextureLoader.getTexture("PNG", ResourceLoader
-					.getResourceAsStream("resources/images/ball.png"));
+					.getResourceAsStream("resources/images/tux.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 
 	public void render() {
+//		texture.bind();
+//		glBegin(GL_QUADS);
+//		glTexCoord2f(0.0f, texture.getHeight());
+//		glVertex2f(x, y);
+//		glTexCoord2f(texture.getWidth(), texture.getHeight());
+//		glVertex2f(x + r, y);
+//		glTexCoord2f(texture.getWidth(), 0.0f);
+//		glVertex2f(x + r, y + r);
+//		glTexCoord2f(0.0f, 0.0f);
+//		glVertex2f(x, y + r);
+//		glEnd();
+		GL11.glLoadIdentity();
+		
+		glTranslatef(x, y, 0.0f);
+		GL11.glRotatef(angle, 0.0f, 0.0f, 1.0f);
 		texture.bind();
 		glBegin(GL_QUADS);
 		glTexCoord2f(0.0f, texture.getHeight());
-		glVertex2f(x, y);
+		glVertex2f(-0.5f*r, -0.5f*r);
 		glTexCoord2f(texture.getWidth(), texture.getHeight());
-		glVertex2f(x + r, y);
+		glVertex2f(0.5f*r, -0.5f*r);
 		glTexCoord2f(texture.getWidth(), 0.0f);
-		glVertex2f(x + r, y + r);
+		glVertex2f(0.5f*r, 0.5f*r);
 		glTexCoord2f(0.0f, 0.0f);
-		glVertex2f(x, y + r);
+		glVertex2f(-0.5f*r, 0.5f*r);
 		glEnd();
+		GL11.glLoadIdentity();
 	}
 
 	public void update(float delta, Paddle paddle) {
+		angle-=0.5f*dx;
 		if(sticky) {
 			x = paddle.getX() + paddle.getWidth() / 2.0f - r / 2.0f;
 			y = paddle.getY() + paddle.getHeight();
