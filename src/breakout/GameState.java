@@ -41,7 +41,7 @@ public class GameState implements IGameState {
 	private List<Coin> coins;
 	private Texture[] coinTextures;
 	private Texts texts;
-	private Lights lights;
+	//private Lights lights;
 
 	@Override
 	public String getName() {
@@ -60,8 +60,7 @@ public class GameState implements IGameState {
 		paddle = new Paddle(100, 10, Display.getWidth() / 6,
 				Display.getHeight() / 20);
 		balls = new ArrayList<Ball>();
-		blocks = LevelLoader
-				.load("resources/levels/level1-1.txt", Hud.height);
+		blocks = LevelLoader.load("resources/levels/level1-4.txt", Hud.height);
 		particles = new ArrayList<Particles>();
 		coins = new ArrayList<Coin>();
 		texts = new Texts();
@@ -255,12 +254,13 @@ public class GameState implements IGameState {
 	}
 
 	private void spawnBall() {
-		for(Ball ball : balls) {
-			if(ball.isSticky())
+		for (Ball ball : balls) {
+			if (ball.isSticky())
 				return;
 		}
-		balls.add(new Ball(Display.getWidth() / 2.0f, Display.getHeight() / 2.0f,
-				Display.getWidth() / 22.0f, 0.0f, -Display.getHeight() / 6));
+		balls.add(new Ball(Display.getWidth() / 2.0f,
+				Display.getHeight() / 2.0f, Display.getWidth() / 22.0f, 0.0f,
+				-Display.getHeight() / 6));
 	}
 
 	private void spawnParticles(Block block) {
@@ -271,8 +271,8 @@ public class GameState implements IGameState {
 
 	private void spawnParticles(Coin coin) {
 		particles.add(new SimpleExplosion(100, coin.getTexture(), coin.getX()
-				+ 0.5f * Block.width, coin.getY() - 0.5f * Block.height, 0.4f,
-				0.4f, 0.4f, 1.0f, 1.0f, 1.0f));
+				+ 0.5f * Block.width, coin.getY(), 0.4f, 0.4f, 0.4f, 1.0f,
+				1.0f, 1.0f));
 	}
 
 	private void spawnCoin(Block block) {

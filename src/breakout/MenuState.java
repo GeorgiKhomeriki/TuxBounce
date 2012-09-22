@@ -20,12 +20,13 @@ import org.newdawn.slick.opengl.TextureLoader;
 import org.newdawn.slick.util.ResourceLoader;
 
 import engine.Font;
+import engine.Game;
 import engine.IGameState;
 
 public class MenuState implements IGameState {
 	public static final String name = "MENU_STATE";
 
-	private Texture bgTexture;
+	private Texture cursorTexture;
 	private Font font;
 
 	private enum MENU {
@@ -41,7 +42,7 @@ public class MenuState implements IGameState {
 	private boolean isKeyPressed;
 	private float highLightColor;
 	private float highLightColorDelta;
-	
+
 	@Override
 	public String getName() {
 		return name;
@@ -50,12 +51,12 @@ public class MenuState implements IGameState {
 	@Override
 	public void init() {
 		try {
-			bgTexture = TextureLoader.getTexture("PNG", ResourceLoader
+			cursorTexture = TextureLoader.getTexture("PNG", ResourceLoader
 					.getResourceAsStream("resources/images/tux.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 		font = new Font("resources/fonts/kromasky_16x16.png", 59, 16);
 		currentMenu = MENU.MAIN;
 		currentSelection = SELECTION.START;
@@ -78,8 +79,7 @@ public class MenuState implements IGameState {
 	public void render(int delta) {
 		glLoadIdentity();
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		
-		renderBackground();
+
 		switch (currentMenu) {
 		case MAIN:
 			renderMain();
@@ -96,38 +96,59 @@ public class MenuState implements IGameState {
 		default:
 			break;
 		}
+		renderCursor();
 	}
-	
-	public void renderBackground() {
-		float width = 250.0f;
-		float height = 220.0f;
-		bgTexture.bind();
+
+	public void renderCursor() {
+		float width = Display.getWidth() / 24;
+		float height = Display.getHeight() / 18;
+		float x = Display.getWidth() * 0.5f - 1.2f * width;
+		float y = getSelectionY(currentSelection);
+		cursorTexture.bind();
 		glColor3f(1.0f, 1.0f, 1.0f);
 		glBegin(GL_QUADS);
-		glTexCoord2f(0.0f, bgTexture.getHeight());
-		glVertex2f(0.0f, 0.0f);
-		glTexCoord2f(bgTexture.getWidth(), bgTexture.getHeight());
-		glVertex2f(width, 0.0f);
-		glTexCoord2f(bgTexture.getWidth(), 0.0f);
-		glVertex2f(width, height);
+		glTexCoord2f(0.0f, cursorTexture.getHeight());
+		glVertex2f(x, y);
+		glTexCoord2f(cursorTexture.getWidth(), cursorTexture.getHeight());
+		glVertex2f(x + width, y);
+		glTexCoord2f(cursorTexture.getWidth(), 0.0f);
+		glVertex2f(x + width, y + height);
 		glTexCoord2f(0.0f, 0.0f);
-		glVertex2f(0.0f, height);
+		glVertex2f(x, y + height);
 		glEnd();
 	}
 
-	public void renderMain() {
+	private float getSelectionY(SELECTION selection) {
+		float y = Display.getHeight() * 0.5f;
+		switch (selection) {
+		case OPTIONS:
+			y -= Display.getHeight() / 16.0f;
+			break;
+		case CREDITS:
+			y -= Display.getHeight() / 8.0f;
+			break;
+		case EXIT:
+			y -= Display.getHeight() / 5.2f;
+			break;
+		default:
+			break;
+		}
+		return y;
+	}
+
+	private void renderMain() {
 		highlightSelection(SELECTION.START);
 		font.drawText("START", Display.getWidth() / 2.0f,
-				Display.getHeight() / 2.0f);
+				getSelectionY(SELECTION.START));
 		highlightSelection(SELECTION.OPTIONS);
-		font.drawText("OPTIONS", Display.getWidth() / 2.0f, Display.getHeight()
-				/ 2.0f - Display.getHeight() / 16.0f);
+		font.drawText("OPTIONS", Display.getWidth() / 2.0f,
+				getSelectionY(SELECTION.OPTIONS));
 		highlightSelection(SELECTION.CREDITS);
-		font.drawText("CREDITS", Display.getWidth() / 2.0f, Display.getHeight()
-				/ 2.0f - Display.getHeight() / 8.0f);
+		font.drawText("CREDITS", Display.getWidth() / 2.0f,
+				getSelectionY(SELECTION.CREDITS));
 		highlightSelection(SELECTION.EXIT);
-		font.drawText("EXIT", Display.getWidth() / 2.0f, Display.getHeight()
-				/ 2.0f - Display.getHeight() / 5.2f);
+		font.drawText("EXIT", Display.getWidth() / 2.0f,
+				getSelectionY(SELECTION.EXIT));
 	}
 
 	private void highlightSelection(SELECTION selection) {
@@ -152,9 +173,9 @@ public class MenuState implements IGameState {
 	@Override
 	public void update(int delta) {
 		updateHighlightColor(delta);
-		
 		switch (currentMenu) {
 		case MAIN:
+			doMainSelectionAction();
 			updateMain(delta);
 			break;
 		case OPTIONS:
@@ -174,12 +195,13 @@ public class MenuState implements IGameState {
 	private void updateMain(float delta) {
 		boolean downPressed = Keyboard.isKeyDown(Keyboard.KEY_DOWN);
 		boolean upPressed = Keyboard.isKeyDown(Keyboard.KEY_UP);
-		if(!isKeyPressed) {
+		if (!isKeyPressed) {
 			if (downPressed || upPressed) {
-				currentSelection = getNextMainSelection(currentSelection, upPressed);
+				currentSelection = getNextMainSelection(currentSelection,
+						upPressed);
 				isKeyPressed = true;
 			}
-		} else if(!downPressed && !upPressed) {
+		} else if (!downPressed && !upPressed) {
 			isKeyPressed = false;
 		}
 	}
@@ -198,6 +220,25 @@ public class MenuState implements IGameState {
 			return SELECTION.START;
 		}
 	}
+	
+	private void doMainSelectionAction() {
+		if(Keyboard.isKeyDown(Keyboard.KEY_RETURN)) {
+			switch(currentSelection) {
+			case START:
+				Game.get().setCurrentState(GameState.name);
+				break;
+			case OPTIONS:
+				break;
+			case CREDITS:
+				break;
+			case EXIT:
+				Game.get().requestShutdown();
+				break;
+			default:
+				break;
+			}
+		}
+	}
 
 	private void updateOptions(float delta) {
 
@@ -210,10 +251,10 @@ public class MenuState implements IGameState {
 	private void updateLevelList(float delta) {
 
 	}
-	
+
 	private void updateHighlightColor(float delta) {
-		highLightColor += highLightColorDelta*delta/200;
-		if(highLightColor <= 0.0f || highLightColor >= 1.0f) {
+		highLightColor += highLightColorDelta * delta / 200;
+		if (highLightColor <= 0.0f || highLightColor >= 1.0f) {
 			highLightColorDelta = -highLightColorDelta;
 		}
 	}

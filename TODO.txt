@@ -1,6 +1,7 @@
 sticky ball timer - DONE
 only extra ball when none already - DONE
 ball speedup - DONE
+add bounce effect to paddle - DONE
 fix timing mistake
 ball-to-ball collision
 show powerup description text

@@ -66,17 +66,17 @@ public class Paddle {
 
 	public void update(float delta) {
 		x = Mouse.getX() - width / 2;
-		bounceIndex += 8.0f / delta;
 
 		if (bounceSize <= 0.0f) {
 			bounceHeight = height;
 		} else {
+			bounceIndex += 8.0f / delta;
 			bounceHeight = this.height + (float) Math.sin(bounceIndex)
 					* bounceSize;
 			bounceSize -= 0.2f;
 		}
 	}
-
+	
 	public void bounce(float bounceCenter) {
 		this.bounceCenter = bounceCenter;
 		bounceSize = 0.2f * height; 

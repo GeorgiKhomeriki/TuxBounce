@@ -36,6 +36,9 @@ public abstract class AbstractGame {
 
 	/** window title */
 	private String title;
+	
+	/** shutdown request */
+	private static boolean shutdownRequested = false;
 
 	public AbstractGame(String title, int screenWidth, int screenHeight,
 			boolean fullscreen) {
@@ -65,7 +68,7 @@ public abstract class AbstractGame {
 
 		lastFPS = Timer.getTime();
 
-		while (!Display.isCloseRequested()) {
+		while (!Display.isCloseRequested() && !shutdownRequested) {
 			int delta = getDelta();
 			if(delta > 0) {
 				update(delta);
@@ -124,6 +127,13 @@ public abstract class AbstractGame {
 		lastFrame = time;
 
 		return delta;
+	}
+	
+	/**
+	 * Request to shutdown the game.
+	 */
+	public void requestShutdown() {
+		shutdownRequested = true;
 	}
 
 	/**
