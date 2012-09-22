@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.opengl.Texture;
@@ -25,6 +26,7 @@ import particles.SimpleExplosion;
 import util.LevelLoader;
 import breakout.Block.BlockState;
 import breakout.Block.BlockType;
+import engine.Game;
 import engine.IGameState;
 import engine.Lights;
 import engine.Texts;
@@ -231,6 +233,11 @@ public class GameState implements IGameState {
 
 		// update HUD
 		Hud.get().update(delta);
+		
+		// check if escape is pressed
+		if(Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) {
+			Game.get().setCurrentState(MenuState.name);
+		}
 	}
 
 	private void doPowerup(Coin coin) {
