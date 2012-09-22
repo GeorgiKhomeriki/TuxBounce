@@ -99,17 +99,19 @@ public class MenuState implements IGameState {
 	}
 	
 	public void renderBackground() {
+		float width = 250.0f;
+		float height = 220.0f;
 		bgTexture.bind();
 		glColor3f(1.0f, 1.0f, 1.0f);
 		glBegin(GL_QUADS);
 		glTexCoord2f(0.0f, bgTexture.getHeight());
 		glVertex2f(0.0f, 0.0f);
 		glTexCoord2f(bgTexture.getWidth(), bgTexture.getHeight());
-		glVertex2f(Display.getWidth(), 0.0f);
+		glVertex2f(width, 0.0f);
 		glTexCoord2f(bgTexture.getWidth(), 0.0f);
-		glVertex2f(Display.getWidth(), Display.getHeight());
+		glVertex2f(width, height);
 		glTexCoord2f(0.0f, 0.0f);
-		glVertex2f(0.0f, Display.getHeight());
+		glVertex2f(0.0f, height);
 		glEnd();
 	}
 

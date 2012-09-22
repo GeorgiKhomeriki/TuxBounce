@@ -21,6 +21,7 @@ import util.Timer;
 public class Ball {
 	private static final int DEBOUNCE_TIME = 200;
 	private static final int STICKY_TIME = 2000;
+	private static final float SPEED_UP_DELTA = 0.02f;
 	private float x;
 	private float y;
 	private float r;
@@ -32,6 +33,7 @@ public class Ball {
 	private boolean sticky;
 	private long stickyTimer;
 	private float angle;
+	private float speedFactor;
 
 	public Ball(float x, float y, float r, float dx, float dy) {
 		this.x = x;
@@ -42,6 +44,7 @@ public class Ball {
 		this.sticky = true;
 		this.stickyTimer = 0l;
 		this.angle = 0.0f;
+		this.speedFactor = 1.0f;
 
 		try {
 			texture = TextureLoader.getTexture("PNG", ResourceLoader
@@ -55,6 +58,7 @@ public class Ball {
 		GL11.glLoadIdentity();
 		glTranslatef(x, y, 0.0f);
 		GL11.glRotatef(angle, 0.0f, 0.0f, 1.0f);
+		GL11.glColor3f(1.0f, 1.0f, 1.0f);
 		texture.bind();
 		glBegin(GL_QUADS);
 		glTexCoord2f(0.0f, texture.getHeight());
@@ -95,12 +99,13 @@ public class Ball {
 						&& x < paddle.getX() + paddle.getWidth()) {
 					dx = (x - (paddle.getX() + 0.5f * paddle.getWidth())) * 3.0f;
 					dy = -dy;
+					speedFactor += SPEED_UP_DELTA;
 					debounceStartTimeY = time;
 				}
 			}
 
 			x += dx * delta / 300.0f;
-			y += dy * delta / 300.0f;
+			y += dy * delta / 300.0f * speedFactor;
 			angle -= 0.1f * dx;
 		}
 	}
