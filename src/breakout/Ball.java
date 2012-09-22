@@ -20,7 +20,7 @@ import util.Timer;
 
 public class Ball {
 	private static final int DEBOUNCE_TIME = 200;
-	private static final int STICKY_TIME = 2000;
+	private static final int STICKY_TIME = 4000;
 	private static final float SPEED_UP_DELTA = 0.02f;
 	private float x;
 	private float y;
@@ -76,7 +76,7 @@ public class Ball {
 	public void update(float delta, Paddle paddle) {
 		if (sticky) {
 			x = paddle.getX() + paddle.getWidth() / 2.0f;
-			y = paddle.getY() + paddle.getHeight() + 0.5f * r;
+			y = paddle.getY() + paddle.getBounceHeight() + 0.5f * r;
 			stickyTimer += delta;
 			if (Mouse.isButtonDown(0) || stickyTimer > STICKY_TIME) {
 				sticky = false;
@@ -99,6 +99,7 @@ public class Ball {
 						&& x < paddle.getX() + paddle.getWidth()) {
 					dx = (x - (paddle.getX() + 0.5f * paddle.getWidth())) * 3.0f;
 					dy = -dy;
+					paddle.bounce();
 					speedFactor += SPEED_UP_DELTA;
 					debounceStartTimeY = time;
 				}

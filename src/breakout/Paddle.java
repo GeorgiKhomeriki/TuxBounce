@@ -16,13 +16,19 @@ public class Paddle {
 	private float width;
 	private float height;
 	private Texture texture;
-	
+	private float bounceIndex;
+	private float bounceSize;
+	private float bounceHeight;
+
 	public Paddle(float x, float y, float width, float height) {
 		this.x = x;
 		this.y = y;
 		this.width = width;
 		this.height = height;
-		
+		this.bounceIndex = 0.0f;
+		this.bounceSize = 0.0f;
+		this.bounceHeight = 0.0f;
+
 		try {
 			texture = TextureLoader.getTexture("PNG", ResourceLoader
 					.getResourceAsStream("resources/images/paddle.png"));
@@ -30,25 +36,47 @@ public class Paddle {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void render() {
 		texture.bind();
 		Color.white.bind();
-		
+
 		glBegin(GL_QUADS);
 		glTexCoord2f(0.0f, texture.getHeight());
 		glVertex2f(x, y);
+		glTexCoord2f(0.5f * texture.getWidth(), texture.getHeight());
+		glVertex2f(x + 0.5f * width, y);
+		glTexCoord2f(0.5f * texture.getWidth(), 0.0f);
+		glVertex2f(x + 0.5f * width, y + bounceHeight);
+		glTexCoord2f(0.0f, 0.0f);
+		glVertex2f(x, y + height);
+
+		glTexCoord2f(0.5f * texture.getWidth(), texture.getHeight());
+		glVertex2f(x + 0.5f * width, y);
 		glTexCoord2f(texture.getWidth(), texture.getHeight());
 		glVertex2f(x + width, y);
 		glTexCoord2f(texture.getWidth(), 0.0f);
 		glVertex2f(x + width, y + height);
-		glTexCoord2f(0.0f, 0.0f);
-		glVertex2f(x, y + height);
+		glTexCoord2f(0.5f * texture.getWidth(), 0.0f);
+		glVertex2f(x + 0.5f * width, y + bounceHeight);
 		glEnd();
 	}
-	
-	public void update() {
-		x = Mouse.getX() - width/2;
+
+	public void update(float delta) {
+		x = Mouse.getX() - width / 2;
+		bounceIndex += 8.0f / delta;
+
+		if (bounceSize <= 0.0f) {
+			bounceHeight = height;
+		} else {
+			bounceHeight = this.height + (float) Math.sin(bounceIndex)
+					* bounceSize;
+			bounceSize -= 0.2f;
+		}
+	}
+
+	public void bounce() {
+		bounceSize = 0.2f * height;
 	}
 
 	public float getX() {
@@ -75,6 +103,10 @@ public class Paddle {
 		this.width = width;
 	}
 
+	public float getBounceHeight() {
+		return bounceHeight;
+	}
+	
 	public float getHeight() {
 		return height;
 	}
@@ -82,5 +114,5 @@ public class Paddle {
 	public void setHeight(float height) {
 		this.height = height;
 	}
-	
+
 }

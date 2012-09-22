@@ -161,7 +161,7 @@ public class GameState implements IGameState {
 					+ balls.get(0).getY());
 
 		// update paddle
-		paddle.update();
+		paddle.update(delta);
 
 		// update balls
 		for (int i = 0; i < balls.size(); i++) {
