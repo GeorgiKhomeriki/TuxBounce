@@ -19,6 +19,7 @@ public class Paddle {
 	private float bounceIndex;
 	private float bounceSize;
 	private float bounceHeight;
+	private float bounceCenter;
 
 	public Paddle(float x, float y, float width, float height) {
 		this.x = x;
@@ -28,6 +29,7 @@ public class Paddle {
 		this.bounceIndex = 0.0f;
 		this.bounceSize = 0.0f;
 		this.bounceHeight = 0.0f;
+		this.bounceCenter = 0.5f;
 
 		try {
 			texture = TextureLoader.getTexture("PNG", ResourceLoader
@@ -44,21 +46,21 @@ public class Paddle {
 		glBegin(GL_QUADS);
 		glTexCoord2f(0.0f, texture.getHeight());
 		glVertex2f(x, y);
-		glTexCoord2f(0.5f * texture.getWidth(), texture.getHeight());
-		glVertex2f(x + 0.5f * width, y);
-		glTexCoord2f(0.5f * texture.getWidth(), 0.0f);
-		glVertex2f(x + 0.5f * width, y + bounceHeight);
+		glTexCoord2f(bounceCenter * texture.getWidth(), texture.getHeight());
+		glVertex2f(x + bounceCenter * width, y);
+		glTexCoord2f(bounceCenter * texture.getWidth(), 0.0f);
+		glVertex2f(x + bounceCenter * width, y + bounceHeight);
 		glTexCoord2f(0.0f, 0.0f);
 		glVertex2f(x, y + height);
 
-		glTexCoord2f(0.5f * texture.getWidth(), texture.getHeight());
-		glVertex2f(x + 0.5f * width, y);
+		glTexCoord2f(bounceCenter * texture.getWidth(), texture.getHeight());
+		glVertex2f(x + bounceCenter * width, y);
 		glTexCoord2f(texture.getWidth(), texture.getHeight());
 		glVertex2f(x + width, y);
 		glTexCoord2f(texture.getWidth(), 0.0f);
 		glVertex2f(x + width, y + height);
-		glTexCoord2f(0.5f * texture.getWidth(), 0.0f);
-		glVertex2f(x + 0.5f * width, y + bounceHeight);
+		glTexCoord2f(bounceCenter * texture.getWidth(), 0.0f);
+		glVertex2f(x + bounceCenter * width, y + bounceHeight);
 		glEnd();
 	}
 
@@ -75,8 +77,9 @@ public class Paddle {
 		}
 	}
 
-	public void bounce() {
-		bounceSize = 0.2f * height;
+	public void bounce(float bounceCenter) {
+		this.bounceCenter = bounceCenter;
+		bounceSize = 0.2f * height; 
 	}
 
 	public float getX() {

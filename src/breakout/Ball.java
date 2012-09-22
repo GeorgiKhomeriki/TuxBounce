@@ -5,6 +5,9 @@ import static org.lwjgl.opengl.GL11.glBegin;
 import static org.lwjgl.opengl.GL11.glEnd;
 import static org.lwjgl.opengl.GL11.glTexCoord2f;
 import static org.lwjgl.opengl.GL11.glTranslatef;
+import static org.lwjgl.opengl.GL11.glRotatef;
+import static org.lwjgl.opengl.GL11.glLoadIdentity;
+import static org.lwjgl.opengl.GL11.glColor3f;
 import static org.lwjgl.opengl.GL11.glVertex2f;
 
 import java.io.IOException;
@@ -55,10 +58,10 @@ public class Ball {
 	}
 
 	public void render() {
-		GL11.glLoadIdentity();
+		glLoadIdentity();
 		glTranslatef(x, y, 0.0f);
-		GL11.glRotatef(angle, 0.0f, 0.0f, 1.0f);
-		GL11.glColor3f(1.0f, 1.0f, 1.0f);
+		glRotatef(angle, 0.0f, 0.0f, 1.0f);
+		glColor3f(1.0f, 1.0f, 1.0f);
 		texture.bind();
 		glBegin(GL_QUADS);
 		glTexCoord2f(0.0f, texture.getHeight());
@@ -70,7 +73,7 @@ public class Ball {
 		glTexCoord2f(0.0f, 0.0f);
 		glVertex2f(-0.5f * r, 0.5f * r);
 		glEnd();
-		GL11.glLoadIdentity();
+		glLoadIdentity();
 	}
 
 	public void update(float delta, Paddle paddle) {
@@ -99,7 +102,7 @@ public class Ball {
 						&& x < paddle.getX() + paddle.getWidth()) {
 					dx = (x - (paddle.getX() + 0.5f * paddle.getWidth())) * 3.0f;
 					dy = -dy;
-					paddle.bounce();
+					paddle.bounce((x - paddle.getX()) / paddle.getWidth());
 					speedFactor += SPEED_UP_DELTA;
 					debounceStartTimeY = time;
 				}
