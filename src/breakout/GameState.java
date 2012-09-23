@@ -30,7 +30,6 @@ import breakout.Block.BlockState;
 import breakout.Block.BlockType;
 import engine.Game;
 import engine.IGameState;
-import engine.Lights;
 import engine.Texts;
 
 public class GameState implements IGameState {
