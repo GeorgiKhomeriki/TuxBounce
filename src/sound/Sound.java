@@ -69,7 +69,7 @@ public class Sound {
 	
 	public void playBoing() {
 		if(isEnabled)
-			boingSound.playAsSoundEffect(1.0f, 0.5f, false);
+			boingSound.playAsSoundEffect(0.9f + 0.2f * random.nextFloat(), 0.5f, false);
 	}
 	
 	public void playPoint() {
@@ -95,7 +95,7 @@ public class Sound {
 	
 	public void playMenuMusic() {
 		if(isEnabled)
-			menuMusic.playAsMusic(1.f, 1.0f, false);
+			menuMusic.playAsMusic(1.f, 1.0f, true);
 	}
 	
 	public void stopMenuMusic() {
