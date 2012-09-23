@@ -64,7 +64,7 @@ public class GameState implements IGameState {
 		paddle = new Paddle(100, 10, Display.getWidth() / 6,
 				Display.getHeight() / 20);
 		balls = new ArrayList<Ball>();
-		blocks = LevelLoader.load("resources/levels/level1-3.txt", Hud.height);
+		blocks = LevelLoader.load("resources/levels/level1-1.txt", Hud.height);
 		particles = new ArrayList<Particles>();
 		coins = new ArrayList<Coin>();
 		texts = new Texts();
