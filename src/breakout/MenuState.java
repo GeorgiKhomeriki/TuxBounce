@@ -156,7 +156,6 @@ public class MenuState implements IGameState {
 			glColor3f(1.0f, highlightColor, 0.0f);
 		else
 			glColor3f(1.0f, 1.0f, 1.0f);
-		System.out.println(highlightColor);
 	}
 
 	public void renderOptions() {
