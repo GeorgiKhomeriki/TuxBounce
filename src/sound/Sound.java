@@ -9,7 +9,7 @@ import org.newdawn.slick.util.ResourceLoader;
 
 public class Sound {
 	private static Sound instance;
-	private static Random random;
+	private Random random;
 	private Audio acceptSound;
 	private Audio declineSound;
 	private Audio cursorSound;
@@ -18,8 +18,10 @@ public class Sound {
 	private Audio[] hitSounds;
 	private Audio music;
 	private Audio menuMusic;
+	private boolean isEnabled;
 	
 	public Sound() {
+		isEnabled = true;
 		random = new Random();
 		try {
 			acceptSound = AudioLoader.getAudio("WAV",
@@ -51,32 +53,40 @@ public class Sound {
 	}
 	
 	public void playAccept() {
-		acceptSound.playAsSoundEffect(1.0f, 1.0f, false);
+		if(isEnabled)
+			acceptSound.playAsSoundEffect(1.0f, 1.0f, false);
 	}
 	
 	public void playDecline() {
-		declineSound.playAsSoundEffect(1.0f, 1.0f, false);
+		if(isEnabled)
+			declineSound.playAsSoundEffect(1.0f, 1.0f, false);
 	}
 	
 	public void playCursor() {
-		cursorSound.playAsSoundEffect(1.0f, 1.0f, false);
+		if(isEnabled)
+			cursorSound.playAsSoundEffect(1.0f, 1.0f, false);
 	}
 	
 	public void playBoing() {
-		boingSound.playAsSoundEffect(1.0f, 0.5f, false);
+		if(isEnabled)
+			boingSound.playAsSoundEffect(1.0f, 0.5f, false);
 	}
 	
 	public void playPoint() {
-		pointSound.playAsSoundEffect(0.5f + 0.5f * random.nextFloat(),  0.5f, false);
+		if(isEnabled)
+			pointSound.playAsSoundEffect(0.5f + 0.5f * random.nextFloat(),  0.5f, false);
 	}
 	
 	public void playHit() {
-		int i = random.nextInt(3);
-		hitSounds[i].playAsSoundEffect(1.0f,  1.0f,  false);
+		if(isEnabled) {
+			int i = random.nextInt(3);
+			hitSounds[i].playAsSoundEffect(1.0f,  1.0f,  false);
+		}
 	}
 	
 	public void playMusic() {
-		music.playAsMusic(1.0f, 1.0f, true);
+		if(isEnabled)
+			music.playAsMusic(1.0f, 1.0f, true);
 	}
 	
 	public void stopMusic() {
@@ -84,11 +94,16 @@ public class Sound {
 	}
 	
 	public void playMenuMusic() {
-		menuMusic.playAsMusic(1.f, 1.0f, false);
+		if(isEnabled)
+			menuMusic.playAsMusic(1.f, 1.0f, false);
 	}
 	
 	public void stopMenuMusic() {
 		menuMusic.stop();
+	}
+	
+	public void setEnabled(boolean enable) {
+		isEnabled = enable;
 	}
 	
 	public static Sound get() {

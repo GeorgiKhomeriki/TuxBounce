@@ -65,9 +65,6 @@ public class MenuState implements IGameState {
 		isKeyPressed = false;
 		highlightColor = 1.0f;
 		highLightColorDelta = -1.0f;
-		
-		// init sounds
-		Sound.get();
 	}
 
 	@Override
