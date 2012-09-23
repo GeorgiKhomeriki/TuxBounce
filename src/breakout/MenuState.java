@@ -15,10 +15,12 @@ import java.io.IOException;
 
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
+import org.newdawn.slick.openal.SoundStore;
 import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;
 import org.newdawn.slick.util.ResourceLoader;
 
+import sound.Sound;
 import engine.Font;
 import engine.Game;
 import engine.IGameState;
@@ -63,16 +65,19 @@ public class MenuState implements IGameState {
 		isKeyPressed = false;
 		highlightColor = 1.0f;
 		highLightColorDelta = -1.0f;
+		
+		// init sounds
+		Sound.get();
 	}
 
 	@Override
 	public void start() {
-
+		Sound.get().playMenuMusic();
 	}
 
 	@Override
 	public void stop() {
-
+		Sound.get().stopMenuMusic();
 	}
 
 	@Override
@@ -190,6 +195,7 @@ public class MenuState implements IGameState {
 		default:
 			break;
 		}
+		SoundStore.get().poll(0);
 	}
 
 	private void updateMain(float delta) {
@@ -200,6 +206,7 @@ public class MenuState implements IGameState {
 				currentSelection = getNextMainSelection(currentSelection,
 						upPressed);
 				isKeyPressed = true;
+				Sound.get().playCursor();
 			}
 		} else if (!downPressed && !upPressed) {
 			isKeyPressed = false;
@@ -223,6 +230,7 @@ public class MenuState implements IGameState {
 
 	private void doMainSelectionAction() {
 		if (Keyboard.isKeyDown(Keyboard.KEY_RETURN)) {
+			Sound.get().playAccept();
 			switch (currentSelection) {
 			case START:
 				Game.get().setCurrentState(GameState.name);

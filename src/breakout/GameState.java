@@ -17,12 +17,14 @@ import java.util.List;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 import org.newdawn.slick.Color;
+import org.newdawn.slick.openal.SoundStore;
 import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;
 import org.newdawn.slick.util.ResourceLoader;
 
 import particles.Particles;
 import particles.SimpleExplosion;
+import sound.Sound;
 import util.LevelLoader;
 import breakout.Block.BlockState;
 import breakout.Block.BlockType;
@@ -43,7 +45,8 @@ public class GameState implements IGameState {
 	private List<Coin> coins;
 	private Texture[] coinTextures;
 	private Texts texts;
-	//private Lights lights;
+
+	// private Lights lights;
 
 	@Override
 	public String getName() {
@@ -58,7 +61,7 @@ public class GameState implements IGameState {
 			e.printStackTrace();
 		}
 
-		//lights = new Lights();
+		// lights = new Lights();
 		paddle = new Paddle(100, 10, Display.getWidth() / 6,
 				Display.getHeight() / 20);
 		balls = new ArrayList<Ball>();
@@ -85,12 +88,12 @@ public class GameState implements IGameState {
 
 	@Override
 	public void start() {
-
+		Sound.get().playMusic();
 	}
 
 	@Override
 	public void stop() {
-
+		Sound.get().stopMusic();
 	}
 
 	@Override
@@ -180,7 +183,7 @@ public class GameState implements IGameState {
 		}
 
 		// update light
-		//lights.update(paddle, balls);
+		// lights.update(paddle, balls);
 
 		// update blocks
 		for (int i = 0; i < blocks.size(); i++) {
@@ -233,11 +236,16 @@ public class GameState implements IGameState {
 
 		// update HUD
 		Hud.get().update(delta);
-		
+
 		// check if escape is pressed
-		if(Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) {
+		if (Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) {
+			Sound.get().playDecline();
 			Game.get().setCurrentState(MenuState.name);
 		}
+
+		// polling is required to allow streaming to get a chance to queue
+		// buffers.
+		SoundStore.get().poll(0);
 	}
 
 	private void doPowerup(Coin coin) {

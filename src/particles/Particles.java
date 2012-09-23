@@ -9,6 +9,8 @@ import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;
 import org.newdawn.slick.util.ResourceLoader;
 
+import sound.Sound;
+
 import breakout.Hud;
 import breakout.Paddle;
 import engine.Texts;
@@ -150,6 +152,7 @@ public class Particles {
 				i--;
 				texts.add("+1", particle.getX(), particle.getY(), 30, true);
 				Hud.get().addPoints(1);
+				Sound.get().playPoint();
 			} else if (particle.isAlive()) {
 				particle.update(delta);
 				float lifeRatio = (float) (particle.getLife() - particle

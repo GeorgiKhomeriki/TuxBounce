@@ -15,6 +15,7 @@ import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;
 import org.newdawn.slick.util.ResourceLoader;
 
+import sound.Sound;
 import util.LevelLoader;
 
 public class Block {
@@ -79,6 +80,7 @@ public class Block {
 
 	public void onHit() {
 		state = BlockState.DYING;
+		Sound.get().playHit();
 	}
 
 	public boolean isHit(List<Ball> balls) {

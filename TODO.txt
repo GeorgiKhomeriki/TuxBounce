@@ -20,3 +20,5 @@ light size resolution dependent
 no ambient light?
 document source?
 fix texture loading moments i.e. pre-load/re-use textures!
+remove printStacktraces!
+pause - continue

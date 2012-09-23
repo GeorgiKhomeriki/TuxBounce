@@ -10,6 +10,8 @@ import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;
 import org.newdawn.slick.util.ResourceLoader;
 
+import sound.Sound;
+
 public class Paddle {
 	private float x;
 	private float y;
@@ -80,6 +82,7 @@ public class Paddle {
 	public void bounce(float bounceCenter) {
 		this.bounceCenter = bounceCenter;
 		bounceSize = 0.2f * height; 
+		Sound.get().playBoing();
 	}
 
 	public float getX() {

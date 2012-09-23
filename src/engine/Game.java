@@ -3,6 +3,8 @@ package engine;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.lwjgl.openal.AL;
+
 
 public class Game extends AbstractGame {
 
@@ -33,6 +35,7 @@ public class Game extends AbstractGame {
 	@Override
 	protected void shutdown() {
 		currentState.stop();
+		AL.destroy();
 	}
 
 	public void addState(IGameState state) {
@@ -56,8 +59,8 @@ public class Game extends AbstractGame {
 	public static Game get() {
 		if(instance == null) {
 			//instance = new Game("Awesome BreakOut", 1440, 900, true);
-			//instance = new Game("Awesome BreakOut", 1024, 768, false);
-			instance = new Game("Awesome BreakOut", 800, 600, false);
+			instance = new Game("Awesome BreakOut", 1024, 768, false);
+			//instance = new Game("Awesome BreakOut", 800, 600, false);
 			//instance = new Game("Awesome BreakOut", 640, 480, false);
 		}
 		return instance;
