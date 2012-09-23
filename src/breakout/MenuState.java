@@ -40,7 +40,7 @@ public class MenuState implements IGameState {
 	private MENU currentMenu;
 	private SELECTION currentSelection;
 	private boolean isKeyPressed;
-	private float highLightColor;
+	private float highlightColor;
 	private float highLightColorDelta;
 
 	@Override
@@ -61,7 +61,7 @@ public class MenuState implements IGameState {
 		currentMenu = MENU.MAIN;
 		currentSelection = SELECTION.START;
 		isKeyPressed = false;
-		highLightColor = 1.0f;
+		highlightColor = 1.0f;
 		highLightColorDelta = -1.0f;
 	}
 
@@ -153,9 +153,10 @@ public class MenuState implements IGameState {
 
 	private void highlightSelection(SELECTION selection) {
 		if (currentSelection.equals(selection))
-			glColor3f(1.0f, highLightColor, 0.0f);
+			glColor3f(1.0f, highlightColor, 0.0f);
 		else
 			glColor3f(1.0f, 1.0f, 1.0f);
+		System.out.println(highlightColor);
 	}
 
 	public void renderOptions() {
@@ -220,10 +221,10 @@ public class MenuState implements IGameState {
 			return SELECTION.START;
 		}
 	}
-	
+
 	private void doMainSelectionAction() {
-		if(Keyboard.isKeyDown(Keyboard.KEY_RETURN)) {
-			switch(currentSelection) {
+		if (Keyboard.isKeyDown(Keyboard.KEY_RETURN)) {
+			switch (currentSelection) {
 			case START:
 				Game.get().setCurrentState(GameState.name);
 				break;
@@ -253,9 +254,11 @@ public class MenuState implements IGameState {
 	}
 
 	private void updateHighlightColor(float delta) {
-		highLightColor += highLightColorDelta * delta / 200;
-		if (highLightColor <= 0.0f || highLightColor >= 1.0f) {
+		float newColor = highlightColor + highLightColorDelta * delta / 200;
+		if (newColor < 0.0f || newColor > 1.0f) {
 			highLightColorDelta = -highLightColorDelta;
+		} else {
+			highlightColor = newColor;
 		}
 	}
 
