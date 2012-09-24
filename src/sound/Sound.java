@@ -16,6 +16,8 @@ public class Sound {
 	private Audio boingSound;
 	private Audio pointSound;
 	private Audio[] hitSounds;
+	private Audio pointsPowerupSound;
+	private Audio deathSound;
 	private Audio music;
 	private Audio menuMusic;
 	private boolean isEnabled;
@@ -42,6 +44,12 @@ public class Sound {
 					ResourceLoader.getResourceAsStream("resources/sounds/djembe-hi-3.wav"));
 			hitSounds[2] = AudioLoader.getAudio("WAV",
 					ResourceLoader.getResourceAsStream("resources/sounds/djembe-mid-2.wav"));
+			
+			pointsPowerupSound = AudioLoader.getAudio("WAV",
+					ResourceLoader.getResourceAsStream("resources/sounds/goblet-g-medium.wav"));
+			
+			deathSound = AudioLoader.getAudio("WAV",
+					ResourceLoader.getResourceAsStream("resources/sounds/stone-on-stone-impact.wav"));
 			
 			music = AudioLoader.getAudio("WAV",
 					ResourceLoader.getResourceAsStream("resources/sounds/loop003-jungle.wav"));
@@ -82,6 +90,16 @@ public class Sound {
 			int i = random.nextInt(3);
 			hitSounds[i].playAsSoundEffect(1.0f,  1.0f,  false);
 		}
+	}
+	
+	public void playPointsPowerup() {
+		if(isEnabled)
+			pointsPowerupSound.playAsSoundEffect(1.0f, 0.5f, false);
+	}
+	
+	public void playDeath() {
+		if(isEnabled)
+			deathSound.playAsSoundEffect(1.0f, 1.0f, false);
 	}
 	
 	public void playMusic() {

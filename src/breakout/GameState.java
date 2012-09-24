@@ -178,6 +178,7 @@ public class GameState implements IGameState {
 					Hud.get().addLives(-1);
 					spawnBall();
 				}
+				Sound.get().playDeath();
 			}
 		}
 
@@ -261,6 +262,7 @@ public class GameState implements IGameState {
 			break;
 		case GREEN_FACE:
 			spawnParticles(coin);
+			Sound.get().playPointsPowerup();
 			break;
 		default:
 			break;
