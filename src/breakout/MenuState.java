@@ -28,6 +28,7 @@ import engine.IGameState;
 public class MenuState implements IGameState {
 	public static final String name = "MENU_STATE";
 
+	private Texture logoTexture;
 	private Texture cursorTexture;
 	private Font font;
 
@@ -43,7 +44,7 @@ public class MenuState implements IGameState {
 	private SELECTION currentSelection;
 	private boolean isKeyPressed;
 	private float highlightColor;
-	private float highLightColorDelta;
+	private float highlightColorDelta;
 
 	@Override
 	public String getName() {
@@ -53,6 +54,8 @@ public class MenuState implements IGameState {
 	@Override
 	public void init() {
 		try {
+			logoTexture = TextureLoader.getTexture("PNG", ResourceLoader
+					.getResourceAsStream("resources/images/logo.png"));
 			cursorTexture = TextureLoader.getTexture("PNG", ResourceLoader
 					.getResourceAsStream("resources/images/tux.png"));
 		} catch (IOException e) {
@@ -64,7 +67,7 @@ public class MenuState implements IGameState {
 		currentSelection = SELECTION.START;
 		isKeyPressed = false;
 		highlightColor = 1.0f;
-		highLightColorDelta = -1.0f;
+		highlightColorDelta = -1.0f;
 	}
 
 	@Override
@@ -99,6 +102,26 @@ public class MenuState implements IGameState {
 			break;
 		}
 		renderCursor();
+		renderLogo();
+	}
+	
+	public void renderLogo() {
+		float width = Display.getWidth() / 2;
+		float height = Display.getHeight() / 10;
+		float x = Display.getWidth() * 0.01f;
+		float y = Display.getHeight() * 0.85f;
+		logoTexture.bind();
+		glColor3f(1.0f, 1.0f, 1.0f);
+		glBegin(GL_QUADS);
+		glTexCoord2f(0.0f, logoTexture.getHeight());
+		glVertex2f(x, y);
+		glTexCoord2f(logoTexture.getWidth(), logoTexture.getHeight());
+		glVertex2f(x + width, y);
+		glTexCoord2f(logoTexture.getWidth(), 0.0f);
+		glVertex2f(x + width, y + height);
+		glTexCoord2f(0.0f, 0.0f);
+		glVertex2f(x, y + height);
+		glEnd();
 	}
 
 	public void renderCursor() {
@@ -258,9 +281,9 @@ public class MenuState implements IGameState {
 	}
 
 	private void updateHighlightColor(float delta) {
-		float newColor = highlightColor + highLightColorDelta * delta / 200;
+		float newColor = highlightColor + highlightColorDelta * delta / 200;
 		if (newColor < 0.0f || newColor > 1.0f) {
-			highLightColorDelta = -highLightColorDelta;
+			highlightColorDelta = -highlightColorDelta;
 		} else {
 			highlightColor = newColor;
 		}
