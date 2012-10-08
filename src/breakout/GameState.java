@@ -30,6 +30,7 @@ import breakout.Block.BlockState;
 import breakout.Block.BlockType;
 import engine.Game;
 import engine.IGameState;
+import engine.Lights;
 import engine.Texts;
 
 public class GameState implements IGameState {
@@ -45,7 +46,7 @@ public class GameState implements IGameState {
 	private Texture[] coinTextures;
 	private Texts texts;
 
-	// private Lights lights;
+	//private Lights lights;
 
 	@Override
 	public String getName() {
@@ -60,11 +61,11 @@ public class GameState implements IGameState {
 			e.printStackTrace();
 		}
 
-		// lights = new Lights();
+		//lights = new Lights();
 		paddle = new Paddle(100, 10, Display.getWidth() / 6,
 				Display.getHeight() / 20);
 		balls = new ArrayList<Ball>();
-		blocks = LevelLoader.load("resources/levels/level-skvincha2.txt", Hud.height);
+		blocks = LevelLoader.load("resources/levels/level1-1.txt", Hud.height);
 		particles = new ArrayList<Particles>();
 		coins = new ArrayList<Coin>();
 		texts = new Texts();
@@ -183,7 +184,7 @@ public class GameState implements IGameState {
 		}
 
 		// update light
-		// lights.update(paddle, balls);
+		//lights.update(paddle, balls);
 
 		// update blocks
 		for (int i = 0; i < blocks.size(); i++) {

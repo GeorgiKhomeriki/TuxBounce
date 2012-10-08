@@ -64,11 +64,12 @@ public class Lights {
 	}
 
 	private void initLightArrays() {
+		float z = 50.0f;
 		matSpecular = BufferUtils.createFloatBuffer(4);
 		matSpecular.put(1.0f).put(1.0f).put(1.0f).put(1.0f).flip();
 		lightPosition = BufferUtils.createFloatBuffer(4);
 		lightPosition.put(Display.getWidth() / 2.0f)
-				.put(Display.getHeight() / 2.0f).put(50.0f).put(1.0f).flip();
+				.put(Display.getHeight() / 2.0f).put(z).put(1.0f).flip();
 		whiteLight = BufferUtils.createFloatBuffer(4);
 		whiteLight.put(1.0f).put(1.0f).put(1.0f).put(1.0f).flip();
 		lModelAmbient = BufferUtils.createFloatBuffer(4);
