@@ -14,6 +14,7 @@ import static org.lwjgl.opengl.GL11.glVertex2f;
 import java.io.IOException;
 
 import org.lwjgl.input.Keyboard;
+import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.newdawn.slick.openal.SoundStore;
 import org.newdawn.slick.opengl.Texture;
@@ -108,7 +109,7 @@ public class MenuState implements IGameState {
 		renderCursor();
 		renderLogo();
 	}
-	
+
 	public void renderBg() {
 		bgTexture.bind();
 		glColor3f(1.0f, 1.0f, 1.0f);
@@ -123,7 +124,7 @@ public class MenuState implements IGameState {
 		glVertex2f(0.0f, Display.getHeight());
 		glEnd();
 	}
-	
+
 	public void renderLogo() {
 		float width = Display.getWidth() / 2;
 		float height = Display.getHeight() / 10;
@@ -238,6 +239,7 @@ public class MenuState implements IGameState {
 	}
 
 	private void updateMain(float delta) {
+		// check keyboard input
 		boolean downPressed = Keyboard.isKeyDown(Keyboard.KEY_DOWN);
 		boolean upPressed = Keyboard.isKeyDown(Keyboard.KEY_UP);
 		if (!isKeyPressed) {
@@ -249,6 +251,27 @@ public class MenuState implements IGameState {
 			}
 		} else if (!downPressed && !upPressed) {
 			isKeyPressed = false;
+		}
+
+		// check mouse input
+		if (Mouse.getDX() != 0 || Mouse.getDY() != 0) {
+			float x = Mouse.getX();
+			if (x > Display.getWidth() / 2.0f
+					&& x < Display.getWidth() / 2.0f + 7
+							* font.getCharacterWidth()) {
+				checkMouseSelectionY();
+			}
+		}
+	}
+
+	private void checkMouseSelectionY() {
+		float y = Mouse.getY();
+		for (SELECTION selection : SELECTION.values()) {
+			if (y > getSelectionY(selection)
+					&& y < getSelectionY(selection) + font.getCharacterHeight()) {
+				currentSelection = selection;
+				break;
+			}
 		}
 	}
 

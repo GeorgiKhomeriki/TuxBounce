@@ -57,4 +57,12 @@ public class Font {
 		}
 	}
 	
+	public float getCharacterWidth() {
+		return Display.getWidth() / widthScale;
+	}
+	
+	public float getCharacterHeight() {
+		return Display.getHeight() / heightScale;
+	}
+	
 }
