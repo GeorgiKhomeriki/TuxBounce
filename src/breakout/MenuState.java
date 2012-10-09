@@ -28,6 +28,7 @@ import engine.IGameState;
 public class MenuState implements IGameState {
 	public static final String name = "MENU_STATE";
 
+	private Texture bgTexture;
 	private Texture logoTexture;
 	private Texture cursorTexture;
 	private Font font;
@@ -54,6 +55,8 @@ public class MenuState implements IGameState {
 	@Override
 	public void init() {
 		try {
+			bgTexture = TextureLoader.getTexture("JPG", ResourceLoader
+					.getResourceAsStream("resources/images/menu-bg.jpg"));
 			logoTexture = TextureLoader.getTexture("PNG", ResourceLoader
 					.getResourceAsStream("resources/images/logo.png"));
 			cursorTexture = TextureLoader.getTexture("PNG", ResourceLoader
@@ -85,6 +88,7 @@ public class MenuState implements IGameState {
 		glLoadIdentity();
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+		renderBg();
 		switch (currentMenu) {
 		case MAIN:
 			renderMain();
@@ -103,6 +107,21 @@ public class MenuState implements IGameState {
 		}
 		renderCursor();
 		renderLogo();
+	}
+	
+	public void renderBg() {
+		bgTexture.bind();
+		glColor3f(1.0f, 1.0f, 1.0f);
+		glBegin(GL_QUADS);
+		glTexCoord2f(0.0f, bgTexture.getHeight());
+		glVertex2f(0.0f, 0.0f);
+		glTexCoord2f(bgTexture.getWidth(), bgTexture.getHeight());
+		glVertex2f(Display.getWidth(), 0.0f);
+		glTexCoord2f(bgTexture.getWidth(), 0.0f);
+		glVertex2f(Display.getWidth(), Display.getHeight());
+		glTexCoord2f(0.0f, 0.0f);
+		glVertex2f(0.0f, Display.getHeight());
+		glEnd();
 	}
 	
 	public void renderLogo() {

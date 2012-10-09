@@ -60,8 +60,8 @@ public class Game extends AbstractGame {
 		if(instance == null) {
 			//instance = new Game("Tux Bounce", 1920, 1200, true);
 			//instance = new Game("Tux Bounce", 1440, 900, true);
-			//instance = new Game("Awesome BreakOut", 1024, 768, false);
-			instance = new Game("Awesome BreakOut", 800, 600, false);
+			instance = new Game("Awesome BreakOut", 1024, 768, false);
+			//instance = new Game("Awesome BreakOut", 800, 600, false);
 			//instance = new Game("Awesome BreakOut", 640, 480, false);
 		}
 		return instance;
