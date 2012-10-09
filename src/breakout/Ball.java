@@ -27,6 +27,7 @@ public class Ball {
 	private float x;
 	private float y;
 	private float r;
+	private float hitR;
 	private float dx;
 	private float dy;
 	private Texture texture;
@@ -41,6 +42,7 @@ public class Ball {
 		this.x = x;
 		this.y = y;
 		this.r = r;
+		this.hitR = 0.45f * r;
 		this.dx = dx;
 		this.dy = dy;
 		this.sticky = true;
@@ -86,7 +88,7 @@ public class Ball {
 		} else {
 			long time = Timer.getTime();
 			if (time - debounceStartTimeX > DEBOUNCE_TIME
-					&& (x - 0.5f * r < 0 || x + 0.5f * r > Display.getWidth())) {
+					&& (x - 0.5f * hitR < 0 || x + 0.5f * hitR > Display.getWidth())) {
 				dx = -dx;
 				debounceStartTimeX = Timer.getTime();
 			}
@@ -96,7 +98,7 @@ public class Ball {
 					dy = -dy;
 					debounceStartTimeY = time;
 				}
-				if (y - 0.5f * r <= paddle.getY() + paddle.getHeight()
+				if (y - 0.5f * hitR <= paddle.getY() + paddle.getHeight()
 						&& y > paddle.getY() && x > paddle.getX()
 						&& x < paddle.getX() + paddle.getWidth()) {
 					dx = (x - (paddle.getX() + 0.5f * paddle.getWidth())) * 3.0f;
@@ -115,14 +117,14 @@ public class Ball {
 
 	public void bounce(Block block) {
 		if (Timer.getTime() - debounceStartTimeX > DEBOUNCE_TIME
-				&& (block.getX() < x + 0.5f * r || block.getX() + Block.width > x
-						- 0.5f * r)) {
+				&& (block.getX() < x + 0.5f * hitR || block.getX() + Block.width > x
+						- 0.5f * hitR)) {
 			dx = -dx;
 			debounceStartTimeX = Timer.getTime();
 		}
 		if (Timer.getTime() - debounceStartTimeY > DEBOUNCE_TIME
-				&& (block.getY() - Block.height < y + 0.5f * r || block.getY() > y
-						- 0.5f * r)) {
+				&& (block.getY() - Block.height < y + 0.5f * hitR || block.getY() > y
+						- 0.5f * hitR)) {
 			dy = -dy;
 			debounceStartTimeY = Timer.getTime();
 		}
@@ -158,6 +160,14 @@ public class Ball {
 
 	public void setR(float r) {
 		this.r = r;
+	}
+
+	public float getHitR() {
+		return hitR;
+	}
+
+	public void setHitR(float hitR) {
+		this.hitR = hitR;
 	}
 
 }
