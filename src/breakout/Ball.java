@@ -42,7 +42,7 @@ public class Ball {
 		this.x = x;
 		this.y = y;
 		this.r = r;
-		this.hitR = 0.45f * r;
+		this.hitR = 0.5f * r;
 		this.dx = dx;
 		this.dy = dy;
 		this.sticky = true;
