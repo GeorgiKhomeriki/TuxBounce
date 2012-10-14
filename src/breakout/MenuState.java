@@ -65,7 +65,7 @@ public class MenuState implements IGameState {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
+		
 		font = new Font("resources/fonts/kromasky_16x16.png", 59, 16);
 		currentMenu = MENU.MAIN;
 		currentSelection = SELECTION.START;
@@ -252,25 +252,25 @@ public class MenuState implements IGameState {
 		} else if (!downPressed && !upPressed) {
 			isKeyPressed = false;
 		}
-
+		
 		// check mouse input
+		checkMouseSelection();
+	}
+
+	private void checkMouseSelection() {
 		if (Mouse.getDX() != 0 || Mouse.getDY() != 0) {
 			float x = Mouse.getX();
 			if (x > Display.getWidth() / 2.0f
 					&& x < Display.getWidth() / 2.0f + 7
 							* font.getCharacterWidth()) {
-				checkMouseSelectionY();
-			}
-		}
-	}
-
-	private void checkMouseSelectionY() {
-		float y = Mouse.getY();
-		for (SELECTION selection : SELECTION.values()) {
-			if (y > getSelectionY(selection)
-					&& y < getSelectionY(selection) + font.getCharacterHeight()) {
-				currentSelection = selection;
-				break;
+				float y = Mouse.getY();
+				for (SELECTION selection : SELECTION.values()) {
+					if (y > getSelectionY(selection)
+							&& y < getSelectionY(selection) + font.getCharacterHeight()) {
+						currentSelection = selection;
+						break;
+					}
+				}
 			}
 		}
 	}
@@ -291,7 +291,7 @@ public class MenuState implements IGameState {
 	}
 
 	private void doMainSelectionAction() {
-		if (Keyboard.isKeyDown(Keyboard.KEY_RETURN)) {
+		if (Keyboard.isKeyDown(Keyboard.KEY_RETURN) || Mouse.isButtonDown(0)) {
 			Sound.get().playAccept();
 			switch (currentSelection) {
 			case START:

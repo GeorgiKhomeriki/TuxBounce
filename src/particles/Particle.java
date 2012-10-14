@@ -84,7 +84,7 @@ public class Particle {
 	}
 
 	public boolean hasHitPaddle(Paddle paddle) {
-		return x < paddle.getX() + paddle.getWidth()
+		return dy < 0.0f && x < paddle.getX() + paddle.getWidth()
 				&& x + width > paddle.getX()
 				&& y - height < paddle.getY() + paddle.getHeight()
 				&& y > paddle.getHeight();

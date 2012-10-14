@@ -1,7 +1,3 @@
-sticky ball timer - DONE
-only extra ball when none already - DONE
-ball speedup - DONE
-add bounce effect to paddle - DONE
 fix timing mistake
 show powerup description text
 levels / worlds
