@@ -65,7 +65,7 @@ public class MenuState implements IGameState {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 		font = new Font("resources/fonts/kromasky_16x16.png", 59, 16);
 		currentMenu = MENU.MAIN;
 		currentSelection = SELECTION.START;
@@ -252,7 +252,7 @@ public class MenuState implements IGameState {
 		} else if (!downPressed && !upPressed) {
 			isKeyPressed = false;
 		}
-		
+
 		// check mouse input
 		checkMouseSelection();
 	}
@@ -265,8 +265,11 @@ public class MenuState implements IGameState {
 							* font.getCharacterWidth()) {
 				float y = Mouse.getY();
 				for (SELECTION selection : SELECTION.values()) {
-					if (y > getSelectionY(selection)
-							&& y < getSelectionY(selection) + font.getCharacterHeight()) {
+					if (!currentSelection.equals(selection)
+							&& y > getSelectionY(selection)
+							&& y < getSelectionY(selection)
+									+ font.getCharacterHeight()) {
+						Sound.get().playCursor();
 						currentSelection = selection;
 						break;
 					}
