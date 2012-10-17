@@ -3,7 +3,6 @@ package main;
 import org.lwjgl.LWJGLException;
 
 import sound.Sound;
-
 import breakout.GameState;
 import breakout.MenuState;
 import engine.Game;

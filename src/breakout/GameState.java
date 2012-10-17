@@ -30,7 +30,6 @@ import breakout.Block.BlockState;
 import breakout.Block.BlockType;
 import engine.Game;
 import engine.IGameState;
-import engine.Lights;
 import engine.Texts;
 
 public class GameState implements IGameState {
@@ -241,7 +240,7 @@ public class GameState implements IGameState {
 		// check if escape is pressed
 		if (Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) {
 			Sound.get().playDecline();
-			Game.get().setCurrentState(MenuState.name);
+			Game.get().setCurrentState(MenuState2.name);
 		}
 
 		// polling is required to allow streaming to get a chance to queue
