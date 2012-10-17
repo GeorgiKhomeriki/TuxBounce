@@ -17,7 +17,7 @@ import breakout.GameState;
 import engine.Font;
 import engine.Game;
 
-public class MainMenu implements IMenu {
+public abstract class MainMenu implements IMenu {
 	private enum SELECTION {
 		START, OPTIONS, CREDITS, EXIT
 	}
@@ -37,6 +37,10 @@ public class MainMenu implements IMenu {
 		this.highlightColor = 1.0f;
 		this.highlightColorDelta = -1.0f;
 	}
+	
+	public abstract void showOptions();
+	
+	public abstract void showCredits();
 
 	@Override
 	public void start() {
@@ -113,13 +117,10 @@ public class MainMenu implements IMenu {
 	public void update(int delta) {
 		updateHighlightColor(delta);
 
-		// handle keyboard input
 		handleKeyboardInput();
 
-		// handle mouse input
 		handleMouseInput();
 
-		// handle selected action
 		handleSelectedAction();
 	}
 
@@ -166,8 +167,10 @@ public class MainMenu implements IMenu {
 				Game.get().setCurrentState(GameState.name);
 				break;
 			case OPTIONS:
+				showOptions();
 				break;
 			case CREDITS:
+				showCredits();
 				break;
 			case EXIT:
 				Game.get().requestShutdown();

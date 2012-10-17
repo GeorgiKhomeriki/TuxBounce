@@ -14,6 +14,8 @@ import static org.lwjgl.opengl.GL11.glVertex2f;
 import java.io.IOException;
 
 import menu.MainMenu;
+import menu.MenuModel;
+import menu.MenuModel.MENU;
 import menu.OptionsMenu;
 
 import org.lwjgl.opengl.Display;
@@ -28,11 +30,7 @@ import engine.IGameState;
 public class MenuState implements IGameState {
 	public static final String name = "MENU_STATE";
 
-	private enum MENU {
-		MAIN, OPTIONS, CREDITS, LEVEL_LIST
-	};
-
-	private MENU currentMenu;
+	private final MenuModel currentMenu = new MenuModel(MENU.MAIN);
 	private MainMenu mainMenu;
 	private OptionsMenu optionsMenu;
 	private Font font;
@@ -58,10 +56,29 @@ public class MenuState implements IGameState {
 			e.printStackTrace();
 		}
 		font = new Font("resources/fonts/kromasky_16x16.png", 59, 16);
-		
-		mainMenu = new MainMenu(font, cursorTexture);
-		optionsMenu = new OptionsMenu(font, cursorTexture);
-		currentMenu = MENU.OPTIONS;
+
+		initMenus();
+	}
+
+	private void initMenus() {
+		mainMenu = new MainMenu(font, cursorTexture) {
+			@Override
+			public void showOptions() {
+				currentMenu.set(MENU.OPTIONS);
+			}
+
+			@Override
+			public void showCredits() {
+				currentMenu.set(MENU.CREDITS);
+			}
+		};
+
+		optionsMenu = new OptionsMenu(font, cursorTexture) {
+			@Override
+			public void backToMainMenu() {
+				currentMenu.set(MENU.MAIN);
+			}
+		};
 	}
 
 	@Override
@@ -80,7 +97,7 @@ public class MenuState implements IGameState {
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		renderBg();
 		renderLogo();
-		switch (currentMenu) {
+		switch (currentMenu.get()) {
 		case MAIN:
 			mainMenu.render(delta);
 			break;
@@ -108,7 +125,7 @@ public class MenuState implements IGameState {
 		glVertex2f(0.0f, Display.getHeight());
 		glEnd();
 	}
-	
+
 	public void renderLogo() {
 		float width = Display.getWidth() / 2;
 		float height = Display.getHeight() / 10;
@@ -130,7 +147,7 @@ public class MenuState implements IGameState {
 
 	@Override
 	public void update(int delta) {
-		switch (currentMenu) {
+		switch (currentMenu.get()) {
 		case MAIN:
 			mainMenu.update(delta);
 			break;
