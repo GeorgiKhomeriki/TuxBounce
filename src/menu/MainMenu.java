@@ -1,24 +1,16 @@
 package menu;
 
-import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
-import static org.lwjgl.opengl.GL11.GL_DEPTH_BUFFER_BIT;
 import static org.lwjgl.opengl.GL11.GL_QUADS;
 import static org.lwjgl.opengl.GL11.glBegin;
-import static org.lwjgl.opengl.GL11.glClear;
 import static org.lwjgl.opengl.GL11.glColor3f;
 import static org.lwjgl.opengl.GL11.glEnd;
-import static org.lwjgl.opengl.GL11.glLoadIdentity;
 import static org.lwjgl.opengl.GL11.glTexCoord2f;
 import static org.lwjgl.opengl.GL11.glVertex2f;
-
-import java.io.IOException;
 
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.newdawn.slick.opengl.Texture;
-import org.newdawn.slick.opengl.TextureLoader;
-import org.newdawn.slick.util.ResourceLoader;
 
 import sound.Sound;
 import breakout.GameState;
@@ -30,8 +22,6 @@ public class MainMenu implements IMenu {
 		START, OPTIONS, CREDITS, EXIT
 	}
 
-	private Texture bgTexture;
-	private Texture logoTexture;
 	private Texture cursorTexture;
 	private Font font;
 	private SELECTION currentSelection;
@@ -39,23 +29,13 @@ public class MainMenu implements IMenu {
 	private float highlightColor;
 	private float highlightColorDelta;
 
-	public MainMenu() {
-		try {
-			bgTexture = TextureLoader.getTexture("JPG", ResourceLoader
-					.getResourceAsStream("resources/images/menu-bg.jpg"));
-			logoTexture = TextureLoader.getTexture("PNG", ResourceLoader
-					.getResourceAsStream("resources/images/logo.png"));
-			cursorTexture = TextureLoader.getTexture("PNG", ResourceLoader
-					.getResourceAsStream("resources/images/tux.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		font = new Font("resources/fonts/kromasky_16x16.png", 59, 16);
-		currentSelection = SELECTION.START;
-		isKeyPressed = false;
-		highlightColor = 1.0f;
-		highlightColorDelta = -1.0f;
+	public MainMenu(Font font, Texture cursorTexture) {
+		this.font = font;
+		this.cursorTexture = cursorTexture;
+		this.currentSelection = SELECTION.START;
+		this.isKeyPressed = false;
+		this.highlightColor = 1.0f;
+		this.highlightColorDelta = -1.0f;
 	}
 
 	@Override
@@ -70,11 +50,7 @@ public class MainMenu implements IMenu {
 
 	@Override
 	public void render(int delta) {
-		glLoadIdentity();
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		renderBg();
 		renderCursor();
-		renderLogo();
 		highlightSelection(SELECTION.START);
 		font.drawText("START", Display.getWidth() / 2.0f,
 				getSelectionY(SELECTION.START));
@@ -94,40 +70,6 @@ public class MainMenu implements IMenu {
 			glColor3f(1.0f, highlightColor, 0.0f);
 		else
 			glColor3f(1.0f, 1.0f, 1.0f);
-	}
-
-	public void renderBg() {
-		bgTexture.bind();
-		glColor3f(1.0f, 1.0f, 1.0f);
-		glBegin(GL_QUADS);
-		glTexCoord2f(0.0f, bgTexture.getHeight());
-		glVertex2f(0.0f, 0.0f);
-		glTexCoord2f(bgTexture.getWidth(), bgTexture.getHeight());
-		glVertex2f(Display.getWidth(), 0.0f);
-		glTexCoord2f(bgTexture.getWidth(), 0.0f);
-		glVertex2f(Display.getWidth(), Display.getHeight());
-		glTexCoord2f(0.0f, 0.0f);
-		glVertex2f(0.0f, Display.getHeight());
-		glEnd();
-	}
-
-	private void renderLogo() {
-		float width = Display.getWidth() / 2;
-		float height = Display.getHeight() / 10;
-		float x = Display.getWidth() * 0.01f;
-		float y = Display.getHeight() * 0.85f;
-		logoTexture.bind();
-		glColor3f(1.0f, 1.0f, 1.0f);
-		glBegin(GL_QUADS);
-		glTexCoord2f(0.0f, logoTexture.getHeight());
-		glVertex2f(x, y);
-		glTexCoord2f(logoTexture.getWidth(), logoTexture.getHeight());
-		glVertex2f(x + width, y);
-		glTexCoord2f(logoTexture.getWidth(), 0.0f);
-		glVertex2f(x + width, y + height);
-		glTexCoord2f(0.0f, 0.0f);
-		glVertex2f(x, y + height);
-		glEnd();
 	}
 
 	private void renderCursor() {
