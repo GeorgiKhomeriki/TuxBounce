@@ -301,8 +301,10 @@ public class MenuState implements IGameState {
 				Game.get().setCurrentState(GameState.name);
 				break;
 			case OPTIONS:
+				currentMenu = MENU.OPTIONS;
 				break;
 			case CREDITS:
+				currentMenu = MENU.CREDITS;
 				break;
 			case EXIT:
 				Game.get().requestShutdown();
