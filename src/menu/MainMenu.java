@@ -192,14 +192,18 @@ public abstract class MainMenu implements IMenu {
 
 	private SELECTION getNextSelection(SELECTION selection, boolean up) {
 		switch (selection) {
+		case CONTINUE:
+			return up ? SELECTION.EXIT : SELECTION.START;
 		case START:
-			return up ? SELECTION.EXIT : SELECTION.OPTIONS;
+			return up ? GameState.paused ? SELECTION.CONTINUE : SELECTION.EXIT
+					: SELECTION.OPTIONS;
 		case OPTIONS:
 			return up ? SELECTION.START : SELECTION.CREDITS;
 		case CREDITS:
 			return up ? SELECTION.OPTIONS : SELECTION.EXIT;
 		case EXIT:
-			return up ? SELECTION.CREDITS : SELECTION.START;
+			return up ? SELECTION.CREDITS
+					: GameState.paused ? SELECTION.CONTINUE : SELECTION.START;
 		default:
 			return SELECTION.START;
 		}
