@@ -3,16 +3,12 @@ show powerup description text
 levels / worlds
 win scenario
 lose scenario (game-over)
-main menu
-options menu
+options menu - change resolution bug
 credits
-sound effects
-music
 font edges bug
 edge bounce bug
 highscore
 light size resolution dependent
-no ambient light?
 document source?
 fix texture loading moments i.e. pre-load/re-use textures!
 remove printStacktraces!

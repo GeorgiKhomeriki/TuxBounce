@@ -23,7 +23,7 @@ public class Block {
 	public static final float height = Display.getHeight() / 15;
 
 	public enum BlockType {
-		RED, PURPLE, ORANGE, GREY_FACE, GREEN_FACE, BLUE_FACE, RED_FACE;
+		RED, PURPLE, ORANGE, GREY_FACE, GREEN_FACE, BLUE_FACE, RED_FACE, WALL, WALL_BROKEN;
 	}
 
 	public enum BlockState {
@@ -79,7 +79,11 @@ public class Block {
 	}
 
 	public void onHit() {
-		state = BlockState.DYING;
+		if(type.equals(BlockType.WALL)) {
+			setType(BlockType.WALL_BROKEN);
+		} else {
+			state = BlockState.DYING;
+		}
 		Sound.get().playHit();
 	}
 
@@ -122,5 +126,15 @@ public class Block {
 
 	public BlockType getType() {
 		return type;
+	}
+	
+	public void setType(BlockType type) {
+		this.type = type;
+		try {
+			texture = TextureLoader.getTexture("PNG", ResourceLoader
+					.getResourceAsStream(LevelLoader.getTexture(type)));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }

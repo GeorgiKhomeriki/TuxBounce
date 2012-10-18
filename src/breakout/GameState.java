@@ -189,9 +189,11 @@ public class GameState implements IGameState {
 		for (int i = 0; i < blocks.size(); i++) {
 			Block block = blocks.get(i);
 			if (block.getState().equals(BlockState.ALIVE) && block.isHit(balls)) {
+				if(!block.getType().equals(BlockType.WALL)) {
+					spawnParticles(block);
+					spawnCoin(block);
+				}
 				block.onHit();
-				spawnParticles(block);
-				spawnCoin(block);
 			} else if (block.getState().equals(BlockState.DEAD)) {
 				blocks.remove(block);
 				i--;

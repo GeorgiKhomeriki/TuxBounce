@@ -55,6 +55,8 @@ public class LevelLoader {
 			return BlockType.BLUE_FACE;
 		case 7:
 			return BlockType.RED_FACE;
+		case 8:
+			return BlockType.WALL;
 		default:
 			return null;
 		}
@@ -77,6 +79,10 @@ public class LevelLoader {
 			return baseDir + "blockFaceBlue.png";
 		case RED_FACE:
 			return baseDir + "blockFaceRed.png";
+		case WALL:
+			return baseDir + "blockWall1.png";
+		case WALL_BROKEN:
+			return baseDir + "blockWall2.png";
 		default:
 			return null;
 		}
