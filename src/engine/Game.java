@@ -56,11 +56,21 @@ public class Game extends AbstractGame {
 		System.err.println("State not found : " + name);
 	}
 	
+	public void reinit(String name) {
+		for(IGameState state : states) {
+			if(name.equals(state.getName())) {
+				state.init();
+				return;
+			}
+		}
+		System.err.println("State not found : " + name);
+	}
+	
 	public static Game get() {
 		if(instance == null) {
 			//instance = new Game("Tux Bounce", 1920, 1200, true);
-			//instance = new Game("Tux Bounce", 1440, 900, true);
-			instance = new Game("Tux Bounce", 1024, 768, false);
+			instance = new Game("Tux Bounce", 1440, 900, true);
+			//instance = new Game("Tux Bounce", 1024, 768, false);
 			//instance = new Game("Tux Bounce", 800, 600, false);
 			//instance = new Game("Tux Bounce", 640, 480, false);
 		}

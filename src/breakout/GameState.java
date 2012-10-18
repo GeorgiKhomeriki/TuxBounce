@@ -35,7 +35,9 @@ import engine.Texts;
 public class GameState implements IGameState {
 
 	public static final String name = "STATE_GAME";
-
+	
+	public static boolean paused = false;
+	
 	private Texture bgTexture;
 	private Paddle paddle;
 	private List<Ball> balls;
@@ -87,6 +89,7 @@ public class GameState implements IGameState {
 
 	@Override
 	public void start() {
+		GameState.paused = false;
 		Sound.get().playMusic();
 	}
 
@@ -241,6 +244,7 @@ public class GameState implements IGameState {
 
 		// check if escape is pressed
 		if (Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) {
+			GameState.paused = true;
 			Sound.get().playDecline();
 			Game.get().setCurrentState(MenuState.name);
 		}

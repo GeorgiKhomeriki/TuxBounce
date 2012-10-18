@@ -20,6 +20,7 @@ import menu.MenuModel.MENU;
 import menu.OptionsMenu;
 
 import org.lwjgl.opengl.Display;
+import org.newdawn.slick.openal.SoundStore;
 import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;
 import org.newdawn.slick.util.ResourceLoader;
@@ -170,6 +171,10 @@ public class MenuState implements IGameState {
 		default:
 			break;
 		}
+		
+		// polling is required to allow streaming to get a chance to queue
+		// buffers.
+		SoundStore.get().poll(0);
 	}
 
 }

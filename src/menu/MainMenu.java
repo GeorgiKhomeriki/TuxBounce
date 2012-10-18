@@ -19,7 +19,7 @@ import engine.Game;
 
 public abstract class MainMenu implements IMenu {
 	private enum SELECTION {
-		START, OPTIONS, CREDITS, EXIT
+		CONTINUE, START, OPTIONS, CREDITS, EXIT
 	}
 
 	private Texture cursorTexture;
@@ -45,6 +45,11 @@ public abstract class MainMenu implements IMenu {
 	@Override
 	public void render(int delta) {
 		renderCursor();
+		if (GameState.paused) {
+			highlightSelection(SELECTION.CONTINUE);
+			font.drawText("CONTINUE", Display.getWidth() / 2.0f,
+					getSelectionY(SELECTION.CONTINUE));
+		}
 		highlightSelection(SELECTION.START);
 		font.drawText("START", Display.getWidth() / 2.0f,
 				getSelectionY(SELECTION.START));
@@ -88,6 +93,9 @@ public abstract class MainMenu implements IMenu {
 	private float getSelectionY(SELECTION selection) {
 		float y = Display.getHeight() * 0.5f;
 		switch (selection) {
+		case CONTINUE:
+			y += Display.getHeight() / 16.0f;
+			break;
 		case OPTIONS:
 			y -= Display.getHeight() / 16.0f;
 			break;
@@ -133,7 +141,8 @@ public abstract class MainMenu implements IMenu {
 		if (Mouse.getDX() != 0 || Mouse.getDY() != 0) {
 			for (SELECTION selection : SELECTION.values()) {
 				if (!currentSelection.equals(selection)
-						&& isMouseOnSelection(selection)) {
+						&& isMouseOnSelection(selection)
+						&& (!selection.equals(SELECTION.CONTINUE) || GameState.paused)) {
 					Sound.get().playCursor();
 					currentSelection = selection;
 					break;
@@ -159,7 +168,11 @@ public abstract class MainMenu implements IMenu {
 			isKeyPressed = true;
 			Sound.get().playAccept();
 			switch (currentSelection) {
+			case CONTINUE:
+				Game.get().setCurrentState(GameState.name);
+				break;
 			case START:
+				Game.get().reinit(GameState.name);
 				Game.get().setCurrentState(GameState.name);
 				break;
 			case OPTIONS:
