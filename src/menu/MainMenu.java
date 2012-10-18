@@ -43,16 +43,6 @@ public abstract class MainMenu implements IMenu {
 	public abstract void showCredits();
 
 	@Override
-	public void start() {
-
-	}
-
-	@Override
-	public void stop() {
-
-	}
-
-	@Override
 	public void render(int delta) {
 		renderCursor();
 		highlightSelection(SELECTION.START);

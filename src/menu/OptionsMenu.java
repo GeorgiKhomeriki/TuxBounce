@@ -39,28 +39,34 @@ public abstract class OptionsMenu implements IMenu {
 	public abstract void backToMainMenu();
 
 	@Override
-	public void start() {
-
-	}
-
-	@Override
-	public void stop() {
-
-	}
-
-	@Override
 	public void render(int delta) {
+		renderOptions();
+		renderValues();
+		renderCursor();
+	}
+
+	private void renderOptions() {
 		float x = 0.1f * Display.getWidth();
 		highlightSelection(SELECTION.RESOLUTION);
-		font.drawText("RESOLUTION", x, getSelectionY(SELECTION.RESOLUTION));
+		font.drawText("RESOLUTION:", x, getSelectionY(SELECTION.RESOLUTION));
 		highlightSelection(SELECTION.FULLSCREEN);
-		font.drawText("FULLSCREEN", x, getSelectionY(SELECTION.FULLSCREEN));
+		font.drawText("FULLSCREEN:", x, getSelectionY(SELECTION.FULLSCREEN));
 		highlightSelection(SELECTION.SOUND);
-		font.drawText("SOUND", x, getSelectionY(SELECTION.SOUND));
+		font.drawText("SOUND:", x, getSelectionY(SELECTION.SOUND));
 		highlightSelection(SELECTION.BACK);
 		font.drawText("BACK", x, getSelectionY(SELECTION.BACK));
+	}
 
-		renderCursor();
+	private void renderValues() {
+		glColor3f(1.0f, 1.0f, 1.0f);
+		float x = 0.5f * Display.getWidth();
+		String resolution = Display.getWidth() + "X"
+				+ Display.getHeight();
+		font.drawText(resolution, x, getSelectionY(SELECTION.RESOLUTION));
+		String fullscreen = Boolean.toString(Display.isFullscreen()).toUpperCase();
+		font.drawText(fullscreen, x, getSelectionY(SELECTION.FULLSCREEN));
+		String sound = Boolean.toString(Sound.get().isEnabled()).toUpperCase();
+		font.drawText(sound, x, getSelectionY(SELECTION.SOUND));
 	}
 
 	private void highlightSelection(SELECTION selection) {

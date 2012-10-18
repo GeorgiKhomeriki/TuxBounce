@@ -120,6 +120,10 @@ public class Sound {
 		menuMusic.stop();
 	}
 	
+	public boolean isEnabled() {
+		return isEnabled;
+	}
+	
 	public void setEnabled(boolean enable) {
 		isEnabled = enable;
 	}

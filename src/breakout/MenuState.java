@@ -13,6 +13,7 @@ import static org.lwjgl.opengl.GL11.glVertex2f;
 
 import java.io.IOException;
 
+import menu.CreditsMenu;
 import menu.MainMenu;
 import menu.MenuModel;
 import menu.MenuModel.MENU;
@@ -33,6 +34,7 @@ public class MenuState implements IGameState {
 	private final MenuModel currentMenu = new MenuModel(MENU.MAIN);
 	private MainMenu mainMenu;
 	private OptionsMenu optionsMenu;
+	private CreditsMenu creditsMenu;
 	private Font font;
 	private Texture bgTexture;
 	private Texture logoTexture;
@@ -79,6 +81,13 @@ public class MenuState implements IGameState {
 				currentMenu.set(MENU.MAIN);
 			}
 		};
+		
+		creditsMenu = new CreditsMenu(font, cursorTexture) {
+			@Override
+			public void backToMainMenu() {
+				currentMenu.set(MENU.MAIN);
+			}
+		};
 	}
 
 	@Override
@@ -105,6 +114,7 @@ public class MenuState implements IGameState {
 			optionsMenu.render(delta);
 			break;
 		case CREDITS:
+			creditsMenu.render(delta);
 			break;
 		default:
 			break;
@@ -155,6 +165,7 @@ public class MenuState implements IGameState {
 			optionsMenu.update(delta);
 			break;
 		case CREDITS:
+			creditsMenu.update(delta);
 			break;
 		default:
 			break;
