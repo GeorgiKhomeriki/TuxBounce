@@ -37,9 +37,9 @@ public abstract class MainMenu implements IMenu {
 		this.highlightColor = 1.0f;
 		this.highlightColorDelta = -1.0f;
 	}
-	
+
 	public abstract void showOptions();
-	
+
 	public abstract void showCredits();
 
 	@Override
@@ -117,40 +117,46 @@ public abstract class MainMenu implements IMenu {
 	private void handleKeyboardInput() {
 		boolean downPressed = Keyboard.isKeyDown(Keyboard.KEY_DOWN);
 		boolean upPressed = Keyboard.isKeyDown(Keyboard.KEY_UP);
+		boolean returnPressed = Keyboard.isKeyDown(Keyboard.KEY_RETURN);
 		if (!isKeyPressed) {
 			if (downPressed || upPressed) {
 				currentSelection = getNextSelection(currentSelection, upPressed);
 				isKeyPressed = true;
 				Sound.get().playCursor();
 			}
-		} else if (!downPressed && !upPressed) {
+		} else if (!downPressed && !upPressed && !returnPressed) {
 			isKeyPressed = false;
 		}
 	}
 
 	private void handleMouseInput() {
 		if (Mouse.getDX() != 0 || Mouse.getDY() != 0) {
-			float x = Mouse.getX();
-			if (x > Display.getWidth() / 2.0f
-					&& x < Display.getWidth() / 2.0f + 7
-							* font.getCharacterWidth()) {
-				float y = Mouse.getY();
-				for (SELECTION selection : SELECTION.values()) {
-					if (!currentSelection.equals(selection)
-							&& y > getSelectionY(selection)
-							&& y < getSelectionY(selection)
-									+ font.getCharacterHeight()) {
-						Sound.get().playCursor();
-						currentSelection = selection;
-						break;
-					}
+			for (SELECTION selection : SELECTION.values()) {
+				if (!currentSelection.equals(selection)
+						&& isMouseOnSelection(selection)) {
+					Sound.get().playCursor();
+					currentSelection = selection;
+					break;
 				}
 			}
 		}
 	}
 
+	private boolean isMouseOnSelection(SELECTION selection) {
+		float x = Mouse.getX();
+		float y = Mouse.getY();
+		return x > Display.getWidth() / 2.0f
+				&& x < Display.getWidth() / 2.0f + 7 * font.getCharacterWidth()
+				&& y > getSelectionY(selection)
+				&& y < getSelectionY(selection) + font.getCharacterHeight();
+	}
+
 	private void handleSelectedAction() {
-		if (Keyboard.isKeyDown(Keyboard.KEY_RETURN) || Mouse.isButtonDown(0)) {
+		if (!isKeyPressed
+				&& (Keyboard.isKeyDown(Keyboard.KEY_RETURN) || Mouse
+						.isButtonDown(0)
+						&& isMouseOnSelection(currentSelection))) {
+			isKeyPressed = true;
 			Sound.get().playAccept();
 			switch (currentSelection) {
 			case START:

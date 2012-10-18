@@ -7,6 +7,7 @@ import static org.lwjgl.opengl.GL11.glEnd;
 import static org.lwjgl.opengl.GL11.glTexCoord2f;
 import static org.lwjgl.opengl.GL11.glVertex2f;
 
+import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
@@ -60,10 +61,13 @@ public abstract class OptionsMenu implements IMenu {
 	private void renderValues() {
 		glColor3f(1.0f, 1.0f, 1.0f);
 		float x = 0.5f * Display.getWidth();
-		String resolution = Display.getWidth() + "X"
-				+ Display.getHeight();
+		String resolution = Display.getWidth() + "X" + Display.getHeight();
 		font.drawText(resolution, x, getSelectionY(SELECTION.RESOLUTION));
-		String fullscreen = Boolean.toString(Display.isFullscreen()).toUpperCase();
+		String fullscreen = Boolean.toString(Display.isFullscreen())
+				.toUpperCase();
+		if (!Display.getDisplayMode().isFullscreenCapable()) {
+			fullscreen = "CHANGE RES.";
+		}
 		font.drawText(fullscreen, x, getSelectionY(SELECTION.FULLSCREEN));
 		String sound = Boolean.toString(Sound.get().isEnabled()).toUpperCase();
 		font.drawText(sound, x, getSelectionY(SELECTION.SOUND));
@@ -127,47 +131,60 @@ public abstract class OptionsMenu implements IMenu {
 	private void handleKeyboardInput() {
 		boolean downPressed = Keyboard.isKeyDown(Keyboard.KEY_DOWN);
 		boolean upPressed = Keyboard.isKeyDown(Keyboard.KEY_UP);
+		boolean returnPressed = Keyboard.isKeyDown(Keyboard.KEY_RETURN);
 		if (!isKeyPressed) {
 			if (downPressed || upPressed) {
 				currentSelection = getNextSelection(currentSelection, upPressed);
 				isKeyPressed = true;
 				Sound.get().playCursor();
 			}
-		} else if (!downPressed && !upPressed) {
+		} else if (!downPressed && !upPressed && !returnPressed) {
 			isKeyPressed = false;
 		}
 	}
 
 	private void handleMouseInput() {
 		if (Mouse.getDX() != 0 || Mouse.getDY() != 0) {
-			float x = Mouse.getX();
-			if (x > 0.1f * Display.getWidth()
-					&& x < 0.1f * Display.getWidth() + 10
-							* font.getCharacterWidth()) {
-				float y = Mouse.getY();
-				for (SELECTION selection : SELECTION.values()) {
-					if (!currentSelection.equals(selection)
-							&& y > getSelectionY(selection)
-							&& y < getSelectionY(selection)
-									+ font.getCharacterHeight()) {
-						Sound.get().playCursor();
-						currentSelection = selection;
-						break;
-					}
+			for (SELECTION selection : SELECTION.values()) {
+				if (!currentSelection.equals(selection)
+						&& isMouseOnSelection(selection)) {
+					Sound.get().playCursor();
+					currentSelection = selection;
+					break;
 				}
 			}
 		}
 	}
 
+	private boolean isMouseOnSelection(SELECTION selection) {
+		float x = Mouse.getX();
+		float y = Mouse.getY();
+		return x > 0.1f * Display.getWidth()
+				&& x < 0.1f * Display.getWidth() + 10
+						* font.getCharacterWidth()
+				&& y > getSelectionY(selection)
+				&& y < getSelectionY(selection) + font.getCharacterHeight();
+	}
+
 	private void handleSelectedAction() {
-		if (Keyboard.isKeyDown(Keyboard.KEY_RETURN) || Mouse.isButtonDown(0)) {
+		if (!isKeyPressed && (Keyboard.isKeyDown(Keyboard.KEY_RETURN)
+				|| Mouse.isButtonDown(0)
+				&& isMouseOnSelection(currentSelection))) {
+			isKeyPressed = true;
 			Sound.get().playAccept();
 			switch (currentSelection) {
 			case RESOLUTION:
 				break;
 			case FULLSCREEN:
+				try {
+					if (Display.getDisplayMode().isFullscreenCapable())
+						Display.setFullscreen(!Display.isFullscreen());
+				} catch (LWJGLException e) {
+					e.printStackTrace();
+				}
 				break;
 			case SOUND:
+				Sound.get().setEnabled(!Sound.get().isEnabled());
 				break;
 			case BACK:
 				backToMainMenu();
