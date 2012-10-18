@@ -12,5 +12,4 @@ light size resolution dependent
 document source?
 fix texture loading moments i.e. pre-load/re-use textures!
 remove printStacktraces!
-pause - continue
 fix big delta bug

@@ -5,10 +5,10 @@ public class Text {
 	private float x;
 	private float y;
 	private int life;
-	private int age;
+	private float age;
 	private boolean infinite;
 	private boolean doFade;
-	
+
 	public Text(String text, float x, float y) {
 		this.text = text;
 		this.x = x;
@@ -25,15 +25,16 @@ public class Text {
 		this.infinite = false;
 		this.doFade = doFade;
 	}
-	
+
 	public void update(float delta) {
-		age++;
+		age += delta / 25.0f;
+		y += delta / 20.0f;
 	}
-	
+
 	public boolean isAlive() {
 		return infinite || age < life;
 	}
-	
+
 	public String getText() {
 		return text;
 	}
@@ -66,7 +67,7 @@ public class Text {
 		this.life = life;
 	}
 
-	public int getAge() {
+	public float getAge() {
 		return age;
 	}
 

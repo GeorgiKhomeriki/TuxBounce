@@ -13,6 +13,7 @@ import static org.lwjgl.opengl.GL11.glVertex2f;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
@@ -35,9 +36,9 @@ import engine.Texts;
 public class GameState implements IGameState {
 
 	public static final String name = "STATE_GAME";
-	
+
 	public static boolean paused = false;
-	
+
 	private Texture bgTexture;
 	private Paddle paddle;
 	private List<Ball> balls;
@@ -46,6 +47,7 @@ public class GameState implements IGameState {
 	private List<Coin> coins;
 	private Texture[] coinTextures;
 	private Texts texts;
+	private Random random;
 
 	// private Lights lights;
 
@@ -70,13 +72,14 @@ public class GameState implements IGameState {
 		particles = new ArrayList<Particles>();
 		coins = new ArrayList<Coin>();
 		texts = new Texts();
+		random = new Random();
 		spawnBall();
 	}
 
 	private void loadTextures() throws IOException {
 		bgTexture = TextureLoader.getTexture("PNG", ResourceLoader
 				.getResourceAsStream("resources/images/coldmountain.png"));
-		coinTextures = new Texture[4];
+		coinTextures = new Texture[5];
 		coinTextures[0] = TextureLoader.getTexture("PNG", ResourceLoader
 				.getResourceAsStream("resources/images/coinBlue.png"));
 		coinTextures[1] = TextureLoader.getTexture("PNG", ResourceLoader
@@ -85,6 +88,8 @@ public class GameState implements IGameState {
 				.getResourceAsStream("resources/images/coinGreen.png"));
 		coinTextures[3] = TextureLoader.getTexture("PNG", ResourceLoader
 				.getResourceAsStream("resources/images/coinGrey.png"));
+		coinTextures[4] = TextureLoader.getTexture("PNG", ResourceLoader
+				.getResourceAsStream("resources/images/coinPotion.png"));
 	}
 
 	@Override
@@ -192,7 +197,8 @@ public class GameState implements IGameState {
 		for (int i = 0; i < blocks.size(); i++) {
 			Block block = blocks.get(i);
 			if (block.getState().equals(BlockState.ALIVE) && block.isHit(balls)) {
-				if(!block.getType().equals(BlockType.WALL)) {
+				if (!block.getType().equals(BlockType.WALL)
+						&& !block.getType().equals(BlockType.BROWN_FACE)) {
 					spawnParticles(block);
 					spawnCoin(block);
 				}
@@ -257,18 +263,31 @@ public class GameState implements IGameState {
 	private void doPowerup(Coin coin) {
 		switch (coin.getType()) {
 		case GREY_FACE:
+			texts.add("MULTI TUX", coin.getX(), coin.getY(), 130, true);
 			spawnBall();
 			break;
 		case RED_FACE:
-			texts.add("1UP", coin.getX(), coin.getY(), 30, true);
+			texts.add("EXTRA LIFE", coin.getX(), coin.getY(), 130, true);
 			Hud.get().addLives(1);
 			break;
 		case BLUE_FACE:
-			paddle.setWidth(paddle.getWidth() + Display.getWidth() / 60.0f);
+			texts.add("LONGER PADDLE", coin.getX(), coin.getY(), 130, true);
+			paddle.setWidth(paddle.getWidth() + Display.getWidth() / 50.0f);
 			break;
 		case GREEN_FACE:
+			texts.add("POINT FRENZY", coin.getX(), coin.getY(), 130, true);
 			spawnParticles(coin);
 			Sound.get().playPointsPowerup();
+			break;
+		case BROWN_FACE_BROKEN:
+			texts.add("MAGIC POTION", coin.getX(), coin.getY(), 130, true);
+			for (Block b : blocks) {
+				if (random.nextFloat() < 0.2f) {
+					b.onHit();
+					spawnParticles(b);
+					spawnCoin(b);
+				}
+			}
 			break;
 		default:
 			break;
@@ -314,6 +333,10 @@ public class GameState implements IGameState {
 			break;
 		case GREY_FACE:
 			coins.add(new Coin(coinTextures[3], type, block.getX(), block
+					.getY(), Block.width, Block.height, 0.0f, -40.0f));
+			break;
+		case BROWN_FACE_BROKEN:
+			coins.add(new Coin(coinTextures[4], type, block.getX(), block
 					.getY(), Block.width, Block.height, 0.0f, -40.0f));
 			break;
 		default:

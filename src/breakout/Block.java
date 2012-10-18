@@ -23,7 +23,7 @@ public class Block {
 	public static final float height = Display.getHeight() / 15;
 
 	public enum BlockType {
-		RED, PURPLE, ORANGE, GREY_FACE, GREEN_FACE, BLUE_FACE, RED_FACE, WALL, WALL_BROKEN;
+		RED, PURPLE, ORANGE, GREY_FACE, GREEN_FACE, BLUE_FACE, RED_FACE, WALL, WALL_BROKEN, BROWN_FACE, BROWN_FACE_BROKEN;
 	}
 
 	public enum BlockState {
@@ -79,20 +79,26 @@ public class Block {
 	}
 
 	public void onHit() {
-		if(type.equals(BlockType.WALL)) {
+		switch (type) {
+		case WALL:
 			setType(BlockType.WALL_BROKEN);
-		} else {
+			break;
+		case BROWN_FACE:
+			setType(BlockType.BROWN_FACE_BROKEN);
+			break;
+		default:
 			state = BlockState.DYING;
+			break;
 		}
 		Sound.get().playHit();
 	}
 
 	public boolean isHit(List<Ball> balls) {
 		for (Ball ball : balls) {
-			if (x < ball.getX() + 0.5f*ball.getHitR() 
-					&& x + width > ball.getX() - 0.5f*ball.getHitR()
-					&& y - height < ball.getY() + 0.5f*ball.getHitR()
-					&& y > ball.getY() - 0.5f*ball.getHitR()) {
+			if (x < ball.getX() + 0.5f * ball.getHitR()
+					&& x + width > ball.getX() - 0.5f * ball.getHitR()
+					&& y - height < ball.getY() + 0.5f * ball.getHitR()
+					&& y > ball.getY() - 0.5f * ball.getHitR()) {
 				ball.bounce(this);
 				return true;
 			}
@@ -127,7 +133,7 @@ public class Block {
 	public BlockType getType() {
 		return type;
 	}
-	
+
 	public void setType(BlockType type) {
 		this.type = type;
 		try {
