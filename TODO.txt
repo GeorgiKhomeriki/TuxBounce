@@ -1,5 +1,4 @@
 fix timing mistake
-show powerup description text
 levels / worlds
 win scenario
 lose scenario (game-over)
@@ -9,7 +8,6 @@ font edges bug
 edge bounce bug
 highscore
 light size resolution dependent
-document source?
 fix texture loading moments i.e. pre-load/re-use textures!
 remove printStacktraces!
 fix big delta bug
