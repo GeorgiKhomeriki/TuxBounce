@@ -33,7 +33,7 @@ public abstract class MainMenu implements IMenu {
 		this.font = font;
 		this.cursorTexture = cursorTexture;
 		this.currentSelection = SELECTION.START;
-		this.isKeyPressed = false;
+		this.isKeyPressed = true;
 		this.highlightColor = 1.0f;
 		this.highlightColorDelta = -1.0f;
 	}

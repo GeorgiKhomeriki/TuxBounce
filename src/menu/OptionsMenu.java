@@ -11,9 +11,11 @@ import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
+import org.lwjgl.opengl.DisplayMode;
 import org.newdawn.slick.opengl.Texture;
 
 import sound.Sound;
+import util.Graphics;
 import engine.Font;
 
 public abstract class OptionsMenu implements IMenu {
@@ -32,7 +34,7 @@ public abstract class OptionsMenu implements IMenu {
 		this.font = font;
 		this.cursorTexture = cursorTexture;
 		this.currentSelection = SELECTION.RESOLUTION;
-		this.isKeyPressed = false;
+		this.isKeyPressed = true;
 		this.highlightColor = 1.0f;
 		this.highlightColorDelta = -1.0f;
 	}
@@ -58,26 +60,29 @@ public abstract class OptionsMenu implements IMenu {
 		font.drawText("BACK", x, getSelectionY(SELECTION.BACK));
 	}
 
-	private void renderValues() {
-		glColor3f(1.0f, 1.0f, 1.0f);
-		float x = 0.5f * Display.getWidth();
-		String resolution = Display.getWidth() + "X" + Display.getHeight();
-		font.drawText(resolution, x, getSelectionY(SELECTION.RESOLUTION));
-		String fullscreen = Boolean.toString(Display.isFullscreen())
-				.toUpperCase();
-		if (!Display.getDisplayMode().isFullscreenCapable()) {
-			fullscreen = "CHANGE RES.";
-		}
-		font.drawText(fullscreen, x, getSelectionY(SELECTION.FULLSCREEN));
-		String sound = Boolean.toString(Sound.get().isEnabled()).toUpperCase();
-		font.drawText(sound, x, getSelectionY(SELECTION.SOUND));
-	}
-
 	private void highlightSelection(SELECTION selection) {
 		if (currentSelection.equals(selection))
 			glColor3f(1.0f, highlightColor, 0.0f);
 		else
 			glColor3f(1.0f, 1.0f, 1.0f);
+	}
+
+	private void renderValues() {
+		glColor3f(1.0f, 1.0f, 1.0f);
+		float x = 0.5f * Display.getWidth();
+		String resolution = Display.getWidth() + "X" + Display.getHeight();
+		font.drawText(resolution, x, getSelectionY(SELECTION.RESOLUTION));
+		String fullscreen = booleanToString(Display.isFullscreen());
+		if (!Display.getDisplayMode().isFullscreenCapable()) {
+			fullscreen = "CHANGE RES.";
+		}
+		font.drawText(fullscreen, x, getSelectionY(SELECTION.FULLSCREEN));
+		String sound = booleanToString(Sound.get().isEnabled());
+		font.drawText(sound, x, getSelectionY(SELECTION.SOUND));
+	}
+
+	private String booleanToString(boolean b) {
+		return b ? "ON" : "OFF";
 	}
 
 	private void renderCursor() {
@@ -132,13 +137,15 @@ public abstract class OptionsMenu implements IMenu {
 		boolean downPressed = Keyboard.isKeyDown(Keyboard.KEY_DOWN);
 		boolean upPressed = Keyboard.isKeyDown(Keyboard.KEY_UP);
 		boolean returnPressed = Keyboard.isKeyDown(Keyboard.KEY_RETURN);
+		boolean mouseClicked = Mouse.isButtonDown(0);
 		if (!isKeyPressed) {
 			if (downPressed || upPressed) {
 				currentSelection = getNextSelection(currentSelection, upPressed);
 				isKeyPressed = true;
 				Sound.get().playCursor();
 			}
-		} else if (!downPressed && !upPressed && !returnPressed) {
+		} else if (!downPressed && !upPressed && !returnPressed
+				&& !mouseClicked) {
 			isKeyPressed = false;
 		}
 	}
@@ -167,13 +174,27 @@ public abstract class OptionsMenu implements IMenu {
 	}
 
 	private void handleSelectedAction() {
-		if (!isKeyPressed && (Keyboard.isKeyDown(Keyboard.KEY_RETURN)
-				|| Mouse.isButtonDown(0)
-				&& isMouseOnSelection(currentSelection))) {
+		if (!isKeyPressed
+				&& (Keyboard.isKeyDown(Keyboard.KEY_RETURN) || Mouse
+						.isButtonDown(0)
+						&& isMouseOnSelection(currentSelection))) {
 			isKeyPressed = true;
-			Sound.get().playAccept();
 			switch (currentSelection) {
 			case RESOLUTION:
+				try {
+					DisplayMode[] modes = Display.getAvailableDisplayModes();
+					for(int i = 0; i < modes.length; i++) {
+						if(Graphics.compareDisplayModes(modes[i], Display.getDisplayMode())) {
+							if(i+1 < modes.length)
+								Display.setDisplayMode(modes[i+1]);
+							else
+								Display.setDisplayMode(modes[0]);
+							break;
+						}
+					}
+				} catch (LWJGLException e1) {
+					e1.printStackTrace();
+				}
 				break;
 			case FULLSCREEN:
 				try {
@@ -192,6 +213,7 @@ public abstract class OptionsMenu implements IMenu {
 			default:
 				break;
 			}
+			Sound.get().playAccept();
 		}
 	}
 

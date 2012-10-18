@@ -23,6 +23,21 @@ public class Graphics {
 	}
 
 	/**
+	 * Compares two display modes.
+	 * 
+	 * @param d1
+	 *            DisplayMode one
+	 * @param d2
+	 *            DisplayMode two
+	 * @return true iff d1 equals d2
+	 */
+	public static boolean compareDisplayModes(DisplayMode d1, DisplayMode d2) {
+		return d1.getWidth() == d2.getWidth()
+				&& d1.getHeight() == d2.getHeight()
+				&& d1.getFrequency() == d2.getFrequency();
+	}
+
+	/**
 	 * Set the display mode to be used
 	 * 
 	 * @param width
