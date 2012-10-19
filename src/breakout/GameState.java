@@ -74,6 +74,7 @@ public class GameState implements IGameState {
 		texts = new Texts();
 		random = new Random();
 		spawnBall();
+		Hud.get().reset();
 	}
 
 	private void loadTextures() throws IOException {
