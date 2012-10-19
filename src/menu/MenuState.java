@@ -1,4 +1,4 @@
-package breakout;
+package menu;
 
 import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
 import static org.lwjgl.opengl.GL11.GL_DEPTH_BUFFER_BIT;
@@ -13,11 +13,7 @@ import static org.lwjgl.opengl.GL11.glVertex2f;
 
 import java.io.IOException;
 
-import menu.CreditsMenu;
-import menu.MainMenu;
-import menu.MenuModel;
 import menu.MenuModel.MENU;
-import menu.OptionsMenu;
 
 import org.lwjgl.opengl.Display;
 import org.newdawn.slick.openal.SoundStore;
@@ -82,7 +78,7 @@ public class MenuState implements IGameState {
 				currentMenu.set(MENU.MAIN);
 			}
 		};
-		
+
 		creditsMenu = new CreditsMenu(font, cursorTexture) {
 			@Override
 			public void backToMainMenu() {
@@ -171,7 +167,7 @@ public class MenuState implements IGameState {
 		default:
 			break;
 		}
-		
+
 		// polling is required to allow streaming to get a chance to queue
 		// buffers.
 		SoundStore.get().poll(0);

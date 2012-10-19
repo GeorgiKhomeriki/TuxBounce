@@ -1,10 +1,11 @@
 package main;
 
+import menu.MenuState;
+
 import org.lwjgl.LWJGLException;
 
 import sound.Sound;
 import breakout.GameState;
-import breakout.MenuState;
 import engine.Game;
 
 public class Main {

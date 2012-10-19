@@ -19,7 +19,7 @@ import engine.Game;
 
 public abstract class MainMenu implements IMenu {
 	private enum SELECTION {
-		CONTINUE, START, OPTIONS, CREDITS, EXIT
+		CONTINUE, START, OPTIONS, HIGHSCORE, CREDITS, EXIT
 	}
 
 	private Texture cursorTexture;
@@ -56,6 +56,9 @@ public abstract class MainMenu implements IMenu {
 		highlightSelection(SELECTION.OPTIONS);
 		font.drawText("OPTIONS", Display.getWidth() / 2.0f,
 				getSelectionY(SELECTION.OPTIONS));
+		highlightSelection(SELECTION.HIGHSCORE);
+		font.drawText("HIGHSCORE", Display.getWidth() / 2.0f,
+				getSelectionY(SELECTION.HIGHSCORE));
 		highlightSelection(SELECTION.CREDITS);
 		font.drawText("CREDITS", Display.getWidth() / 2.0f,
 				getSelectionY(SELECTION.CREDITS));
@@ -99,11 +102,14 @@ public abstract class MainMenu implements IMenu {
 		case OPTIONS:
 			y -= Display.getHeight() / 16.0f;
 			break;
-		case CREDITS:
+		case HIGHSCORE:
 			y -= Display.getHeight() / 8.0f;
 			break;
-		case EXIT:
+		case CREDITS:
 			y -= Display.getHeight() / 5.2f;
+			break;
+		case EXIT:
+			y -= Display.getHeight() / 3.9f;
 			break;
 		default:
 			break;
@@ -198,9 +204,11 @@ public abstract class MainMenu implements IMenu {
 			return up ? GameState.paused ? SELECTION.CONTINUE : SELECTION.EXIT
 					: SELECTION.OPTIONS;
 		case OPTIONS:
-			return up ? SELECTION.START : SELECTION.CREDITS;
+			return up ? SELECTION.START : SELECTION.HIGHSCORE;
+		case HIGHSCORE:
+			return up ? SELECTION.OPTIONS : SELECTION.CREDITS;
 		case CREDITS:
-			return up ? SELECTION.OPTIONS : SELECTION.EXIT;
+			return up ? SELECTION.HIGHSCORE : SELECTION.EXIT;
 		case EXIT:
 			return up ? SELECTION.CREDITS
 					: GameState.paused ? SELECTION.CONTINUE : SELECTION.START;
