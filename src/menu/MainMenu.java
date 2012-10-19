@@ -39,7 +39,7 @@ public abstract class MainMenu implements IMenu {
 	}
 
 	public abstract void showOptions();
-
+	public abstract void showHighscore();
 	public abstract void showCredits();
 
 	@Override
@@ -183,6 +183,9 @@ public abstract class MainMenu implements IMenu {
 				break;
 			case OPTIONS:
 				showOptions();
+				break;
+			case HIGHSCORE:
+				showHighscore();
 				break;
 			case CREDITS:
 				showCredits();

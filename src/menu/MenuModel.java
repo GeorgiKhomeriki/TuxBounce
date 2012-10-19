@@ -2,7 +2,7 @@ package menu;
 
 public class MenuModel {
 	public enum MENU {
-		MAIN, OPTIONS, CREDITS, LEVEL_LIST
+		MAIN, OPTIONS, HIGHSCORE, CREDITS, LEVEL_LIST
 	};
 
 	private MENU menu;

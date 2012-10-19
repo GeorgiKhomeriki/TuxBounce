@@ -41,8 +41,10 @@ public abstract class CreditsMenu implements IMenu {
 	}
 
 	private void renderCredits() {
-		font.drawText("CREATED BY GEORGI KHOMERIKI",
+		font.drawText("CODE:   GEORGI KHOMERIKI",
 				0.02f * Display.getWidth(), 0.7f * Display.getHeight());
+		font.drawText("DESIGN: KETI MAGLAPERIDZE",
+				0.02f * Display.getWidth(), 0.6f * Display.getHeight());
 	}
 
 	private void renderBack() {

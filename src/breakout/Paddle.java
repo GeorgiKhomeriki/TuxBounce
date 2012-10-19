@@ -5,6 +5,7 @@ import static org.lwjgl.opengl.GL11.*;
 import java.io.IOException;
 
 import org.lwjgl.input.Mouse;
+import org.lwjgl.opengl.Display;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;
@@ -68,6 +69,12 @@ public class Paddle {
 
 	public void update(float delta) {
 		x = Mouse.getX() - width / 2;
+		
+		if(x < 0.0f) {
+			x = 0.0f;
+		} else if(x + width > Display.getWidth()) {
+			x = Display.getWidth() - 0.95f*width;
+		}
 
 		if (bounceSize <= 0.0f) {
 			bounceHeight = height;
