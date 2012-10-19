@@ -195,6 +195,7 @@ public abstract class OptionsMenu implements IMenu {
 				} catch (LWJGLException e1) {
 					e1.printStackTrace();
 				}
+				Sound.get().playAccept();
 				break;
 			case FULLSCREEN:
 				try {
@@ -203,17 +204,19 @@ public abstract class OptionsMenu implements IMenu {
 				} catch (LWJGLException e) {
 					e.printStackTrace();
 				}
+				Sound.get().playAccept();
 				break;
 			case SOUND:
 				Sound.get().setEnabled(!Sound.get().isEnabled());
+				Sound.get().playAccept();
 				break;
 			case BACK:
 				backToMainMenu();
+				Sound.get().playDecline();
 				break;
 			default:
 				break;
 			}
-			Sound.get().playAccept();
 		}
 	}
 

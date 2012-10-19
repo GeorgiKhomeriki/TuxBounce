@@ -12,6 +12,8 @@ import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.newdawn.slick.opengl.Texture;
 
+import sound.Sound;
+
 import engine.Font;
 
 public abstract class CreditsMenu implements IMenu {
@@ -70,17 +72,16 @@ public abstract class CreditsMenu implements IMenu {
 
 	@Override
 	public void update(int delta) {
-
 		if (!isKeyPressed
 				&& (Keyboard.isKeyDown(Keyboard.KEY_RETURN) || Mouse
 						.isButtonDown(0) && isMouseOnBack())) {
 			isKeyPressed = true;
 			backToMainMenu();
+			Sound.get().playDecline();
 		}
 		if (!Keyboard.isKeyDown(Keyboard.KEY_RETURN) && !Mouse.isButtonDown(0)) {
 			isKeyPressed = false;
 		}
-
 		updateHighlightColor(delta);
 	}
 
