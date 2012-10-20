@@ -43,9 +43,13 @@ public abstract class CreditsMenu implements IMenu {
 	private void renderCredits() {
 		glColor3f(1.0f, 1.0f, 1.0f);
 		font.drawText("CODE:   GEORGI KHOMERIKI",
-				0.02f * Display.getWidth(), 0.7f * Display.getHeight());
-		font.drawText("DESIGN: KETI MAGLAPERIDZE",
 				0.02f * Display.getWidth(), 0.6f * Display.getHeight());
+		font.drawText("DESIGN: KETI MAGLAPERIDZE",
+				0.02f * Display.getWidth(), 0.5f * Display.getHeight());
+		font.drawText("ASSETS: WWW.OPENGAMEART.ORG",
+				0.02f * Display.getWidth(), 0.4f * Display.getHeight());
+		font.drawText("        WWW.FREESOUND.ORG",
+				0.02f * Display.getWidth(), 0.3f * Display.getHeight());
 	}
 
 	private void renderBack() {
