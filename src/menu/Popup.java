@@ -39,8 +39,8 @@ public abstract class Popup extends AbstractPopup {
 	public void renderContent() {
 		getFontLarge().drawText(title, getX() + 0.05f * getWidth(),
 				getY() + 0.7f * getHeight());
-		getFontSmall().drawText(message,
-				getX() + 0.05f * getWidth(), getY() + 0.5f * getHeight());
+		getFontSmall().drawText(message, getX() + 0.05f * getWidth(),
+				getY() + 0.5f * getHeight());
 		highlightSelection(SELECTION.YES);
 		getFontLarge().drawText("YES", getX() + 0.55f * getWidth(),
 				getY() + 0.1f * getHeight());
@@ -85,12 +85,16 @@ public abstract class Popup extends AbstractPopup {
 	}
 
 	private void handleMouseInput() {
-		if (isMouseOnSelection(SELECTION.YES)) {
-			Sound.get().playCursor();
-			currentSelection = SELECTION.YES;
-		} else if (isMouseOnSelection(SELECTION.NO)) {
-			Sound.get().playCursor();
-			currentSelection = SELECTION.NO;
+		if(Mouse.getDX() != 0 || Mouse.getDY() != 0) {
+			if (isMouseOnSelection(SELECTION.YES)
+					&& !currentSelection.equals(SELECTION.YES)) {
+				Sound.get().playCursor();
+				currentSelection = SELECTION.YES;
+			} else if (isMouseOnSelection(SELECTION.NO)
+					&& !currentSelection.equals(SELECTION.NO)) {
+				Sound.get().playCursor();
+				currentSelection = SELECTION.NO;
+			}
 		}
 	}
 
