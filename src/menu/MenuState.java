@@ -71,7 +71,7 @@ public class MenuState implements IGameState {
 			public void showHighscore() {
 				currentMenu.set(MENU.HIGHSCORE);
 			}
-			
+
 			@Override
 			public void showCredits() {
 				currentMenu.set(MENU.CREDITS);
@@ -135,7 +135,7 @@ public class MenuState implements IGameState {
 		}
 	}
 
-	public void renderBg() {
+	private void renderBg() {
 		bgTexture.bind();
 		glColor3f(1.0f, 1.0f, 1.0f);
 		glBegin(GL_QUADS);

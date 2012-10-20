@@ -14,6 +14,7 @@ import org.newdawn.slick.opengl.Texture;
 
 import sound.Sound;
 import breakout.GameState;
+import breakout.Hud;
 import engine.Font;
 import engine.Game;
 
@@ -39,7 +40,9 @@ public abstract class MainMenu implements IMenu {
 	}
 
 	public abstract void showOptions();
+
 	public abstract void showHighscore();
+
 	public abstract void showCredits();
 
 	@Override
@@ -178,6 +181,7 @@ public abstract class MainMenu implements IMenu {
 				Game.get().setCurrentState(GameState.name);
 				break;
 			case START:
+				Hud.get().reset();
 				Game.get().reinit(GameState.name);
 				Game.get().setCurrentState(GameState.name);
 				break;

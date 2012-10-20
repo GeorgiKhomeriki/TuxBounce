@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Random;
 
 import menu.MenuState;
+import menu.WinPopup;
 
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
@@ -50,6 +51,8 @@ public class GameState implements IGameState {
 	private Texture[] coinTextures;
 	private Texts texts;
 	private Random random;
+	private int level;
+	private WinPopup winPopup;
 
 	// private Lights lights;
 
@@ -65,18 +68,30 @@ public class GameState implements IGameState {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		winPopup = new WinPopup(1.0f / 2.0f * Display.getWidth(),
+				1.0f / 3.0f * Display.getHeight()) {
+					@Override
+					public void doYes() {
+						initLevel(++level);
+					}
+		};
+		level = 0;
+		initLevel(level);
+	}
 
+	private void initLevel(int level) {
 		// lights = new Lights();
 		paddle = new Paddle(100, 10, Display.getWidth() / 6,
 				Display.getHeight() / 20);
 		balls = new ArrayList<Ball>();
-		blocks = LevelLoader.load("resources/levels/level1-1.txt", Hud.height);
+		blocks = LevelLoader.load("resources/levels/" + level + ".txt",
+				Hud.height);
 		particles = new ArrayList<Particles>();
 		coins = new ArrayList<Coin>();
 		texts = new Texts();
 		random = new Random();
+		winPopup.setEnabled(false);
 		spawnBall();
-		Hud.get().reset();
 	}
 
 	private void loadTextures() throws IOException {
@@ -134,6 +149,8 @@ public class GameState implements IGameState {
 		texts.render();
 
 		Hud.get().render();
+
+		winPopup.render();
 	}
 
 	private void renderBackground() {
@@ -186,9 +203,12 @@ public class GameState implements IGameState {
 				balls.remove(i);
 				i--;
 				if (balls.isEmpty()) {
-					Hud.get().addLives(-1);
+					if(!blocks.isEmpty()) {
+						Hud.get().addLives(-1);
+					}
 					spawnBall();
 				}
+				texts.add("OOPS!", ball.getX(), 0.0f, 100, true);
 				Sound.get().playDeath();
 			}
 		}
@@ -250,6 +270,14 @@ public class GameState implements IGameState {
 
 		// update HUD
 		Hud.get().update(delta);
+
+		// update popup
+		winPopup.update(delta);
+
+		// check for victory
+		if (blocks.isEmpty()) {
+			winPopup.setEnabled(true);
+		}
 
 		// check if escape is pressed
 		if (Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) {
