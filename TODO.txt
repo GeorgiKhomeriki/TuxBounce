@@ -1,9 +1,6 @@
 fix timing mistake
 levels / worlds
-win scenario
-lose scenario (game-over)
 options menu - change resolution bug
-credits
 font edges bug
 edge bounce bug
 highscore
@@ -13,3 +10,4 @@ remove printStacktraces!
 fix big delta bug
 reset points to old value on retry
 add win / lose music
+complete victory scenario
