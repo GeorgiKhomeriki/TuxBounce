@@ -11,3 +11,5 @@ light size resolution dependent
 fix texture loading moments i.e. pre-load/re-use textures!
 remove printStacktraces!
 fix big delta bug
+reset points to old value on retry
+add win / lose music

@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import menu.LosePopup;
 import menu.MenuState;
 import menu.WinPopup;
 
@@ -53,6 +54,7 @@ public class GameState implements IGameState {
 	private Random random;
 	private int level;
 	private WinPopup winPopup;
+	private LosePopup losePopup;
 
 	// private Lights lights;
 
@@ -68,14 +70,9 @@ public class GameState implements IGameState {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		winPopup = new WinPopup(1.0f / 2.0f * Display.getWidth(),
-				1.0f / 3.0f * Display.getHeight()) {
-					@Override
-					public void doYes() {
-						initLevel(++level);
-					}
-		};
+
 		level = 0;
+		initPopups();
 		initLevel(level);
 	}
 
@@ -91,7 +88,26 @@ public class GameState implements IGameState {
 		texts = new Texts();
 		random = new Random();
 		winPopup.setEnabled(false);
+		losePopup.setEnabled(false);
 		spawnBall();
+	}
+
+	private void initPopups() {
+		winPopup = new WinPopup(0.5f * Display.getWidth(),
+				0.333f * Display.getHeight()) {
+			@Override
+			public void doYes() {
+				initLevel(++level);
+			}
+		};
+		losePopup = new LosePopup(0.5f * Display.getWidth(),
+				0.333f * Display.getHeight()) {
+			@Override
+			public void doYes() {
+				Hud.get().setLives(3);
+				initLevel(level);
+			}
+		};
 	}
 
 	private void loadTextures() throws IOException {
@@ -151,6 +167,7 @@ public class GameState implements IGameState {
 		Hud.get().render();
 
 		winPopup.render();
+		losePopup.render();
 	}
 
 	private void renderBackground() {
@@ -203,10 +220,12 @@ public class GameState implements IGameState {
 				balls.remove(i);
 				i--;
 				if (balls.isEmpty()) {
-					if(!blocks.isEmpty()) {
+					if (!blocks.isEmpty()) {
 						Hud.get().addLives(-1);
 					}
-					spawnBall();
+					if (Hud.get().getLives() > 0) {
+						spawnBall();
+					}
 				}
 				texts.add("OOPS!", ball.getX(), 0.0f, 100, true);
 				Sound.get().playDeath();
@@ -271,12 +290,18 @@ public class GameState implements IGameState {
 		// update HUD
 		Hud.get().update(delta);
 
-		// update popup
+		// update popups
 		winPopup.update(delta);
+		losePopup.update(delta);
 
 		// check for victory
 		if (blocks.isEmpty()) {
 			winPopup.setEnabled(true);
+		}
+
+		// check for defeat
+		if (Hud.get().getLives() <= 0) {
+			losePopup.setEnabled(true);
 		}
 
 		// check if escape is pressed

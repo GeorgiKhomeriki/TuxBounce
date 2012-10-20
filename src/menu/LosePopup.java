@@ -5,13 +5,11 @@ import static org.lwjgl.opengl.GL11.glColor3f;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
+import sound.Sound;
 import breakout.GameState;
-
 import engine.Game;
 
-import sound.Sound;
-
-public abstract class WinPopup extends Popup {
+public abstract class LosePopup extends Popup {
 	public enum SELECTION {
 		YES, NO
 	};
@@ -21,7 +19,7 @@ public abstract class WinPopup extends Popup {
 	private float highlightColor;
 	private float highlightColorDelta;
 
-	public WinPopup(float width, float height) {
+	public LosePopup(float width, float height) {
 		super(width, height);
 		this.currentSelection = SELECTION.YES;
 		this.isKeyPressed = true;
@@ -33,9 +31,9 @@ public abstract class WinPopup extends Popup {
 
 	@Override
 	public void renderContent() {
-		getFontLarge().drawText("AWESOME!", getX() + 0.05f * getWidth(),
+		getFontLarge().drawText("TOO BAD!", getX() + 0.05f * getWidth(),
 				getY() + 0.7f * getHeight());
-		getFontSmall().drawText("ARE YOU READY FOR THE NEXT LEVEL?",
+		getFontSmall().drawText("WOULD YOU LIKE TO RETRY?",
 				getX() + 0.05f * getWidth(), getY() + 0.5f * getHeight());
 		highlightSelection(SELECTION.YES);
 		getFontLarge().drawText("YES", getX() + 0.55f * getWidth(),

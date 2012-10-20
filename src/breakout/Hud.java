@@ -111,6 +111,22 @@ public class Hud {
 		lineColor += lineColorDelta / delta;
 	}
 
+	public int getScore() {
+		return score;
+	}
+
+	public void setScore(int score) {
+		this.score = score;
+	}
+
+	public int getLives() {
+		return lives;
+	}
+
+	public void setLives(int lives) {
+		this.lives = lives;
+	}
+
 	public static Hud get() {
 		if (instance == null) {
 			instance = new Hud();
