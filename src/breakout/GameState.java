@@ -15,9 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import menu.LosePopup;
 import menu.MenuState;
-import menu.WinPopup;
+import menu.Popup;
 
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
@@ -53,8 +52,8 @@ public class GameState implements IGameState {
 	private Texts texts;
 	private Random random;
 	private int level;
-	private WinPopup winPopup;
-	private LosePopup losePopup;
+	private Popup winPopup;
+	private Popup losePopup;
 
 	// private Lights lights;
 
@@ -93,15 +92,16 @@ public class GameState implements IGameState {
 	}
 
 	private void initPopups() {
-		winPopup = new WinPopup(0.5f * Display.getWidth(),
+		winPopup = new Popup("AWESOME!",
+				"ARE YOU READY FOR THE NEXT LEVEL?", 0.5f * Display.getWidth(),
 				0.333f * Display.getHeight()) {
 			@Override
 			public void doYes() {
 				initLevel(++level);
 			}
 		};
-		losePopup = new LosePopup(0.5f * Display.getWidth(),
-				0.333f * Display.getHeight()) {
+		losePopup = new Popup("TOO BAD!", "WOULD YOU LIKE TO RETRY?",
+				0.5f * Display.getWidth(), 0.333f * Display.getHeight()) {
 			@Override
 			public void doYes() {
 				Hud.get().setLives(3);
