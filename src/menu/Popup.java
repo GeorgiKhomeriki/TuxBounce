@@ -85,7 +85,7 @@ public abstract class Popup extends AbstractPopup {
 	}
 
 	private void handleMouseInput() {
-		if(Mouse.getDX() != 0 || Mouse.getDY() != 0) {
+		if (Mouse.getDX() != 0 || Mouse.getDY() != 0) {
 			if (isMouseOnSelection(SELECTION.YES)
 					&& !currentSelection.equals(SELECTION.YES)) {
 				Sound.get().playCursor();
@@ -101,24 +101,23 @@ public abstract class Popup extends AbstractPopup {
 	private boolean isMouseOnSelection(SELECTION selection) {
 		float x = Mouse.getX();
 		float y = Mouse.getY();
-		switch (selection) {
-		case YES:
-			return x > getX() + 0.55f * getWidth()
-					&& x < getX() + 0.55f * getWidth() + 3
-							* getFontLarge().getCharacterWidth()
-					&& y > getY() + 0.1f * getHeight()
-					&& y < getY() + 0.1f * getHeight()
-							+ getFontLarge().getCharacterHeight();
-		case NO:
-			return x > getX() + 0.8f * getWidth()
-					&& x < getX() + 0.8f * getWidth() + 2
-							* getFontLarge().getCharacterWidth()
-					&& y > getY() + 0.1f * getHeight()
-					&& y < getY() + 0.1f * getHeight()
-							+ getFontLarge().getCharacterHeight();
-		default:
+		float loc;
+		float size;
+		if (selection.equals(SELECTION.YES)) {
+			loc = 0.55f;
+			size = 3.0f;
+		} else if (selection.equals(SELECTION.NO)) {
+			loc = 0.8f;
+			size = 2.0f;
+		} else {
 			return false;
 		}
+		return x > getX() + loc * getWidth()
+				&& x < getX() + loc * getWidth() + size
+						* getFontLarge().getCharacterWidth()
+				&& y > getY() + 0.1f * getHeight()
+				&& y < getY() + 0.1f * getHeight()
+						+ getFontLarge().getCharacterHeight();
 	}
 
 	private void handleSelectedAction() {
