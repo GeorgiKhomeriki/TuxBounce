@@ -186,14 +186,8 @@ public abstract class OptionsMenu implements IMenu {
 					for (int i = 0; i < modes.length; i++) {
 						if (Graphics.compareDisplayModes(modes[i],
 								Display.getDisplayMode())) {
-							DisplayMode newMode;
-							if (i + 1 < modes.length) {
-								newMode = modes[i + 1];
-								// Display.setDisplayMode(modes[i+1]);
-							} else {
-								newMode = modes[0];
-								// Display.setDisplayMode(modes[0]);
-							}
+							DisplayMode newMode = i + 1 < modes.length ? modes[i + 1]
+									: modes[0];
 							Graphics.setDisplayMode(newMode.getWidth(),
 									newMode.getHeight(), Display.isFullscreen());
 							break;
