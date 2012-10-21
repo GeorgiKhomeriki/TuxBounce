@@ -11,3 +11,4 @@ fix big delta bug
 reset points to old value on retry
 add win / lose music
 complete victory scenario
+improve bouncing

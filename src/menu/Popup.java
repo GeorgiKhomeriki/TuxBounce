@@ -126,7 +126,6 @@ public abstract class Popup extends AbstractPopup {
 						.isButtonDown(0)
 						&& isMouseOnSelection(currentSelection))) {
 			isKeyPressed = true;
-			Sound.get().playAccept();
 			switch (currentSelection) {
 			case YES:
 				Sound.get().playAccept();
