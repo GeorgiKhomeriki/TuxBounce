@@ -183,12 +183,19 @@ public abstract class OptionsMenu implements IMenu {
 			case RESOLUTION:
 				try {
 					DisplayMode[] modes = Display.getAvailableDisplayModes();
-					for(int i = 0; i < modes.length; i++) {
-						if(Graphics.compareDisplayModes(modes[i], Display.getDisplayMode())) {
-							if(i+1 < modes.length)
-								Display.setDisplayMode(modes[i+1]);
-							else
-								Display.setDisplayMode(modes[0]);
+					for (int i = 0; i < modes.length; i++) {
+						if (Graphics.compareDisplayModes(modes[i],
+								Display.getDisplayMode())) {
+							DisplayMode newMode;
+							if (i + 1 < modes.length) {
+								newMode = modes[i + 1];
+								// Display.setDisplayMode(modes[i+1]);
+							} else {
+								newMode = modes[0];
+								// Display.setDisplayMode(modes[0]);
+							}
+							Graphics.setDisplayMode(newMode.getWidth(),
+									newMode.getHeight(), Display.isFullscreen());
 							break;
 						}
 					}
