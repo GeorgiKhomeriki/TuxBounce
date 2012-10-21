@@ -28,14 +28,15 @@ import static org.lwjgl.opengl.GL11.glMaterial;
 import static org.lwjgl.opengl.GL11.glMaterialf;
 import static org.lwjgl.opengl.GL11.glShadeModel;
 
+import game.Ball;
+import game.Paddle;
+
 import java.nio.FloatBuffer;
 import java.util.List;
 
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.Display;
 
-import breakout.Ball;
-import breakout.Paddle;
 
 public class Lights {
 	private FloatBuffer matSpecular;

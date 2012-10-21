@@ -13,10 +13,10 @@ import org.lwjgl.opengl.Display;
 import org.newdawn.slick.opengl.Texture;
 
 import sound.Sound;
-import breakout.GameState;
-import breakout.Hud;
 import engine.Font;
 import engine.Game;
+import game.GameState;
+import game.Hud;
 
 public abstract class MainMenu implements IMenu {
 	private enum SELECTION {

@@ -1,4 +1,4 @@
-package breakout;
+package game;
 
 import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
 import static org.lwjgl.opengl.GL11.GL_DEPTH_BUFFER_BIT;
@@ -30,11 +30,11 @@ import particles.Particles;
 import particles.SimpleExplosion;
 import sound.Sound;
 import util.LevelLoader;
-import breakout.Block.BlockState;
-import breakout.Block.BlockType;
 import engine.Game;
 import engine.IGameState;
 import engine.Texts;
+import game.Block.BlockState;
+import game.Block.BlockType;
 
 public class GameState implements IGameState {
 

@@ -1,5 +1,8 @@
 package util;
 
+import game.Block;
+import game.Block.BlockType;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -8,8 +11,6 @@ import java.util.Scanner;
 
 import org.lwjgl.opengl.Display;
 
-import breakout.Block;
-import breakout.Block.BlockType;
 
 
 public class LevelLoader {

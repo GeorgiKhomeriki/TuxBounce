@@ -1,4 +1,4 @@
-package breakout;
+package game;
 
 import static org.lwjgl.opengl.GL11.GL_LIGHTING;
 import static org.lwjgl.opengl.GL11.GL_LINES;

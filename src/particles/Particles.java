@@ -11,9 +11,9 @@ import org.newdawn.slick.util.ResourceLoader;
 
 import sound.Sound;
 
-import breakout.Hud;
-import breakout.Paddle;
 import engine.Texts;
+import game.Hud;
+import game.Paddle;
 
 public class Particles {
 	private List<Particle> particles;

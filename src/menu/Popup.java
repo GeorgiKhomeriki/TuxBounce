@@ -5,9 +5,9 @@ import static org.lwjgl.opengl.GL11.glColor3f;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
-import breakout.GameState;
 
 import engine.Game;
+import game.GameState;
 
 import sound.Sound;
 
