@@ -13,10 +13,9 @@ import org.lwjgl.opengl.Display;
 import org.newdawn.slick.opengl.Texture;
 
 import sound.Sound;
-
 import engine.Font;
 
-public abstract class HighscoreMenu implements IMenu {
+public abstract class HighscoreMenu {
 	private Font font;
 	private Texture cursorTexture;
 	private boolean isKeyPressed;
@@ -33,12 +32,11 @@ public abstract class HighscoreMenu implements IMenu {
 
 	public abstract void backToMainMenu();
 
-	@Override
 	public void render(int delta) {
 		renderBack();
 		renderCursor();
 	}
-	
+
 	private void renderBack() {
 		glColor3f(1.0f, highlightColor, 0.0f);
 		font.drawText("BACK", Display.getWidth() * 0.45f,
@@ -64,7 +62,6 @@ public abstract class HighscoreMenu implements IMenu {
 		glEnd();
 	}
 
-	@Override
 	public void update(int delta) {
 		if (!isKeyPressed
 				&& (Keyboard.isKeyDown(Keyboard.KEY_RETURN) || Mouse
@@ -78,7 +75,7 @@ public abstract class HighscoreMenu implements IMenu {
 		}
 		updateHighlightColor(delta);
 	}
-	
+
 	private boolean isMouseOnBack() {
 		float x = Mouse.getX();
 		float y = Mouse.getY();
@@ -88,7 +85,7 @@ public abstract class HighscoreMenu implements IMenu {
 				&& y > 0.03f * Display.getHeight()
 				&& y < 0.03f * Display.getHeight() + font.getCharacterHeight();
 	}
-	
+
 	private void updateHighlightColor(float delta) {
 		float newColor = highlightColor + highlightColorDelta * delta / 200;
 		if (newColor < 0.0f || newColor > 1.0f) {

@@ -13,10 +13,9 @@ import org.lwjgl.opengl.Display;
 import org.newdawn.slick.opengl.Texture;
 
 import sound.Sound;
-
 import engine.Font;
 
-public abstract class CreditsMenu implements IMenu {
+public abstract class CreditsMenu {
 	private Font font;
 	private Texture cursorTexture;
 	private boolean isKeyPressed;
@@ -33,7 +32,6 @@ public abstract class CreditsMenu implements IMenu {
 
 	public abstract void backToMainMenu();
 
-	@Override
 	public void render(int delta) {
 		renderBack();
 		renderCursor();
@@ -42,14 +40,14 @@ public abstract class CreditsMenu implements IMenu {
 
 	private void renderCredits() {
 		glColor3f(1.0f, 1.0f, 1.0f);
-		font.drawText("CODE:   GEORGI KHOMERIKI",
-				0.02f * Display.getWidth(), 0.6f * Display.getHeight());
-		font.drawText("DESIGN: KETI MAGLAPERIDZE",
-				0.02f * Display.getWidth(), 0.5f * Display.getHeight());
+		font.drawText("CODE:   GEORGI KHOMERIKI", 0.02f * Display.getWidth(),
+				0.6f * Display.getHeight());
+		font.drawText("DESIGN: KETI MAGLAPERIDZE", 0.02f * Display.getWidth(),
+				0.5f * Display.getHeight());
 		font.drawText("ASSETS: WWW.OPENGAMEART.ORG",
 				0.02f * Display.getWidth(), 0.4f * Display.getHeight());
-		font.drawText("        WWW.FREESOUND.ORG",
-				0.02f * Display.getWidth(), 0.3f * Display.getHeight());
+		font.drawText("        WWW.FREESOUND.ORG", 0.02f * Display.getWidth(),
+				0.3f * Display.getHeight());
 	}
 
 	private void renderBack() {
@@ -77,7 +75,6 @@ public abstract class CreditsMenu implements IMenu {
 		glEnd();
 	}
 
-	@Override
 	public void update(int delta) {
 		if (!isKeyPressed
 				&& (Keyboard.isKeyDown(Keyboard.KEY_RETURN) || Mouse

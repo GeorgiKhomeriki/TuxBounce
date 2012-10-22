@@ -30,6 +30,7 @@ public class MenuState implements IGameState {
 
 	private final MenuModel currentMenu = new MenuModel(MENU.MAIN);
 	private MainMenu mainMenu;
+	private LevelChoiceMenu levelChoiceMenu;
 	private OptionsMenu optionsMenu;
 	private HighscoreMenu highscoreMenu;
 	private CreditsMenu creditsMenu;
@@ -63,6 +64,11 @@ public class MenuState implements IGameState {
 	private void initMenus() {
 		mainMenu = new MainMenu(font, cursorTexture) {
 			@Override
+			public void showLevelChoice() {
+				currentMenu.set(MENU.LEVEL_CHOICE);
+			}
+
+			@Override
 			public void showOptions() {
 				currentMenu.set(MENU.OPTIONS);
 			}
@@ -76,7 +82,13 @@ public class MenuState implements IGameState {
 			public void showCredits() {
 				currentMenu.set(MENU.CREDITS);
 			}
+		};
 
+		levelChoiceMenu = new LevelChoiceMenu(font, cursorTexture) {
+			@Override
+			public void backToMainMenu() {
+				currentMenu.set(MENU.MAIN);
+			}
 		};
 
 		optionsMenu = new OptionsMenu(font, cursorTexture) {
@@ -120,6 +132,9 @@ public class MenuState implements IGameState {
 		switch (currentMenu.get()) {
 		case MAIN:
 			mainMenu.render(delta);
+			break;
+		case LEVEL_CHOICE:
+			levelChoiceMenu.render(delta);
 			break;
 		case OPTIONS:
 			optionsMenu.render(delta);
@@ -174,6 +189,9 @@ public class MenuState implements IGameState {
 		switch (currentMenu.get()) {
 		case MAIN:
 			mainMenu.update(delta);
+			break;
+		case LEVEL_CHOICE:
+			levelChoiceMenu.update(delta);
 			break;
 		case OPTIONS:
 			optionsMenu.update(delta);

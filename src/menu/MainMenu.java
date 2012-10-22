@@ -18,7 +18,7 @@ import engine.Game;
 import game.GameState;
 import game.Hud;
 
-public abstract class MainMenu implements IMenu {
+public abstract class MainMenu {
 	private enum SELECTION {
 		CONTINUE, START, OPTIONS, HIGHSCORE, CREDITS, EXIT
 	}
@@ -39,13 +39,14 @@ public abstract class MainMenu implements IMenu {
 		this.highlightColorDelta = -1.0f;
 	}
 
+	public abstract void showLevelChoice();
+
 	public abstract void showOptions();
 
 	public abstract void showHighscore();
 
 	public abstract void showCredits();
 
-	@Override
 	public void render(int delta) {
 		renderCursor();
 		if (GameState.paused) {
@@ -120,7 +121,6 @@ public abstract class MainMenu implements IMenu {
 		return y;
 	}
 
-	@Override
 	public void update(int delta) {
 		updateHighlightColor(delta);
 

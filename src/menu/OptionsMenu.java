@@ -18,7 +18,7 @@ import sound.Sound;
 import util.Graphics;
 import engine.Font;
 
-public abstract class OptionsMenu implements IMenu {
+public abstract class OptionsMenu {
 	private enum SELECTION {
 		RESOLUTION, FULLSCREEN, SOUND, BACK
 	}
@@ -41,7 +41,6 @@ public abstract class OptionsMenu implements IMenu {
 
 	public abstract void backToMainMenu();
 
-	@Override
 	public void render(int delta) {
 		renderOptions();
 		renderValues();
@@ -122,7 +121,6 @@ public abstract class OptionsMenu implements IMenu {
 		return y;
 	}
 
-	@Override
 	public void update(int delta) {
 		updateHighlightColor(delta);
 
@@ -193,8 +191,8 @@ public abstract class OptionsMenu implements IMenu {
 							break;
 						}
 					}
-				} catch (LWJGLException e1) {
-					e1.printStackTrace();
+				} catch (LWJGLException e) {
+					e.printStackTrace();
 				}
 				Sound.get().playAccept();
 				break;

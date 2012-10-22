@@ -5,11 +5,10 @@ import java.util.List;
 
 import org.lwjgl.openal.AL;
 
-
 public class Game extends AbstractGame {
 
-	private static Game instance; 
-	
+	private static Game instance;
+
 	private List<IGameState> states;
 	private IGameState currentState;
 
@@ -41,11 +40,11 @@ public class Game extends AbstractGame {
 	public void addState(IGameState state) {
 		states.add(state);
 	}
-	
+
 	public void setCurrentState(String name) {
-		for(IGameState state : states) {
-			if(name.equals(state.getName())) {
-				if(currentState != null) {
+		for (IGameState state : states) {
+			if (name.equals(state.getName())) {
+				if (currentState != null) {
 					currentState.stop();
 				}
 				state.start();
@@ -55,24 +54,24 @@ public class Game extends AbstractGame {
 		}
 		System.err.println("State not found : " + name);
 	}
-	
+
 	public void reinit(String name) {
-		for(IGameState state : states) {
-			if(name.equals(state.getName())) {
+		for (IGameState state : states) {
+			if (name.equals(state.getName())) {
 				state.init();
 				return;
 			}
 		}
 		System.err.println("State not found : " + name);
 	}
-	
+
 	public static Game get() {
-		if(instance == null) {
-			//instance = new Game("Tux Bounce", 1920, 1200, true);
-			//instance = new Game("Tux Bounce", 1440, 900, true);
-			//instance = new Game("Tux Bounce", 1024, 768, false);
-			instance = new Game("Tux Bounce", 800, 600, false);
-			//instance = new Game("Tux Bounce", 640, 480, false);
+		if (instance == null) {
+			// instance = new Game("Tux Bounce", 1920, 1200, true);
+			// instance = new Game("Tux Bounce", 1440, 900, true);
+			// instance = new Game("Tux Bounce", 1024, 768, false);
+			// instance = new Game("Tux Bounce", 800, 600, false);
+			instance = new Game("Tux Bounce", 640, 480, false);
 		}
 		return instance;
 	}
