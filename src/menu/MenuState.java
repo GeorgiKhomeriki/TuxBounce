@@ -10,18 +10,14 @@ import static org.lwjgl.opengl.GL11.glEnd;
 import static org.lwjgl.opengl.GL11.glLoadIdentity;
 import static org.lwjgl.opengl.GL11.glTexCoord2f;
 import static org.lwjgl.opengl.GL11.glVertex2f;
-
-import java.io.IOException;
-
 import menu.MenuModel.MENU;
 
 import org.lwjgl.opengl.Display;
 import org.newdawn.slick.openal.SoundStore;
 import org.newdawn.slick.opengl.Texture;
-import org.newdawn.slick.opengl.TextureLoader;
-import org.newdawn.slick.util.ResourceLoader;
 
 import sound.Sound;
+import textures.Textures;
 import engine.Font;
 import engine.IGameState;
 
@@ -35,9 +31,6 @@ public class MenuState implements IGameState {
 	private HighscoreMenu highscoreMenu;
 	private CreditsMenu creditsMenu;
 	private Font font;
-	private Texture bgTexture;
-	private Texture logoTexture;
-	private Texture cursorTexture;
 
 	@Override
 	public String getName() {
@@ -46,23 +39,13 @@ public class MenuState implements IGameState {
 
 	@Override
 	public void init() {
-		try {
-			cursorTexture = TextureLoader.getTexture("PNG", ResourceLoader
-					.getResourceAsStream("resources/images/tux.png"));
-			bgTexture = TextureLoader.getTexture("JPG", ResourceLoader
-					.getResourceAsStream("resources/images/menu-bg.jpg"));
-			logoTexture = TextureLoader.getTexture("PNG", ResourceLoader
-					.getResourceAsStream("resources/images/logo.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 		font = new Font("resources/fonts/kromasky_16x16.png", 59, 16);
 
 		initMenus();
 	}
 
 	private void initMenus() {
-		mainMenu = new MainMenu(font, cursorTexture) {
+		mainMenu = new MainMenu(font) {
 			@Override
 			public void showLevelChoice() {
 				currentMenu.set(MENU.LEVEL_CHOICE);
@@ -84,28 +67,28 @@ public class MenuState implements IGameState {
 			}
 		};
 
-		levelChoiceMenu = new LevelChoiceMenu(font, cursorTexture) {
+		levelChoiceMenu = new LevelChoiceMenu(font) {
 			@Override
 			public void backToMainMenu() {
 				currentMenu.set(MENU.MAIN);
 			}
 		};
 
-		optionsMenu = new OptionsMenu(font, cursorTexture) {
+		optionsMenu = new OptionsMenu(font) {
 			@Override
 			public void backToMainMenu() {
 				currentMenu.set(MENU.MAIN);
 			}
 		};
 
-		highscoreMenu = new HighscoreMenu(font, cursorTexture) {
+		highscoreMenu = new HighscoreMenu(font) {
 			@Override
 			public void backToMainMenu() {
 				currentMenu.set(MENU.MAIN);
 			}
 		};
 
-		creditsMenu = new CreditsMenu(font, cursorTexture) {
+		creditsMenu = new CreditsMenu(font) {
 			@Override
 			public void backToMainMenu() {
 				currentMenu.set(MENU.MAIN);
@@ -151,6 +134,7 @@ public class MenuState implements IGameState {
 	}
 
 	private void renderBg() {
+		Texture bgTexture = Textures.get().getBgMenu();
 		bgTexture.bind();
 		glColor3f(1.0f, 1.0f, 1.0f);
 		glBegin(GL_QUADS);
@@ -170,6 +154,7 @@ public class MenuState implements IGameState {
 		float height = Display.getHeight() / 10;
 		float x = Display.getWidth() * 0.01f;
 		float y = Display.getHeight() * 0.85f;
+		Texture logoTexture = Textures.get().getLogo();
 		logoTexture.bind();
 		glColor3f(1.0f, 1.0f, 1.0f);
 		glBegin(GL_QUADS);

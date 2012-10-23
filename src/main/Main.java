@@ -12,7 +12,6 @@ import game.GameState;
 public class Main {
 
 	public static void main(String[] args) throws LWJGLException {
-		Sound.get().setEnabled(false);
 		Game.get().addState(new LoadingState());
 		Game.get().addState(new MenuState());
 		Game.get().addState(new GameState());

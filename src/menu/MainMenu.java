@@ -13,6 +13,7 @@ import org.lwjgl.opengl.Display;
 import org.newdawn.slick.opengl.Texture;
 
 import sound.Sound;
+import textures.Textures;
 import engine.Font;
 import engine.Game;
 import game.GameState;
@@ -23,16 +24,14 @@ public abstract class MainMenu {
 		CONTINUE, START, OPTIONS, HIGHSCORE, CREDITS, EXIT
 	}
 
-	private Texture cursorTexture;
 	private Font font;
 	private SELECTION currentSelection;
 	private boolean isKeyPressed;
 	private float highlightColor;
 	private float highlightColorDelta;
 
-	public MainMenu(Font font, Texture cursorTexture) {
+	public MainMenu(Font font) {
 		this.font = font;
-		this.cursorTexture = cursorTexture;
 		this.currentSelection = SELECTION.START;
 		this.isKeyPressed = true;
 		this.highlightColor = 1.0f;
@@ -83,6 +82,7 @@ public abstract class MainMenu {
 		float height = Display.getHeight() / 18;
 		float x = Display.getWidth() * 0.5f - 1.2f * width;
 		float y = getSelectionY(currentSelection);
+		Texture cursorTexture = Textures.get().getBall();
 		cursorTexture.bind();
 		glColor3f(1.0f, 1.0f, 1.0f);
 		glBegin(GL_QUADS);

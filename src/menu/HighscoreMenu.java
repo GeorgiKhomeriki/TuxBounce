@@ -13,18 +13,17 @@ import org.lwjgl.opengl.Display;
 import org.newdawn.slick.opengl.Texture;
 
 import sound.Sound;
+import textures.Textures;
 import engine.Font;
 
 public abstract class HighscoreMenu {
 	private Font font;
-	private Texture cursorTexture;
 	private boolean isKeyPressed;
 	private float highlightColor;
 	private float highlightColorDelta;
 
-	public HighscoreMenu(Font font, Texture cursorTexture) {
+	public HighscoreMenu(Font font) {
 		this.font = font;
-		this.cursorTexture = cursorTexture;
 		this.isKeyPressed = true;
 		this.highlightColor = 1.0f;
 		this.highlightColorDelta = -1.0f;
@@ -48,6 +47,7 @@ public abstract class HighscoreMenu {
 		float height = Display.getHeight() / 18;
 		float x = Display.getWidth() * 0.45f - 1.2f * width;
 		float y = 0.03f * Display.getHeight();
+		Texture cursorTexture = Textures.get().getBall();
 		cursorTexture.bind();
 		glColor3f(1.0f, 1.0f, 1.0f);
 		glBegin(GL_QUADS);
