@@ -9,13 +9,13 @@ import static org.lwjgl.opengl.GL11.glColor3f;
 import static org.lwjgl.opengl.GL11.glColor4f;
 import static org.lwjgl.opengl.GL11.glDisable;
 import static org.lwjgl.opengl.GL11.glEnable;
-import static org.lwjgl.opengl.GL11.glIsEnabled;
 import static org.lwjgl.opengl.GL11.glEnd;
+import static org.lwjgl.opengl.GL11.glIsEnabled;
 import static org.lwjgl.opengl.GL11.glVertex2f;
 
 import org.lwjgl.opengl.Display;
 
-import engine.Font;
+import assets.Fonts;
 
 public class Hud {
 	private static Hud instance;
@@ -23,7 +23,6 @@ public class Hud {
 	public static final float height = Display.getHeight() / 15.0f;
 	public static final float displayHeight = Display.getHeight();
 
-	private Font font;
 	private float lineColor = 0.5f;
 	private float lineColorDelta = 0.3f;
 
@@ -31,7 +30,6 @@ public class Hud {
 	private int lives;
 
 	public Hud() {
-		this.font = new Font("resources/fonts/kromasky_16x16.png", 59, 16);
 		this.lineColor = 0.5f;
 		this.lineColorDelta = 0.3f;
 		reset();
@@ -79,10 +77,10 @@ public class Hud {
 
 	private void printText() {
 		glColor3f(1.0f, 1.0f, 1.0f);
-		font.renderText("SCORE:" + addZeros(score, 6), 0.0f, displayHeight
+		Fonts.get().large().renderText("SCORE:" + addZeros(score, 6), 0.0f, displayHeight
 				- displayHeight / 17.0f);
 
-		font.renderText("LIVES:" + addZeros(lives, 3),
+		Fonts.get().large().renderText("LIVES:" + addZeros(lives, 3),
 				Display.getWidth() * 0.69f, displayHeight - displayHeight
 						/ 17.0f);
 	}
