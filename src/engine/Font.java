@@ -18,11 +18,11 @@ public class Font {
 	private int numChars;
 	private float widthScale;
 	private float heightScale;
-	
+
 	public Font(String file, int numChars, int pixels) {
 		try {
-			texture = TextureLoader.getTexture("PNG", ResourceLoader
-					.getResourceAsStream(file));
+			texture = TextureLoader.getTexture("PNG",
+					ResourceLoader.getResourceAsStream(file));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -35,34 +35,36 @@ public class Font {
 			heightScale = 45.0f;
 		}
 	}
-	
-	public void drawText(String text, float x, float y) {
+
+	public void renderText(String text, float x, float y) {
 		texture.bind();
 		float width = Display.getWidth() / widthScale;
 		float height = Display.getHeight() / heightScale;
-		for(int i = 0; i < text.length(); i++) {
-			float c = (int)text.charAt(i) - 32;
-			if(c > 0) {
+		for (int i = 0; i < text.length(); i++) {
+			float c = (int) text.charAt(i) - 32;
+			if (c > 0) {
 				glBegin(GL_QUADS);
-				glTexCoord2f(c/numChars * texture.getWidth(), texture.getHeight());
-				glVertex2f(x + i*width, y);
-				glTexCoord2f((c+1)/numChars * texture.getWidth(), texture.getHeight());
-				glVertex2f(x + i*width + width, y);
-				glTexCoord2f((c+1)/numChars * texture.getWidth(), 0.0f);
-				glVertex2f(x + i*width + width, y + height);
-				glTexCoord2f(c/numChars * texture.getWidth(), 0.0f);
-				glVertex2f(x + i*width, y + height);
+				glTexCoord2f(c / numChars * texture.getWidth(),
+						texture.getHeight());
+				glVertex2f(x + i * width, y);
+				glTexCoord2f((c + 1) / numChars * texture.getWidth(),
+						texture.getHeight());
+				glVertex2f(x + i * width + width, y);
+				glTexCoord2f((c + 1) / numChars * texture.getWidth(), 0.0f);
+				glVertex2f(x + i * width + width, y + height);
+				glTexCoord2f(c / numChars * texture.getWidth(), 0.0f);
+				glVertex2f(x + i * width, y + height);
 				glEnd();
 			}
 		}
 	}
-	
+
 	public float getCharacterWidth() {
 		return Display.getWidth() / widthScale;
 	}
-	
+
 	public float getCharacterHeight() {
 		return Display.getHeight() / heightScale;
 	}
-	
+
 }

@@ -39,56 +39,24 @@ public class Text {
 		return text;
 	}
 
-	public void setText(String text) {
-		this.text = text;
-	}
-
 	public float getX() {
 		return x;
-	}
-
-	public void setX(float x) {
-		this.x = x;
 	}
 
 	public float getY() {
 		return y;
 	}
 
-	public void setY(float y) {
-		this.y = y;
-	}
-
 	public int getLife() {
 		return life;
 	}
-
-	public void setLife(int life) {
-		this.life = life;
-	}
-
+	
 	public float getAge() {
 		return age;
 	}
 
-	public void setAge(int age) {
-		this.age = age;
-	}
-
-	public boolean isInfinite() {
-		return infinite;
-	}
-
-	public void setInfinite(boolean infinite) {
-		this.infinite = infinite;
-	}
-
 	public boolean isDoFade() {
 		return doFade;
-	}
-
-	public void setDoFade(boolean doFade) {
-		this.doFade = doFade;
 	}
 
 }

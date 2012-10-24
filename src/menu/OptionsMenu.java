@@ -49,16 +49,16 @@ public abstract class OptionsMenu {
 		highlightSelection(SELECTION.RESOLUTION);
 		Fonts.get()
 				.large()
-				.drawText("RESOLUTION:", x, getSelectionY(SELECTION.RESOLUTION));
+				.renderText("RESOLUTION:", x, getSelectionY(SELECTION.RESOLUTION));
 		highlightSelection(SELECTION.FULLSCREEN);
 		Fonts.get()
 				.large()
-				.drawText("FULLSCREEN:", x, getSelectionY(SELECTION.FULLSCREEN));
+				.renderText("FULLSCREEN:", x, getSelectionY(SELECTION.FULLSCREEN));
 		highlightSelection(SELECTION.SOUND);
 		Fonts.get().large()
-				.drawText("SOUND:", x, getSelectionY(SELECTION.SOUND));
+				.renderText("SOUND:", x, getSelectionY(SELECTION.SOUND));
 		highlightSelection(SELECTION.BACK);
-		Fonts.get().large().drawText("BACK", x, getSelectionY(SELECTION.BACK));
+		Fonts.get().large().renderText("BACK", x, getSelectionY(SELECTION.BACK));
 	}
 
 	private void highlightSelection(SELECTION selection) {
@@ -73,15 +73,15 @@ public abstract class OptionsMenu {
 		float x = 0.5f * Display.getWidth();
 		String resolution = Display.getWidth() + "X" + Display.getHeight();
 		Fonts.get().large()
-				.drawText(resolution, x, getSelectionY(SELECTION.RESOLUTION));
+				.renderText(resolution, x, getSelectionY(SELECTION.RESOLUTION));
 		String fullscreen = booleanToString(Display.isFullscreen());
 		if (!Display.getDisplayMode().isFullscreenCapable()) {
 			fullscreen = "CHANGE RES.";
 		}
 		Fonts.get().large()
-				.drawText(fullscreen, x, getSelectionY(SELECTION.FULLSCREEN));
+				.renderText(fullscreen, x, getSelectionY(SELECTION.FULLSCREEN));
 		String sound = booleanToString(Sounds.get().isEnabled());
-		Fonts.get().large().drawText(sound, x, getSelectionY(SELECTION.SOUND));
+		Fonts.get().large().renderText(sound, x, getSelectionY(SELECTION.SOUND));
 	}
 
 	private String booleanToString(boolean b) {

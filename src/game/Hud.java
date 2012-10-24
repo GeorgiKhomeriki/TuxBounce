@@ -79,10 +79,10 @@ public class Hud {
 
 	private void printText() {
 		glColor3f(1.0f, 1.0f, 1.0f);
-		font.drawText("SCORE:" + addZeros(score, 6), 0.0f, displayHeight
+		font.renderText("SCORE:" + addZeros(score, 6), 0.0f, displayHeight
 				- displayHeight / 17.0f);
 
-		font.drawText("LIVES:" + addZeros(lives, 3),
+		font.renderText("LIVES:" + addZeros(lives, 3),
 				Display.getWidth() * 0.69f, displayHeight - displayHeight
 						/ 17.0f);
 	}

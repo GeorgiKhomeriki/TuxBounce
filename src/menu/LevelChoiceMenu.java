@@ -38,7 +38,7 @@ public abstract class LevelChoiceMenu {
 		glColor3f(1.0f, highlightColor, 0.0f);
 		Fonts.get()
 				.large()
-				.drawText("BACK", Display.getWidth() * 0.45f,
+				.renderText("BACK", Display.getWidth() * 0.45f,
 						0.03f * Display.getHeight());
 	}
 

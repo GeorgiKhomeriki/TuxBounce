@@ -38,21 +38,21 @@ public abstract class Popup extends AbstractPopup {
 	public void renderContent() {
 		Fonts.get()
 				.large()
-				.drawText(title, getX() + 0.05f * getWidth(),
+				.renderText(title, getX() + 0.05f * getWidth(),
 						getY() + 0.7f * getHeight());
 		Fonts.get()
 				.small()
-				.drawText(message, getX() + 0.05f * getWidth(),
+				.renderText(message, getX() + 0.05f * getWidth(),
 						getY() + 0.5f * getHeight());
 		highlightSelection(SELECTION.YES);
 		Fonts.get()
 				.large()
-				.drawText("YES", getX() + 0.55f * getWidth(),
+				.renderText("YES", getX() + 0.55f * getWidth(),
 						getY() + 0.1f * getHeight());
 		highlightSelection(SELECTION.NO);
 		Fonts.get()
 				.large()
-				.drawText("NO", getX() + 0.8f * getWidth(),
+				.renderText("NO", getX() + 0.8f * getWidth(),
 						getY() + 0.1f * getHeight());
 	}
 

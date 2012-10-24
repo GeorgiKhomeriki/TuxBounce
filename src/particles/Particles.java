@@ -1,20 +1,16 @@
 package particles;
 
-import java.io.IOException;
+import engine.Texts;
+import game.Hud;
+import game.Paddle;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 import org.newdawn.slick.opengl.Texture;
-import org.newdawn.slick.opengl.TextureLoader;
-import org.newdawn.slick.util.ResourceLoader;
 
 import assets.Sounds;
-
-
-import engine.Texts;
-import game.Hud;
-import game.Paddle;
 
 public class Particles {
 	private List<Particle> particles;
@@ -47,17 +43,6 @@ public class Particles {
 	private float startB;
 	private float endB;
 
-	public Particles(int numParticles, String texture, float minX, float maxX,
-			float minY, float maxY, float minDx, float maxDx, float minDy,
-			float maxDy, float minAx, float maxAx, float minAy, float maxAy,
-			float minWidth, float maxWidth, float minHeight, float maxHeight,
-			int minLife, int maxLife, boolean doFade) {
-		this(numParticles, texture, minX, maxX, minY, maxY, minDx, maxDx,
-				minDy, maxDy, minAx, maxAx, minAy, maxAy, minWidth, maxWidth,
-				minHeight, maxHeight, minLife, maxLife, doFade, 1.0f, 1.0f,
-				1.0f, 1.0f, 1.0f, 1.0f);
-	}
-
 	public Particles(int numParticles, Texture texture, float minX, float maxX,
 			float minY, float maxY, float minDx, float maxDx, float minDy,
 			float maxDy, float minAx, float maxAx, float minAy, float maxAy,
@@ -65,36 +50,6 @@ public class Particles {
 			int minLife, int maxLife, boolean doFade, float startR,
 			float startG, float startB, float endR, float endG, float endB) {
 		this.texture = texture;
-		setVars(numParticles, minX, maxX, minY, maxY, minDx, maxDx, minDy,
-				maxDy, minAx, maxAx, minAy, maxAy, minWidth, maxWidth,
-				minHeight, maxHeight, minLife, maxLife, doFade, startR, startG,
-				startB, endR, endG, endB);
-	}
-
-	public Particles(int numParticles, String texture, float minX, float maxX,
-			float minY, float maxY, float minDx, float maxDx, float minDy,
-			float maxDy, float minAx, float maxAx, float minAy, float maxAy,
-			float minWidth, float maxWidth, float minHeight, float maxHeight,
-			int minLife, int maxLife, boolean doFade, float startR,
-			float startG, float startB, float endR, float endG, float endB) {
-		try {
-			this.texture = TextureLoader.getTexture("PNG",
-					ResourceLoader.getResourceAsStream(texture));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		setVars(numParticles, minX, maxX, minY, maxY, minDx, maxDx, minDy,
-				maxDy, minAx, maxAx, minAy, maxAy, minWidth, maxWidth,
-				minHeight, maxHeight, minLife, maxLife, doFade, startR, startG,
-				startB, endR, endG, endB);
-	}
-
-	private void setVars(int numParticles, float minX, float maxX, float minY,
-			float maxY, float minDx, float maxDx, float minDy, float maxDy,
-			float minAx, float maxAx, float minAy, float maxAy, float minWidth,
-			float maxWidth, float minHeight, float maxHeight, int minLife,
-			int maxLife, boolean doFade, float startR, float startG,
-			float startB, float endR, float endG, float endB) {
 		this.numParticles = numParticles;
 		this.minX = minX;
 		this.maxX = maxX;
@@ -148,7 +103,7 @@ public class Particles {
 	public void update(float delta, Paddle paddle, Texts texts) {
 		for (int i = 0; i < particles.size(); i++) {
 			Particle particle = particles.get(i);
-			if(particle.hasHitPaddle(paddle)) {
+			if (particle.hasHitPaddle(paddle)) {
 				particles.remove(i);
 				i--;
 				texts.add("+1", particle.getX(), particle.getY(), 30, true);

@@ -20,23 +20,7 @@ public class SimpleExplosion extends Particles {
 	private static final int maxLife = 150;
 	private static final boolean doFade = false;
 
-	public SimpleExplosion(int numParticles, Texture texture, float x, float y) {
-		super(numParticles, texture, x, x, y, y, minDx, maxDx, minDy, maxDy,
-				minAx, maxAx, minAy, maxAy, minWidth, maxWidth, minHeight,
-				maxHeight, minLife, maxLife, doFade, 1.0f, 1.0f, 1.0f, 1.0f,
-				1.0f, 1.0f);
-	}
-
 	public SimpleExplosion(int numParticles, Texture texture, float x, float y,
-			float startR, float startG, float startB, float endR, float endG,
-			float endB) {
-		super(numParticles, texture, x, x, y, y, minDx, maxDx, minDy, maxDy,
-				minAx, maxAx, minAy, maxAy, minWidth, maxWidth, minHeight,
-				maxHeight, minLife, maxLife, doFade, startR, startG, startB,
-				endR, endG, endB);
-	}
-
-	public SimpleExplosion(int numParticles, String texture, float x, float y,
 			float startR, float startG, float startB, float endR, float endG,
 			float endB) {
 		super(numParticles, texture, x, x, y, y, minDx, maxDx, minDy, maxDy,

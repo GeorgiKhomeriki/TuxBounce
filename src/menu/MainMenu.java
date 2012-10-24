@@ -50,33 +50,33 @@ public abstract class MainMenu {
 			highlightSelection(SELECTION.CONTINUE);
 			Fonts.get()
 					.large()
-					.drawText("CONTINUE", Display.getWidth() / 2.0f,
+					.renderText("CONTINUE", Display.getWidth() / 2.0f,
 							getSelectionY(SELECTION.CONTINUE));
 		}
 		highlightSelection(SELECTION.START);
 		Fonts.get()
 				.large()
-				.drawText("START", Display.getWidth() / 2.0f,
+				.renderText("START", Display.getWidth() / 2.0f,
 						getSelectionY(SELECTION.START));
 		highlightSelection(SELECTION.OPTIONS);
 		Fonts.get()
 				.large()
-				.drawText("OPTIONS", Display.getWidth() / 2.0f,
+				.renderText("OPTIONS", Display.getWidth() / 2.0f,
 						getSelectionY(SELECTION.OPTIONS));
 		highlightSelection(SELECTION.HIGHSCORE);
 		Fonts.get()
 				.large()
-				.drawText("HIGHSCORE", Display.getWidth() / 2.0f,
+				.renderText("HIGHSCORE", Display.getWidth() / 2.0f,
 						getSelectionY(SELECTION.HIGHSCORE));
 		highlightSelection(SELECTION.CREDITS);
 		Fonts.get()
 				.large()
-				.drawText("CREDITS", Display.getWidth() / 2.0f,
+				.renderText("CREDITS", Display.getWidth() / 2.0f,
 						getSelectionY(SELECTION.CREDITS));
 		highlightSelection(SELECTION.EXIT);
 		Fonts.get()
 				.large()
-				.drawText("EXIT", Display.getWidth() / 2.0f,
+				.renderText("EXIT", Display.getWidth() / 2.0f,
 						getSelectionY(SELECTION.EXIT));
 	}
 

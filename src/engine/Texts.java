@@ -34,7 +34,7 @@ public class Texts {
 			float alpha = t.isDoFade() ? ((float) t.getLife() - (float) t
 					.getAge()) / (float) t.getLife() : 1.0f;
 			glColor4f(1.0f, 1.0f, 1.0f, alpha);
-			Fonts.get().small().drawText(t.getText(), t.getX(), t.getY());
+			Fonts.get().small().renderText(t.getText(), t.getX(), t.getY());
 		}
 		if(isLightingEnabled)
 			glEnable(GL_LIGHTING);

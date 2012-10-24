@@ -39,19 +39,19 @@ public abstract class CreditsMenu {
 		glColor3f(1.0f, 1.0f, 1.0f);
 		Fonts.get()
 				.large()
-				.drawText("CODE:   GEORGI KHOMERIKI",
+				.renderText("CODE:   GEORGI KHOMERIKI",
 						0.02f * Display.getWidth(), 0.6f * Display.getHeight());
 		Fonts.get()
 				.large()
-				.drawText("DESIGN: KETI MAGLAPERIDZE",
+				.renderText("DESIGN: KETI MAGLAPERIDZE",
 						0.02f * Display.getWidth(), 0.5f * Display.getHeight());
 		Fonts.get()
 				.large()
-				.drawText("ASSETS: WWW.OPENGAMEART.ORG",
+				.renderText("ASSETS: WWW.OPENGAMEART.ORG",
 						0.02f * Display.getWidth(), 0.4f * Display.getHeight());
 		Fonts.get()
 				.large()
-				.drawText("        WWW.FREESOUND.ORG",
+				.renderText("        WWW.FREESOUND.ORG",
 						0.02f * Display.getWidth(), 0.3f * Display.getHeight());
 	}
 
@@ -59,7 +59,7 @@ public abstract class CreditsMenu {
 		glColor3f(1.0f, highlightColor, 0.0f);
 		Fonts.get()
 				.large()
-				.drawText("BACK", Display.getWidth() * 0.45f,
+				.renderText("BACK", Display.getWidth() * 0.45f,
 						0.03f * Display.getHeight());
 	}
 
