@@ -12,11 +12,7 @@ import org.newdawn.slick.opengl.Texture;
 
 import assets.Textures;
 
-import engine.Font;
-
 public abstract class AbstractPopup {
-	private Font fontSmall;
-	private Font fontLarge;
 	private boolean enabled;
 	private float x;
 	private float y;
@@ -29,8 +25,6 @@ public abstract class AbstractPopup {
 		this.x = 0.5f * Display.getWidth() - 0.5f * width;
 		this.y = 0.5f * Display.getHeight() - 0.5f * height;
 		this.enabled = false;
-		this.fontSmall = new Font("resources/fonts/bubblemad_8x8.png", 83, 8);
-		this.fontLarge = new Font("resources/fonts/kromasky_16x16.png", 59, 16);
 	}
 
 	public abstract void renderContent();
@@ -71,14 +65,6 @@ public abstract class AbstractPopup {
 
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
-	}
-
-	public Font getFontSmall() {
-		return fontSmall;
-	}
-
-	public Font getFontLarge() {
-		return fontLarge;
 	}
 
 	public float getX() {

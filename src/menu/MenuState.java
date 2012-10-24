@@ -18,8 +18,6 @@ import org.newdawn.slick.opengl.Texture;
 
 import assets.Sounds;
 import assets.Textures;
-
-import engine.Font;
 import engine.IGameState;
 
 public class MenuState implements IGameState {
@@ -31,7 +29,6 @@ public class MenuState implements IGameState {
 	private OptionsMenu optionsMenu;
 	private HighscoreMenu highscoreMenu;
 	private CreditsMenu creditsMenu;
-	private Font font;
 
 	@Override
 	public String getName() {
@@ -40,13 +37,7 @@ public class MenuState implements IGameState {
 
 	@Override
 	public void init() {
-		font = new Font("resources/fonts/kromasky_16x16.png", 59, 16);
-
-		initMenus();
-	}
-
-	private void initMenus() {
-		mainMenu = new MainMenu(font) {
+		mainMenu = new MainMenu() {
 			@Override
 			public void showLevelChoice() {
 				currentMenu.set(MENU.LEVEL_CHOICE);
@@ -68,28 +59,28 @@ public class MenuState implements IGameState {
 			}
 		};
 
-		levelChoiceMenu = new LevelChoiceMenu(font) {
+		levelChoiceMenu = new LevelChoiceMenu() {
 			@Override
 			public void backToMainMenu() {
 				currentMenu.set(MENU.MAIN);
 			}
 		};
 
-		optionsMenu = new OptionsMenu(font) {
+		optionsMenu = new OptionsMenu() {
 			@Override
 			public void backToMainMenu() {
 				currentMenu.set(MENU.MAIN);
 			}
 		};
 
-		highscoreMenu = new HighscoreMenu(font) {
+		highscoreMenu = new HighscoreMenu() {
 			@Override
 			public void backToMainMenu() {
 				currentMenu.set(MENU.MAIN);
 			}
 		};
 
-		creditsMenu = new CreditsMenu(font) {
+		creditsMenu = new CreditsMenu() {
 			@Override
 			public void backToMainMenu() {
 				currentMenu.set(MENU.MAIN);

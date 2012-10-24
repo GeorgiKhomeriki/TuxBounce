@@ -14,25 +14,22 @@ import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 import org.newdawn.slick.opengl.Texture;
 
+import util.Graphics;
+import assets.Fonts;
 import assets.Sounds;
 import assets.Textures;
-
-import util.Graphics;
-import engine.Font;
 
 public abstract class OptionsMenu {
 	private enum SELECTION {
 		RESOLUTION, FULLSCREEN, SOUND, BACK
 	}
 
-	private Font font;
 	private SELECTION currentSelection;
 	private boolean isKeyPressed;
 	private float highlightColor;
 	private float highlightColorDelta;
 
-	public OptionsMenu(Font font) {
-		this.font = font;
+	public OptionsMenu() {
 		this.currentSelection = SELECTION.RESOLUTION;
 		this.isKeyPressed = true;
 		this.highlightColor = 1.0f;
@@ -50,13 +47,18 @@ public abstract class OptionsMenu {
 	private void renderOptions() {
 		float x = 0.1f * Display.getWidth();
 		highlightSelection(SELECTION.RESOLUTION);
-		font.drawText("RESOLUTION:", x, getSelectionY(SELECTION.RESOLUTION));
+		Fonts.get()
+				.large()
+				.drawText("RESOLUTION:", x, getSelectionY(SELECTION.RESOLUTION));
 		highlightSelection(SELECTION.FULLSCREEN);
-		font.drawText("FULLSCREEN:", x, getSelectionY(SELECTION.FULLSCREEN));
+		Fonts.get()
+				.large()
+				.drawText("FULLSCREEN:", x, getSelectionY(SELECTION.FULLSCREEN));
 		highlightSelection(SELECTION.SOUND);
-		font.drawText("SOUND:", x, getSelectionY(SELECTION.SOUND));
+		Fonts.get().large()
+				.drawText("SOUND:", x, getSelectionY(SELECTION.SOUND));
 		highlightSelection(SELECTION.BACK);
-		font.drawText("BACK", x, getSelectionY(SELECTION.BACK));
+		Fonts.get().large().drawText("BACK", x, getSelectionY(SELECTION.BACK));
 	}
 
 	private void highlightSelection(SELECTION selection) {
@@ -70,14 +72,16 @@ public abstract class OptionsMenu {
 		glColor3f(1.0f, 1.0f, 1.0f);
 		float x = 0.5f * Display.getWidth();
 		String resolution = Display.getWidth() + "X" + Display.getHeight();
-		font.drawText(resolution, x, getSelectionY(SELECTION.RESOLUTION));
+		Fonts.get().large()
+				.drawText(resolution, x, getSelectionY(SELECTION.RESOLUTION));
 		String fullscreen = booleanToString(Display.isFullscreen());
 		if (!Display.getDisplayMode().isFullscreenCapable()) {
 			fullscreen = "CHANGE RES.";
 		}
-		font.drawText(fullscreen, x, getSelectionY(SELECTION.FULLSCREEN));
+		Fonts.get().large()
+				.drawText(fullscreen, x, getSelectionY(SELECTION.FULLSCREEN));
 		String sound = booleanToString(Sounds.get().isEnabled());
-		font.drawText(sound, x, getSelectionY(SELECTION.SOUND));
+		Fonts.get().large().drawText(sound, x, getSelectionY(SELECTION.SOUND));
 	}
 
 	private String booleanToString(boolean b) {
@@ -167,9 +171,10 @@ public abstract class OptionsMenu {
 		float y = Mouse.getY();
 		return x > 0.1f * Display.getWidth()
 				&& x < 0.1f * Display.getWidth() + 10
-						* font.getCharacterWidth()
+						* Fonts.get().large().getCharacterWidth()
 				&& y > getSelectionY(selection)
-				&& y < getSelectionY(selection) + font.getCharacterHeight();
+				&& y < getSelectionY(selection)
+						+ Fonts.get().large().getCharacterHeight();
 	}
 
 	private void handleSelectedAction() {

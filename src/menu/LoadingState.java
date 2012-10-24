@@ -1,5 +1,6 @@
 package menu;
 
+import assets.Fonts;
 import assets.Sounds;
 import assets.Textures;
 import engine.Game;
@@ -40,6 +41,7 @@ public class LoadingState implements IGameState {
 		if (startLoading) {
 			Sounds.get();
 			Textures.get();
+			Fonts.get();
 			Sounds.get().setEnabled(false);
 			Game.get().setCurrentState(MenuState.name);
 		}

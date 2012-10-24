@@ -6,33 +6,30 @@ import static org.lwjgl.opengl.GL11.glColor3f;
 import static org.lwjgl.opengl.GL11.glEnd;
 import static org.lwjgl.opengl.GL11.glTexCoord2f;
 import static org.lwjgl.opengl.GL11.glVertex2f;
+import engine.Game;
+import game.GameState;
+import game.Hud;
 
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.newdawn.slick.opengl.Texture;
 
+import assets.Fonts;
 import assets.Sounds;
 import assets.Textures;
-
-import engine.Font;
-import engine.Game;
-import game.GameState;
-import game.Hud;
 
 public abstract class MainMenu {
 	private enum SELECTION {
 		CONTINUE, START, OPTIONS, HIGHSCORE, CREDITS, EXIT
 	}
 
-	private Font font;
 	private SELECTION currentSelection;
 	private boolean isKeyPressed;
 	private float highlightColor;
 	private float highlightColorDelta;
 
-	public MainMenu(Font font) {
-		this.font = font;
+	public MainMenu() {
 		this.currentSelection = SELECTION.START;
 		this.isKeyPressed = true;
 		this.highlightColor = 1.0f;
@@ -51,24 +48,36 @@ public abstract class MainMenu {
 		renderCursor();
 		if (GameState.paused) {
 			highlightSelection(SELECTION.CONTINUE);
-			font.drawText("CONTINUE", Display.getWidth() / 2.0f,
-					getSelectionY(SELECTION.CONTINUE));
+			Fonts.get()
+					.large()
+					.drawText("CONTINUE", Display.getWidth() / 2.0f,
+							getSelectionY(SELECTION.CONTINUE));
 		}
 		highlightSelection(SELECTION.START);
-		font.drawText("START", Display.getWidth() / 2.0f,
-				getSelectionY(SELECTION.START));
+		Fonts.get()
+				.large()
+				.drawText("START", Display.getWidth() / 2.0f,
+						getSelectionY(SELECTION.START));
 		highlightSelection(SELECTION.OPTIONS);
-		font.drawText("OPTIONS", Display.getWidth() / 2.0f,
-				getSelectionY(SELECTION.OPTIONS));
+		Fonts.get()
+				.large()
+				.drawText("OPTIONS", Display.getWidth() / 2.0f,
+						getSelectionY(SELECTION.OPTIONS));
 		highlightSelection(SELECTION.HIGHSCORE);
-		font.drawText("HIGHSCORE", Display.getWidth() / 2.0f,
-				getSelectionY(SELECTION.HIGHSCORE));
+		Fonts.get()
+				.large()
+				.drawText("HIGHSCORE", Display.getWidth() / 2.0f,
+						getSelectionY(SELECTION.HIGHSCORE));
 		highlightSelection(SELECTION.CREDITS);
-		font.drawText("CREDITS", Display.getWidth() / 2.0f,
-				getSelectionY(SELECTION.CREDITS));
+		Fonts.get()
+				.large()
+				.drawText("CREDITS", Display.getWidth() / 2.0f,
+						getSelectionY(SELECTION.CREDITS));
 		highlightSelection(SELECTION.EXIT);
-		font.drawText("EXIT", Display.getWidth() / 2.0f,
-				getSelectionY(SELECTION.EXIT));
+		Fonts.get()
+				.large()
+				.drawText("EXIT", Display.getWidth() / 2.0f,
+						getSelectionY(SELECTION.EXIT));
 	}
 
 	private void highlightSelection(SELECTION selection) {
@@ -165,9 +174,9 @@ public abstract class MainMenu {
 		float x = Mouse.getX();
 		float y = Mouse.getY();
 		return x > Display.getWidth() / 2.0f
-				&& x < Display.getWidth() / 2.0f + 7 * font.getCharacterWidth()
+				&& x < Display.getWidth() / 2.0f + 7 * Fonts.get().large().getCharacterWidth()
 				&& y > getSelectionY(selection)
-				&& y < getSelectionY(selection) + font.getCharacterHeight();
+				&& y < getSelectionY(selection) + Fonts.get().large().getCharacterHeight();
 	}
 
 	private void handleSelectedAction() {

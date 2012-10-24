@@ -12,19 +12,16 @@ import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.newdawn.slick.opengl.Texture;
 
+import assets.Fonts;
 import assets.Sounds;
 import assets.Textures;
 
-import engine.Font;
-
 public abstract class HighscoreMenu {
-	private Font font;
 	private boolean isKeyPressed;
 	private float highlightColor;
 	private float highlightColorDelta;
 
-	public HighscoreMenu(Font font) {
-		this.font = font;
+	public HighscoreMenu() {
 		this.isKeyPressed = true;
 		this.highlightColor = 1.0f;
 		this.highlightColorDelta = -1.0f;
@@ -39,8 +36,10 @@ public abstract class HighscoreMenu {
 
 	private void renderBack() {
 		glColor3f(1.0f, highlightColor, 0.0f);
-		font.drawText("BACK", Display.getWidth() * 0.45f,
-				0.03f * Display.getHeight());
+		Fonts.get()
+				.large()
+				.drawText("BACK", Display.getWidth() * 0.45f,
+						0.03f * Display.getHeight());
 	}
 
 	private void renderCursor() {
@@ -82,9 +81,10 @@ public abstract class HighscoreMenu {
 		float y = Mouse.getY();
 		return x > Display.getWidth() * 0.45f
 				&& x < Display.getWidth() * 0.45f + 4
-						* font.getCharacterWidth()
+						* Fonts.get().large().getCharacterWidth()
 				&& y > 0.03f * Display.getHeight()
-				&& y < 0.03f * Display.getHeight() + font.getCharacterHeight();
+				&& y < 0.03f * Display.getHeight()
+						+ Fonts.get().large().getCharacterHeight();
 	}
 
 	private void updateHighlightColor(float delta) {

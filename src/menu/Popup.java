@@ -1,16 +1,14 @@
 package menu;
 
 import static org.lwjgl.opengl.GL11.glColor3f;
+import engine.Game;
+import game.GameState;
 
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
+import assets.Fonts;
 import assets.Sounds;
-
-
-import engine.Game;
-import game.GameState;
-
 
 public abstract class Popup extends AbstractPopup {
 	public enum SELECTION {
@@ -38,16 +36,24 @@ public abstract class Popup extends AbstractPopup {
 
 	@Override
 	public void renderContent() {
-		getFontLarge().drawText(title, getX() + 0.05f * getWidth(),
-				getY() + 0.7f * getHeight());
-		getFontSmall().drawText(message, getX() + 0.05f * getWidth(),
-				getY() + 0.5f * getHeight());
+		Fonts.get()
+				.large()
+				.drawText(title, getX() + 0.05f * getWidth(),
+						getY() + 0.7f * getHeight());
+		Fonts.get()
+				.small()
+				.drawText(message, getX() + 0.05f * getWidth(),
+						getY() + 0.5f * getHeight());
 		highlightSelection(SELECTION.YES);
-		getFontLarge().drawText("YES", getX() + 0.55f * getWidth(),
-				getY() + 0.1f * getHeight());
+		Fonts.get()
+				.large()
+				.drawText("YES", getX() + 0.55f * getWidth(),
+						getY() + 0.1f * getHeight());
 		highlightSelection(SELECTION.NO);
-		getFontLarge().drawText("NO", getX() + 0.8f * getWidth(),
-				getY() + 0.1f * getHeight());
+		Fonts.get()
+				.large()
+				.drawText("NO", getX() + 0.8f * getWidth(),
+						getY() + 0.1f * getHeight());
 	}
 
 	private void highlightSelection(SELECTION selection) {
@@ -115,10 +121,10 @@ public abstract class Popup extends AbstractPopup {
 		}
 		return x > getX() + loc * getWidth()
 				&& x < getX() + loc * getWidth() + size
-						* getFontLarge().getCharacterWidth()
+						* Fonts.get().large().getCharacterWidth()
 				&& y > getY() + 0.1f * getHeight()
 				&& y < getY() + 0.1f * getHeight()
-						+ getFontLarge().getCharacterHeight();
+						+ Fonts.get().large().getCharacterHeight();
 	}
 
 	private void handleSelectedAction() {

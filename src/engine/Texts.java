@@ -1,16 +1,20 @@
 package engine;
 
-import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL11.GL_LIGHTING;
+import static org.lwjgl.opengl.GL11.glColor4f;
+import static org.lwjgl.opengl.GL11.glDisable;
+import static org.lwjgl.opengl.GL11.glEnable;
+import static org.lwjgl.opengl.GL11.glIsEnabled;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import assets.Fonts;
+
 public class Texts {
 	private List<Text> texts;
-	private Font font;
 
 	public Texts() {
-		font = new Font("resources/fonts/bubblemad_8x8.png", 83, 8);
 		texts = new ArrayList<Text>();
 	}
 
@@ -30,7 +34,7 @@ public class Texts {
 			float alpha = t.isDoFade() ? ((float) t.getLife() - (float) t
 					.getAge()) / (float) t.getLife() : 1.0f;
 			glColor4f(1.0f, 1.0f, 1.0f, alpha);
-			font.drawText(t.getText(), t.getX(), t.getY());
+			Fonts.get().small().drawText(t.getText(), t.getX(), t.getY());
 		}
 		if(isLightingEnabled)
 			glEnable(GL_LIGHTING);
