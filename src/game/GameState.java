@@ -12,7 +12,6 @@ import static org.lwjgl.opengl.GL11.glVertex2f;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import menu.MenuState;
 import menu.Popup;
@@ -23,12 +22,12 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.openal.SoundStore;
 import org.newdawn.slick.opengl.Texture;
 
-import assets.Sounds;
-import assets.Textures;
-
 import particles.Particles;
 import particles.SimpleExplosion;
 import util.LevelLoader;
+import util.Random;
+import assets.Sounds;
+import assets.Textures;
 import engine.Game;
 import engine.IGameState;
 import engine.Texts;
@@ -47,7 +46,6 @@ public class GameState implements IGameState {
 	private List<Particles> particles;
 	private List<Coin> coins;
 	private Texts texts;
-	private Random random;
 	private int level;
 	private Popup winPopup;
 	private Popup losePopup;
@@ -76,7 +74,6 @@ public class GameState implements IGameState {
 		particles = new ArrayList<Particles>();
 		coins = new ArrayList<Coin>();
 		texts = new Texts();
-		random = new Random();
 		winPopup.setEnabled(false);
 		losePopup.setEnabled(false);
 		spawnBall();
@@ -313,7 +310,7 @@ public class GameState implements IGameState {
 		case BROWN_FACE_BROKEN:
 			texts.add("MAGIC POTION", coin.getX(), coin.getY(), 130, true);
 			for (Block b : blocks) {
-				if (random.nextFloat() < 0.2f) {
+				if (Random.get().nextFloat() < 0.2f) {
 					b.onHit();
 					spawnParticles(b);
 					spawnCoin(b);
