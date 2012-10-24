@@ -78,11 +78,12 @@ public class Ball {
 			}
 		} else {
 			long time = Timer.getTime();
-			if (time - debounceStartTimeX > DEBOUNCE_TIME
-					&& (x - 0.5f * hitR < 0 || x + 0.5f * hitR > Display.getWidth())) {
-				dx = -dx;
-				debounceStartTimeX = Timer.getTime();
-			}
+//			if (time - debounceStartTimeX > DEBOUNCE_TIME
+//					&& (x - 0.5f * hitR < 0 || x + 0.5f * hitR > Display
+//							.getWidth())) {
+//				dx = -dx;
+//				debounceStartTimeX = Timer.getTime();
+//			}
 
 			if (time - debounceStartTimeY > DEBOUNCE_TIME) {
 				if (y + 0.5f * r > Display.getHeight() - Hud.height) {
@@ -100,8 +101,17 @@ public class Ball {
 				}
 			}
 
-			x += dx * delta / 300.0f;
-			y += dy * delta / 300.0f * speedFactor;
+			float newX = x + dx * delta / 300.0f;
+			float newY = y + dy * delta / 300.0f * speedFactor;
+
+			if (newX - 0.5f * hitR < 0 || 
+					newX + 0.5f * hitR > Display.getWidth()) {
+				dx = -dx;
+				newX = x + dx * delta / 300.0f;
+			}
+			x = newX;
+			y = newY;
+			
 			angle -= 0.1f * dx;
 		}
 	}
@@ -109,13 +119,13 @@ public class Ball {
 	public void bounce(Block block) {
 		// remove 'else' for previous bouncing scheme
 		if (Timer.getTime() - debounceStartTimeY > DEBOUNCE_TIME
-				&& (block.getY() - Block.height < y + 0.5f * hitR || block.getY() > y
-						- 0.5f * hitR)) {
+				&& (block.getY() - Block.height < y + 0.5f * hitR || block
+						.getY() > y - 0.5f * hitR)) {
 			dy = -dy;
 			debounceStartTimeY = Timer.getTime();
 		} else if (Timer.getTime() - debounceStartTimeX > DEBOUNCE_TIME
-				&& (block.getX() < x + 0.5f * hitR || block.getX() + Block.width > x
-						- 0.5f * hitR)) {
+				&& (block.getX() < x + 0.5f * hitR || block.getX()
+						+ Block.width > x - 0.5f * hitR)) {
 			dx = -dx;
 			debounceStartTimeX = Timer.getTime();
 		}
