@@ -1,15 +1,17 @@
 package game;
 
-import game.Block.BlockType;
 import static org.lwjgl.opengl.GL11.GL_QUADS;
 import static org.lwjgl.opengl.GL11.glBegin;
 import static org.lwjgl.opengl.GL11.glColor3f;
 import static org.lwjgl.opengl.GL11.glEnd;
 import static org.lwjgl.opengl.GL11.glTexCoord2f;
 import static org.lwjgl.opengl.GL11.glVertex2f;
+import game.Block.BlockType;
 
 import org.lwjgl.opengl.Display;
 import org.newdawn.slick.opengl.Texture;
+
+import textures.Textures;
 
 public class Coin {
 	private Texture texture;
@@ -18,23 +20,20 @@ public class Coin {
 	private float y;
 	private float width;
 	private float height;
-	private float dx;
 	private float dy;
 
-	public Coin(Texture texture, BlockType type, float x, float y, float width,
-			float height, float dx, float dy) {
-		this.texture = texture;
+	public Coin(BlockType type, float x, float y, float width, float height,
+			float dy) {
 		this.type = type;
 		this.x = x;
 		this.y = y;
 		this.width = width;
 		this.height = height;
-		this.dx = dx;
 		this.dy = dy;
+		this.texture = Textures.get().getCoinTexture(type);
 	}
 
 	public void update(float delta) {
-		x += dx / delta;
 		y += dy / delta;
 	}
 
@@ -63,33 +62,17 @@ public class Coin {
 	public boolean isAlive() {
 		return x >= 0 && x <= Display.getWidth() && y >= 0;
 	}
-	
-	public Texture getTexture() {
-		return texture;
-	}
 
 	public BlockType getType() {
 		return type;
-	}
-
-	public void setType(BlockType type) {
-		this.type = type;
 	}
 
 	public float getX() {
 		return x;
 	}
 
-	public void setX(float x) {
-		this.x = x;
-	}
-
 	public float getY() {
 		return y;
-	}
-
-	public void setY(float y) {
-		this.y = y;
 	}
 
 }

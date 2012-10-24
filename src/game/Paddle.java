@@ -1,24 +1,24 @@
 package game;
 
-import static org.lwjgl.opengl.GL11.*;
-
-import java.io.IOException;
+import static org.lwjgl.opengl.GL11.GL_QUADS;
+import static org.lwjgl.opengl.GL11.glBegin;
+import static org.lwjgl.opengl.GL11.glEnd;
+import static org.lwjgl.opengl.GL11.glTexCoord2f;
+import static org.lwjgl.opengl.GL11.glVertex2f;
 
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.opengl.Texture;
-import org.newdawn.slick.opengl.TextureLoader;
-import org.newdawn.slick.util.ResourceLoader;
 
 import sound.Sound;
+import textures.Textures;
 
 public class Paddle {
 	private float x;
 	private float y;
 	private float width;
 	private float height;
-	private Texture texture;
 	private float bounceIndex;
 	private float bounceSize;
 	private float bounceHeight;
@@ -33,16 +33,10 @@ public class Paddle {
 		this.bounceSize = 0.0f;
 		this.bounceHeight = 0.0f;
 		this.bounceCenter = 0.5f;
-
-		try {
-			texture = TextureLoader.getTexture("PNG", ResourceLoader
-					.getResourceAsStream("resources/images/paddle.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 	}
 
 	public void render() {
+		Texture texture = Textures.get().getPaddle();
 		texture.bind();
 		Color.white.bind();
 
@@ -69,11 +63,11 @@ public class Paddle {
 
 	public void update(float delta) {
 		x = Mouse.getX() - width / 2;
-		
-		if(x < 0.0f) {
+
+		if (x < 0.0f) {
 			x = 0.0f;
-		} else if(x + width > Display.getWidth()) {
-			x = Display.getWidth() - 0.95f*width;
+		} else if (x + width > Display.getWidth()) {
+			x = Display.getWidth() - 0.95f * width;
 		}
 
 		if (bounceSize <= 0.0f) {
@@ -85,10 +79,10 @@ public class Paddle {
 			bounceSize -= 0.2f;
 		}
 	}
-	
+
 	public void bounce(float bounceCenter) {
 		this.bounceCenter = bounceCenter;
-		bounceSize = 0.2f * height; 
+		bounceSize = 0.2f * height;
 		Sound.get().playBoing();
 	}
 
@@ -119,7 +113,7 @@ public class Paddle {
 	public float getBounceHeight() {
 		return bounceHeight;
 	}
-	
+
 	public float getHeight() {
 		return height;
 	}

@@ -5,7 +5,6 @@ import menu.MenuState;
 
 import org.lwjgl.LWJGLException;
 
-import sound.Sound;
 import engine.Game;
 import game.GameState;
 

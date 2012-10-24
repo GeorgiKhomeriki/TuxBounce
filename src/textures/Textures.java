@@ -1,5 +1,7 @@
 package textures;
 
+import game.Block.BlockType;
+
 import java.io.IOException;
 
 import org.newdawn.slick.opengl.Texture;
@@ -99,6 +101,52 @@ public class Textures {
 			
 		} catch (IOException e) {
 			e.printStackTrace();
+		}
+	}
+	
+	public Texture getBlockTexture(BlockType type) {
+		switch (type) {
+		case RED:
+			return blockRed;
+		case PURPLE:
+			return blockPurple;
+		case ORANGE:
+			return blockOrange;
+		case GREY_FACE:
+			return blockGreyFace;
+		case GREEN_FACE:
+			return blockGreenFace;
+		case BLUE_FACE:
+			return blockBlueFace;
+		case RED_FACE:
+			return blockRedFace;
+		case WALL:
+			return blockWall;
+		case WALL_BROKEN:
+			return blockWallBroken;
+		case BROWN_FACE:
+			return blockBrownFace;
+		case BROWN_FACE_BROKEN:
+			return blockBrownFaceBroken;
+		default:
+			return null;
+		}
+	}
+	
+	public Texture getCoinTexture(BlockType type) {
+		switch (type) {
+		case BLUE_FACE:
+			return coinBlue;
+		case RED_FACE:
+			return coinRed;
+		case GREEN_FACE:
+			return coinGreen;
+		case GREY_FACE:
+			return coinGrey;
+		case BROWN_FACE_BROKEN:
+			return coinPotion;
+		default:
+			return null;
 		}
 	}
 		

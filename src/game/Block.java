@@ -7,16 +7,13 @@ import static org.lwjgl.opengl.GL11.glEnd;
 import static org.lwjgl.opengl.GL11.glTexCoord2f;
 import static org.lwjgl.opengl.GL11.glVertex2f;
 
-import java.io.IOException;
 import java.util.List;
 
 import org.lwjgl.opengl.Display;
 import org.newdawn.slick.opengl.Texture;
-import org.newdawn.slick.opengl.TextureLoader;
-import org.newdawn.slick.util.ResourceLoader;
 
 import sound.Sound;
-import util.LevelLoader;
+import textures.Textures;
 
 public class Block {
 	public static final float width = Display.getWidth() / 20;
@@ -43,12 +40,7 @@ public class Block {
 		this.opacity = 1.0f;
 		this.state = BlockState.ALIVE;
 		this.type = type;
-		try {
-			texture = TextureLoader.getTexture("PNG", ResourceLoader
-					.getResourceAsStream(LevelLoader.getTexture(type)));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		this.texture = Textures.get().getBlockTexture(type);
 	}
 
 	public void render() {
@@ -93,6 +85,7 @@ public class Block {
 		Sound.get().playHit();
 	}
 
+	// TODO: check this!
 	public boolean isHit(List<Ball> balls) {
 		for (Ball ball : balls) {
 			if (x < ball.getX() + 0.5f * ball.getHitR()
@@ -110,16 +103,8 @@ public class Block {
 		return x;
 	}
 
-	public void setX(float x) {
-		this.x = x;
-	}
-
 	public float getY() {
 		return y;
-	}
-
-	public void setY(float y) {
-		this.y = y;
 	}
 
 	public BlockState getState() {
@@ -136,11 +121,6 @@ public class Block {
 
 	public void setType(BlockType type) {
 		this.type = type;
-		try {
-			texture = TextureLoader.getTexture("PNG", ResourceLoader
-					.getResourceAsStream(LevelLoader.getTexture(type)));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		this.texture = Textures.get().getBlockTexture(type);
 	}
 }

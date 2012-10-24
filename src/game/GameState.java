@@ -10,7 +10,6 @@ import static org.lwjgl.opengl.GL11.glLoadIdentity;
 import static org.lwjgl.opengl.GL11.glTexCoord2f;
 import static org.lwjgl.opengl.GL11.glVertex2f;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -23,12 +22,11 @@ import org.lwjgl.opengl.Display;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.openal.SoundStore;
 import org.newdawn.slick.opengl.Texture;
-import org.newdawn.slick.opengl.TextureLoader;
-import org.newdawn.slick.util.ResourceLoader;
 
 import particles.Particles;
 import particles.SimpleExplosion;
 import sound.Sound;
+import textures.Textures;
 import util.LevelLoader;
 import engine.Game;
 import engine.IGameState;
@@ -42,13 +40,11 @@ public class GameState implements IGameState {
 
 	public static boolean paused = false;
 
-	private Texture bgTexture;
 	private Paddle paddle;
 	private List<Ball> balls;
 	private List<Block> blocks;
 	private List<Particles> particles;
 	private List<Coin> coins;
-	private Texture[] coinTextures;
 	private Texts texts;
 	private Random random;
 	private int level;
@@ -64,12 +60,6 @@ public class GameState implements IGameState {
 
 	@Override
 	public void init() {
-		try {
-			loadTextures();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
 		level = 0;
 		initPopups();
 		initLevel(level);
@@ -92,9 +82,8 @@ public class GameState implements IGameState {
 	}
 
 	private void initPopups() {
-		winPopup = new Popup("AWESOME!",
-				"ARE YOU READY FOR THE NEXT LEVEL?", 0.5f * Display.getWidth(),
-				0.333f * Display.getHeight()) {
+		winPopup = new Popup("AWESOME!", "ARE YOU READY FOR THE NEXT LEVEL?",
+				0.5f * Display.getWidth(), 0.333f * Display.getHeight()) {
 			@Override
 			public void doYes() {
 				initLevel(++level);
@@ -108,22 +97,6 @@ public class GameState implements IGameState {
 				initLevel(level);
 			}
 		};
-	}
-
-	private void loadTextures() throws IOException {
-		bgTexture = TextureLoader.getTexture("PNG", ResourceLoader
-				.getResourceAsStream("resources/images/coldmountain.png"));
-		coinTextures = new Texture[5];
-		coinTextures[0] = TextureLoader.getTexture("PNG", ResourceLoader
-				.getResourceAsStream("resources/images/coinBlue.png"));
-		coinTextures[1] = TextureLoader.getTexture("PNG", ResourceLoader
-				.getResourceAsStream("resources/images/coinRed.png"));
-		coinTextures[2] = TextureLoader.getTexture("PNG", ResourceLoader
-				.getResourceAsStream("resources/images/coinGreen.png"));
-		coinTextures[3] = TextureLoader.getTexture("PNG", ResourceLoader
-				.getResourceAsStream("resources/images/coinGrey.png"));
-		coinTextures[4] = TextureLoader.getTexture("PNG", ResourceLoader
-				.getResourceAsStream("resources/images/coinPotion.png"));
 	}
 
 	@Override
@@ -171,6 +144,7 @@ public class GameState implements IGameState {
 	}
 
 	private void renderBackground() {
+		Texture bgTexture = Textures.get().getBgGame1();
 		float screenWidth = Display.getWidth();
 		float screenHeight = Display.getHeight();
 		float texWidth = bgTexture.getWidth();
@@ -367,36 +341,19 @@ public class GameState implements IGameState {
 	}
 
 	private void spawnParticles(Coin coin) {
-		particles.add(new SimpleExplosion(100, coin.getTexture(), coin.getX()
-				+ 0.5f * Block.width, coin.getY(), 0.4f, 0.4f, 0.4f, 1.0f,
-				1.0f, 1.0f));
+		particles.add(new SimpleExplosion(100, Textures.get().getCoinGreen(),
+				coin.getX() + 0.5f * Block.width, coin.getY(), 0.4f, 0.4f,
+				0.4f, 1.0f, 1.0f, 1.0f));
 	}
 
 	private void spawnCoin(Block block) {
-		BlockType type = block.getType();
-		switch (type) {
-		case BLUE_FACE:
-			coins.add(new Coin(coinTextures[0], type, block.getX(), block
-					.getY(), Block.width, Block.height, 0.0f, -40.0f));
-			break;
-		case RED_FACE:
-			coins.add(new Coin(coinTextures[1], type, block.getX(), block
-					.getY(), Block.width, Block.height, 0.0f, -40.0f));
-			break;
-		case GREEN_FACE:
-			coins.add(new Coin(coinTextures[2], type, block.getX(), block
-					.getY(), Block.width, Block.height, 0.0f, -40.0f));
-			break;
-		case GREY_FACE:
-			coins.add(new Coin(coinTextures[3], type, block.getX(), block
-					.getY(), Block.width, Block.height, 0.0f, -40.0f));
-			break;
-		case BROWN_FACE_BROKEN:
-			coins.add(new Coin(coinTextures[4], type, block.getX(), block
-					.getY(), Block.width, Block.height, 0.0f, -40.0f));
-			break;
-		default:
-			break;
+		if (block.getType().equals(Block.BlockType.BLUE_FACE)
+				|| block.getType().equals(Block.BlockType.RED_FACE)
+				|| block.getType().equals(Block.BlockType.GREEN_FACE)
+				|| block.getType().equals(Block.BlockType.GREY_FACE)
+				|| block.getType().equals(Block.BlockType.BROWN_FACE_BROKEN)) {
+			coins.add(new Coin(block.getType(), block.getX(), block.getY(),
+					Block.width, Block.height, -40.0f));
 		}
 	}
 

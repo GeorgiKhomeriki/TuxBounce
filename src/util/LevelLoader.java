@@ -11,8 +11,6 @@ import java.util.Scanner;
 
 import org.lwjgl.opengl.Display;
 
-
-
 public class LevelLoader {
 
 	public static List<Block> load(String file, float offset) {
@@ -60,36 +58,6 @@ public class LevelLoader {
 			return BlockType.WALL;
 		case 9:
 			return BlockType.BROWN_FACE;
-		default:
-			return null;
-		}
-	}
-
-	public static String getTexture(BlockType type) {
-		String baseDir = "resources/images/";
-		switch (type) {
-		case RED:
-			return baseDir + "blockRed.png";
-		case PURPLE:
-			return baseDir + "blockPurple.png";
-		case ORANGE:
-			return baseDir + "blockOrange.png";
-		case GREY_FACE:
-			return baseDir + "blockFaceGrey.png";
-		case GREEN_FACE:
-			return baseDir + "blockFaceGreen.png";
-		case BLUE_FACE:
-			return baseDir + "blockFaceBlue.png";
-		case RED_FACE:
-			return baseDir + "blockFaceRed.png";
-		case WALL:
-			return baseDir + "blockWall1.png";
-		case WALL_BROKEN:
-			return baseDir + "blockWall2.png";
-		case BROWN_FACE:
-			return baseDir + "blockFaceBrown1.png";
-		case BROWN_FACE_BROKEN:
-			return baseDir + "blockFaceBrown2.png";
 		default:
 			return null;
 		}

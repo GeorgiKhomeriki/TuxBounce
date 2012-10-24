@@ -30,12 +30,6 @@ public class Particle {
 	private float alpha;
 
 	public Particle(Texture texture, float x, float y, float dx, float dy,
-			float ax, float ay, float width, float height, int life) {
-		this(texture, x, y, dx, dy, ax, ay, width, height, life, 1.0f, 1.0f,
-				1.0f);
-	}
-
-	public Particle(Texture texture, float x, float y, float dx, float dy,
 			float ax, float ay, float width, float height, int life, float R,
 			float G, float B) {
 		this.texture = texture;

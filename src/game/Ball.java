@@ -10,14 +10,11 @@ import static org.lwjgl.opengl.GL11.glTexCoord2f;
 import static org.lwjgl.opengl.GL11.glTranslatef;
 import static org.lwjgl.opengl.GL11.glVertex2f;
 
-import java.io.IOException;
-
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.newdawn.slick.opengl.Texture;
-import org.newdawn.slick.opengl.TextureLoader;
-import org.newdawn.slick.util.ResourceLoader;
 
+import textures.Textures;
 import util.Timer;
 
 public class Ball {
@@ -30,7 +27,6 @@ public class Ball {
 	private float hitR;
 	private float dx;
 	private float dy;
-	private Texture texture;
 	private long debounceStartTimeX;
 	private long debounceStartTimeY;
 	private boolean sticky;
@@ -49,13 +45,6 @@ public class Ball {
 		this.stickyTimer = 0l;
 		this.angle = 0.0f;
 		this.speedFactor = 1.0f;
-
-		try {
-			texture = TextureLoader.getTexture("PNG", ResourceLoader
-					.getResourceAsStream("resources/images/tux.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 	}
 
 	public void render() {
@@ -63,6 +52,7 @@ public class Ball {
 		glTranslatef(x, y, 0.0f);
 		glRotatef(angle, 0.0f, 0.0f, 1.0f);
 		glColor3f(1.0f, 1.0f, 1.0f);
+		Texture texture = Textures.get().getBall();
 		texture.bind();
 		glBegin(GL_QUADS);
 		glTexCoord2f(0.0f, texture.getHeight());

@@ -7,32 +7,22 @@ import static org.lwjgl.opengl.GL11.glEnd;
 import static org.lwjgl.opengl.GL11.glTexCoord2f;
 import static org.lwjgl.opengl.GL11.glVertex2f;
 
-import java.io.IOException;
-
 import org.lwjgl.opengl.Display;
 import org.newdawn.slick.opengl.Texture;
-import org.newdawn.slick.opengl.TextureLoader;
-import org.newdawn.slick.util.ResourceLoader;
 
+import textures.Textures;
 import engine.Font;
 
 public abstract class AbstractPopup {
 	private Font fontSmall;
 	private Font fontLarge;
 	private boolean enabled;
-	private Texture bgTexture;
 	private float x;
 	private float y;
 	private float width;
 	private float height;
 
 	public AbstractPopup(float width, float height) {
-		try {
-			bgTexture = TextureLoader.getTexture("PNG", ResourceLoader
-					.getResourceAsStream("resources/images/futureui.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 		this.width = width;
 		this.height = height;
 		this.x = 0.5f * Display.getWidth() - 0.5f * width;
@@ -53,6 +43,7 @@ public abstract class AbstractPopup {
 	}
 
 	private void renderBg() {
+		Texture bgTexture = Textures.get().getPopup();
 		bgTexture.bind();
 		glColor3f(1.0f, 1.0f, 1.0f);
 		glBegin(GL_QUADS);
