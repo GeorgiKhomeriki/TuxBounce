@@ -12,8 +12,9 @@ import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.newdawn.slick.opengl.Texture;
 
-import sound.Sound;
-import textures.Textures;
+import assets.Sounds;
+import assets.Textures;
+
 import engine.Font;
 
 public abstract class HighscoreMenu {
@@ -68,7 +69,7 @@ public abstract class HighscoreMenu {
 						.isButtonDown(0) && isMouseOnBack())) {
 			isKeyPressed = true;
 			backToMainMenu();
-			Sound.get().playDecline();
+			Sounds.get().playDecline();
 		}
 		if (!Keyboard.isKeyDown(Keyboard.KEY_RETURN) && !Mouse.isButtonDown(0)) {
 			isKeyPressed = false;

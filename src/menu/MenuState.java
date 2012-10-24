@@ -16,8 +16,9 @@ import org.lwjgl.opengl.Display;
 import org.newdawn.slick.openal.SoundStore;
 import org.newdawn.slick.opengl.Texture;
 
-import sound.Sound;
-import textures.Textures;
+import assets.Sounds;
+import assets.Textures;
+
 import engine.Font;
 import engine.IGameState;
 
@@ -98,12 +99,12 @@ public class MenuState implements IGameState {
 
 	@Override
 	public void start() {
-		Sound.get().playMenuMusic();
+		Sounds.get().playMenuMusic();
 	}
 
 	@Override
 	public void stop() {
-		Sound.get().stopMenuMusic();
+		Sounds.get().stopMenuMusic();
 	}
 
 	@Override

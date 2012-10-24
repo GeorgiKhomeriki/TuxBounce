@@ -11,7 +11,8 @@ import game.Block.BlockType;
 import org.lwjgl.opengl.Display;
 import org.newdawn.slick.opengl.Texture;
 
-import textures.Textures;
+import assets.Textures;
+
 
 public class Coin {
 	private Texture texture;

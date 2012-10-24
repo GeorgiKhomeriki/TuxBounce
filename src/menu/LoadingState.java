@@ -1,7 +1,7 @@
 package menu;
 
-import sound.Sound;
-import textures.Textures;
+import assets.Sounds;
+import assets.Textures;
 import engine.Game;
 import engine.IGameState;
 
@@ -38,9 +38,9 @@ public class LoadingState implements IGameState {
 	@Override
 	public void update(int delta) {
 		if (startLoading) {
-			Sound.get();
+			Sounds.get();
 			Textures.get();
-			Sound.get().setEnabled(false);
+			Sounds.get().setEnabled(false);
 			Game.get().setCurrentState(MenuState.name);
 		}
 		startLoading = true;

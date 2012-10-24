@@ -5,11 +5,12 @@ import static org.lwjgl.opengl.GL11.glColor3f;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
+import assets.Sounds;
+
 
 import engine.Game;
 import game.GameState;
 
-import sound.Sound;
 
 public abstract class Popup extends AbstractPopup {
 	public enum SELECTION {
@@ -77,7 +78,7 @@ public abstract class Popup extends AbstractPopup {
 					}
 				}
 				isKeyPressed = true;
-				Sound.get().playCursor();
+				Sounds.get().playCursor();
 			}
 		} else if (!leftPressed && !rightPressed && !returnPressed) {
 			isKeyPressed = false;
@@ -88,11 +89,11 @@ public abstract class Popup extends AbstractPopup {
 		if (Mouse.getDX() != 0 || Mouse.getDY() != 0) {
 			if (isMouseOnSelection(SELECTION.YES)
 					&& !currentSelection.equals(SELECTION.YES)) {
-				Sound.get().playCursor();
+				Sounds.get().playCursor();
 				currentSelection = SELECTION.YES;
 			} else if (isMouseOnSelection(SELECTION.NO)
 					&& !currentSelection.equals(SELECTION.NO)) {
-				Sound.get().playCursor();
+				Sounds.get().playCursor();
 				currentSelection = SELECTION.NO;
 			}
 		}
@@ -128,11 +129,11 @@ public abstract class Popup extends AbstractPopup {
 			isKeyPressed = true;
 			switch (currentSelection) {
 			case YES:
-				Sound.get().playAccept();
+				Sounds.get().playAccept();
 				doYes();
 				break;
 			case NO:
-				Sound.get().playDecline();
+				Sounds.get().playDecline();
 				doNo();
 				break;
 			}
@@ -141,7 +142,7 @@ public abstract class Popup extends AbstractPopup {
 
 	private void doNo() {
 		GameState.paused = true;
-		Sound.get().playDecline();
+		Sounds.get().playDecline();
 		Game.get().setCurrentState(MenuState.name);
 	}
 

@@ -23,10 +23,11 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.openal.SoundStore;
 import org.newdawn.slick.opengl.Texture;
 
+import assets.Sounds;
+import assets.Textures;
+
 import particles.Particles;
 import particles.SimpleExplosion;
-import sound.Sound;
-import textures.Textures;
 import util.LevelLoader;
 import engine.Game;
 import engine.IGameState;
@@ -102,12 +103,12 @@ public class GameState implements IGameState {
 	@Override
 	public void start() {
 		GameState.paused = false;
-		Sound.get().playMusic();
+		Sounds.get().playMusic();
 	}
 
 	@Override
 	public void stop() {
-		Sound.get().stopMusic();
+		Sounds.get().stopMusic();
 	}
 
 	@Override
@@ -202,7 +203,7 @@ public class GameState implements IGameState {
 					}
 				}
 				texts.add("OOPS!", ball.getX(), 0.0f, 100, true);
-				Sound.get().playDeath();
+				Sounds.get().playDeath();
 			}
 		}
 
@@ -281,7 +282,7 @@ public class GameState implements IGameState {
 		// check if escape is pressed
 		if (Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) {
 			GameState.paused = true;
-			Sound.get().playDecline();
+			Sounds.get().playDecline();
 			Game.get().setCurrentState(MenuState.name);
 		}
 
@@ -307,7 +308,7 @@ public class GameState implements IGameState {
 		case GREEN_FACE:
 			texts.add("POINT FRENZY", coin.getX(), coin.getY(), 130, true);
 			spawnParticles(coin);
-			Sound.get().playPointsPowerup();
+			Sounds.get().playPointsPowerup();
 			break;
 		case BROWN_FACE_BROKEN:
 			texts.add("MAGIC POTION", coin.getX(), coin.getY(), 130, true);

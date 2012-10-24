@@ -14,8 +14,9 @@ import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 import org.newdawn.slick.opengl.Texture;
 
-import sound.Sound;
-import textures.Textures;
+import assets.Sounds;
+import assets.Textures;
+
 import util.Graphics;
 import engine.Font;
 
@@ -75,7 +76,7 @@ public abstract class OptionsMenu {
 			fullscreen = "CHANGE RES.";
 		}
 		font.drawText(fullscreen, x, getSelectionY(SELECTION.FULLSCREEN));
-		String sound = booleanToString(Sound.get().isEnabled());
+		String sound = booleanToString(Sounds.get().isEnabled());
 		font.drawText(sound, x, getSelectionY(SELECTION.SOUND));
 	}
 
@@ -140,7 +141,7 @@ public abstract class OptionsMenu {
 			if (downPressed || upPressed) {
 				currentSelection = getNextSelection(currentSelection, upPressed);
 				isKeyPressed = true;
-				Sound.get().playCursor();
+				Sounds.get().playCursor();
 			}
 		} else if (!downPressed && !upPressed && !returnPressed
 				&& !mouseClicked) {
@@ -153,7 +154,7 @@ public abstract class OptionsMenu {
 			for (SELECTION selection : SELECTION.values()) {
 				if (!currentSelection.equals(selection)
 						&& isMouseOnSelection(selection)) {
-					Sound.get().playCursor();
+					Sounds.get().playCursor();
 					currentSelection = selection;
 					break;
 				}
@@ -194,7 +195,7 @@ public abstract class OptionsMenu {
 				} catch (LWJGLException e) {
 					e.printStackTrace();
 				}
-				Sound.get().playAccept();
+				Sounds.get().playAccept();
 				break;
 			case FULLSCREEN:
 				try {
@@ -203,15 +204,15 @@ public abstract class OptionsMenu {
 				} catch (LWJGLException e) {
 					e.printStackTrace();
 				}
-				Sound.get().playAccept();
+				Sounds.get().playAccept();
 				break;
 			case SOUND:
-				Sound.get().setEnabled(!Sound.get().isEnabled());
-				Sound.get().playAccept();
+				Sounds.get().setEnabled(!Sounds.get().isEnabled());
+				Sounds.get().playAccept();
 				break;
 			case BACK:
 				backToMainMenu();
-				Sound.get().playDecline();
+				Sounds.get().playDecline();
 				break;
 			default:
 				break;

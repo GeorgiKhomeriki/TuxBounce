@@ -14,7 +14,8 @@ import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.newdawn.slick.opengl.Texture;
 
-import textures.Textures;
+import assets.Textures;
+
 import util.Timer;
 
 public class Ball {

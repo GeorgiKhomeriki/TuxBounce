@@ -12,8 +12,9 @@ import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.newdawn.slick.opengl.Texture;
 
-import sound.Sound;
-import textures.Textures;
+import assets.Sounds;
+import assets.Textures;
+
 import engine.Font;
 import engine.Game;
 import game.GameState;
@@ -139,7 +140,7 @@ public abstract class MainMenu {
 			if (downPressed || upPressed) {
 				currentSelection = getNextSelection(currentSelection, upPressed);
 				isKeyPressed = true;
-				Sound.get().playCursor();
+				Sounds.get().playCursor();
 			}
 		} else if (!downPressed && !upPressed && !returnPressed) {
 			isKeyPressed = false;
@@ -152,7 +153,7 @@ public abstract class MainMenu {
 				if (!currentSelection.equals(selection)
 						&& isMouseOnSelection(selection)
 						&& (!selection.equals(SELECTION.CONTINUE) || GameState.paused)) {
-					Sound.get().playCursor();
+					Sounds.get().playCursor();
 					currentSelection = selection;
 					break;
 				}
@@ -175,7 +176,7 @@ public abstract class MainMenu {
 						.isButtonDown(0)
 						&& isMouseOnSelection(currentSelection))) {
 			isKeyPressed = true;
-			Sound.get().playAccept();
+			Sounds.get().playAccept();
 			switch (currentSelection) {
 			case CONTINUE:
 				Game.get().setCurrentState(GameState.name);

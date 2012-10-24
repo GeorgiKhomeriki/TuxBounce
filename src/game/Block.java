@@ -12,8 +12,9 @@ import java.util.List;
 import org.lwjgl.opengl.Display;
 import org.newdawn.slick.opengl.Texture;
 
-import sound.Sound;
-import textures.Textures;
+import assets.Sounds;
+import assets.Textures;
+
 
 public class Block {
 	public static final float width = Display.getWidth() / 20;
@@ -82,7 +83,7 @@ public class Block {
 			state = BlockState.DYING;
 			break;
 		}
-		Sound.get().playHit();
+		Sounds.get().playHit();
 	}
 
 	// TODO: check this!

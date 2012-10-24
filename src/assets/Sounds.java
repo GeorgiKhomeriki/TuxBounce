@@ -1,4 +1,4 @@
-package sound;
+package assets;
 
 import java.io.IOException;
 import java.util.Random;
@@ -7,8 +7,8 @@ import org.newdawn.slick.openal.Audio;
 import org.newdawn.slick.openal.AudioLoader;
 import org.newdawn.slick.util.ResourceLoader;
 
-public class Sound {
-	private static Sound instance;
+public class Sounds {
+	private static Sounds instance;
 	private Random random;
 	private Audio acceptSound;
 	private Audio declineSound;
@@ -22,7 +22,7 @@ public class Sound {
 	private Audio menuMusic;
 	private boolean isEnabled;
 	
-	public Sound() {
+	public Sounds() {
 		isEnabled = true;
 		random = new Random();
 		try {
@@ -128,9 +128,9 @@ public class Sound {
 		isEnabled = enable;
 	}
 	
-	public static Sound get() {
+	public static Sounds get() {
 		if(instance == null) {
-			instance = new Sound();
+			instance = new Sounds();
 		}
 		return instance;
 	}
