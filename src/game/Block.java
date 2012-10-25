@@ -86,7 +86,6 @@ public class Block {
 		Sounds.get().playHit();
 	}
 
-	// TODO: check this!
 	public boolean isHit(List<Ball> balls) {
 		for (Ball ball : balls) {
 			if (x < ball.getX() + 0.5f * ball.getHitR()

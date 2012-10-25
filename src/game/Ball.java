@@ -86,10 +86,10 @@ public class Ball {
 //			}
 
 			if (time - debounceStartTimeY > DEBOUNCE_TIME) {
-				if (y + 0.5f * r > Display.getHeight() - Hud.height) {
-					dy = -dy;
-					debounceStartTimeY = time;
-				}
+//				if (y + 0.5f * r > Display.getHeight() - Hud.height) {
+//					dy = -dy;
+//					debounceStartTimeY = time;
+//				}
 				if (y - 0.5f * hitR <= paddle.getY() + paddle.getHeight()
 						&& y > paddle.getY() && x > paddle.getX()
 						&& x < paddle.getX() + paddle.getWidth()) {
@@ -108,6 +108,10 @@ public class Ball {
 					newX + 0.5f * hitR > Display.getWidth()) {
 				dx = -dx;
 				newX = x + dx * delta / 300.0f;
+			}
+			if (newY + 0.5f * hitR > Display.getHeight() - Hud.height) {
+				dy = -dy;
+				newY = y + dy * delta / 300.0f * speedFactor;
 			}
 			x = newX;
 			y = newY;
