@@ -1,9 +1,14 @@
 package menu;
 
+import static org.lwjgl.opengl.GL11.GL_MODELVIEW;
+import static org.lwjgl.opengl.GL11.GL_PROJECTION;
 import static org.lwjgl.opengl.GL11.GL_QUADS;
 import static org.lwjgl.opengl.GL11.glBegin;
 import static org.lwjgl.opengl.GL11.glColor3f;
 import static org.lwjgl.opengl.GL11.glEnd;
+import static org.lwjgl.opengl.GL11.glLoadIdentity;
+import static org.lwjgl.opengl.GL11.glMatrixMode;
+import static org.lwjgl.opengl.GL11.glOrtho;
 import static org.lwjgl.opengl.GL11.glTexCoord2f;
 import static org.lwjgl.opengl.GL11.glVertex2f;
 
@@ -49,16 +54,19 @@ public abstract class OptionsMenu {
 		highlightSelection(SELECTION.RESOLUTION);
 		Fonts.get()
 				.large()
-				.renderText("RESOLUTION:", x, getSelectionY(SELECTION.RESOLUTION));
+				.renderText("RESOLUTION:", x,
+						getSelectionY(SELECTION.RESOLUTION));
 		highlightSelection(SELECTION.FULLSCREEN);
 		Fonts.get()
 				.large()
-				.renderText("FULLSCREEN:", x, getSelectionY(SELECTION.FULLSCREEN));
+				.renderText("FULLSCREEN:", x,
+						getSelectionY(SELECTION.FULLSCREEN));
 		highlightSelection(SELECTION.SOUND);
 		Fonts.get().large()
 				.renderText("SOUND:", x, getSelectionY(SELECTION.SOUND));
 		highlightSelection(SELECTION.BACK);
-		Fonts.get().large().renderText("BACK", x, getSelectionY(SELECTION.BACK));
+		Fonts.get().large()
+				.renderText("BACK", x, getSelectionY(SELECTION.BACK));
 	}
 
 	private void highlightSelection(SELECTION selection) {
@@ -81,7 +89,8 @@ public abstract class OptionsMenu {
 		Fonts.get().large()
 				.renderText(fullscreen, x, getSelectionY(SELECTION.FULLSCREEN));
 		String sound = booleanToString(Sounds.get().isEnabled());
-		Fonts.get().large().renderText(sound, x, getSelectionY(SELECTION.SOUND));
+		Fonts.get().large()
+				.renderText(sound, x, getSelectionY(SELECTION.SOUND));
 	}
 
 	private String booleanToString(boolean b) {
@@ -194,6 +203,11 @@ public abstract class OptionsMenu {
 									: modes[0];
 							Graphics.setDisplayMode(newMode.getWidth(),
 									newMode.getHeight(), Display.isFullscreen());
+							glMatrixMode(GL_PROJECTION);
+							glLoadIdentity();
+							glOrtho(0, newMode.getWidth(), 0,
+									newMode.getHeight(), 1, -1);
+							glMatrixMode(GL_MODELVIEW);
 							break;
 						}
 					}
