@@ -39,6 +39,7 @@ public class GameState implements IGameState {
 	public static final String name = "STATE_GAME";
 
 	public static boolean paused = false;
+	public static int level = 0;
 
 	private Paddle paddle;
 	private List<Ball> balls;
@@ -46,7 +47,6 @@ public class GameState implements IGameState {
 	private List<Particles> particles;
 	private List<Coin> coins;
 	private Texts texts;
-	private int level;
 	private Popup winPopup;
 	private Popup losePopup;
 
@@ -59,7 +59,6 @@ public class GameState implements IGameState {
 
 	@Override
 	public void init() {
-		level = 0;
 		initPopups();
 		initLevel(level);
 	}
@@ -267,12 +266,12 @@ public class GameState implements IGameState {
 		losePopup.update(delta);
 
 		// check for victory
-		if (blocks.isEmpty()) {
+		if (!winPopup.isEnabled() && blocks.isEmpty()) {
 			winPopup.setEnabled(true);
 		}
 
 		// check for defeat
-		if (Hud.get().getLives() <= 0) {
+		if (!losePopup.isEnabled() && Hud.get().getLives() <= 0) {
 			losePopup.setEnabled(true);
 		}
 

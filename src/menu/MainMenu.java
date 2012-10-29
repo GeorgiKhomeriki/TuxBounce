@@ -8,7 +8,6 @@ import static org.lwjgl.opengl.GL11.glTexCoord2f;
 import static org.lwjgl.opengl.GL11.glVertex2f;
 import engine.Game;
 import game.GameState;
-import game.Hud;
 
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
@@ -25,13 +24,11 @@ public abstract class MainMenu {
 	}
 
 	private SELECTION currentSelection;
-	private boolean isKeyPressed;
 	private float highlightColor;
 	private float highlightColorDelta;
 
 	public MainMenu() {
 		this.currentSelection = SELECTION.START;
-		this.isKeyPressed = true;
 		this.highlightColor = 1.0f;
 		this.highlightColorDelta = -1.0f;
 	}
@@ -145,14 +142,16 @@ public abstract class MainMenu {
 		boolean downPressed = Keyboard.isKeyDown(Keyboard.KEY_DOWN);
 		boolean upPressed = Keyboard.isKeyDown(Keyboard.KEY_UP);
 		boolean returnPressed = Keyboard.isKeyDown(Keyboard.KEY_RETURN);
-		if (!isKeyPressed) {
+		boolean mouseClicked = Mouse.isButtonDown(0);
+		if (!Commons.get().isKeyPressed()) {
 			if (downPressed || upPressed) {
 				currentSelection = getNextSelection(currentSelection, upPressed);
-				isKeyPressed = true;
+				Commons.get().setKeyPressed(true);
 				Sounds.get().playCursor();
 			}
-		} else if (!downPressed && !upPressed && !returnPressed) {
-			isKeyPressed = false;
+		} else if (!downPressed && !upPressed && !returnPressed
+				&& !mouseClicked) {
+			Commons.get().setKeyPressed(false);
 		}
 	}
 
@@ -174,26 +173,26 @@ public abstract class MainMenu {
 		float x = Mouse.getX();
 		float y = Mouse.getY();
 		return x > Display.getWidth() / 2.0f
-				&& x < Display.getWidth() / 2.0f + 7 * Fonts.get().large().getCharacterWidth()
+				&& x < Display.getWidth() / 2.0f + 7
+						* Fonts.get().large().getCharacterWidth()
 				&& y > getSelectionY(selection)
-				&& y < getSelectionY(selection) + Fonts.get().large().getCharacterHeight();
+				&& y < getSelectionY(selection)
+						+ Fonts.get().large().getCharacterHeight();
 	}
 
 	private void handleSelectedAction() {
-		if (!isKeyPressed
-				&& (Keyboard.isKeyDown(Keyboard.KEY_RETURN) || Mouse
+		if (!Commons.get().isKeyPressed()
+				&& ((Keyboard.isKeyDown(Keyboard.KEY_RETURN) || Mouse
 						.isButtonDown(0)
-						&& isMouseOnSelection(currentSelection))) {
-			isKeyPressed = true;
+						&& isMouseOnSelection(currentSelection)))) {
+			Commons.get().setKeyPressed(true);
 			Sounds.get().playAccept();
 			switch (currentSelection) {
 			case CONTINUE:
 				Game.get().setCurrentState(GameState.name);
 				break;
 			case START:
-				Hud.get().reset();
-				Game.get().reinit(GameState.name);
-				Game.get().setCurrentState(GameState.name);
+				showLevelChoice();
 				break;
 			case OPTIONS:
 				showOptions();

@@ -78,18 +78,8 @@ public class Ball {
 			}
 		} else {
 			long time = Timer.getTime();
-//			if (time - debounceStartTimeX > DEBOUNCE_TIME
-//					&& (x - 0.5f * hitR < 0 || x + 0.5f * hitR > Display
-//							.getWidth())) {
-//				dx = -dx;
-//				debounceStartTimeX = Timer.getTime();
-//			}
 
 			if (time - debounceStartTimeY > DEBOUNCE_TIME) {
-//				if (y + 0.5f * r > Display.getHeight() - Hud.height) {
-//					dy = -dy;
-//					debounceStartTimeY = time;
-//				}
 				if (y - 0.5f * hitR <= paddle.getY() + paddle.getHeight()
 						&& y > paddle.getY() && x > paddle.getX()
 						&& x < paddle.getX() + paddle.getWidth()) {

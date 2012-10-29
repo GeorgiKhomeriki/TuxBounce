@@ -16,6 +16,7 @@ public class MenuModel {
 	}
 
 	public void set(MENU menu) {
+		Commons.get().setKeyPressed(true);
 		this.menu = menu;
 	}
 

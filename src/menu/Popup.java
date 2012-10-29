@@ -16,7 +16,6 @@ public abstract class Popup extends AbstractPopup {
 	};
 
 	private SELECTION currentSelection;
-	private boolean isKeyPressed;
 	private float highlightColor;
 	private float highlightColorDelta;
 	private String title;
@@ -27,7 +26,6 @@ public abstract class Popup extends AbstractPopup {
 		this.title = title;
 		this.message = message;
 		this.currentSelection = SELECTION.YES;
-		this.isKeyPressed = true;
 		this.highlightColor = 1.0f;
 		this.highlightColorDelta = -1.0f;
 	}
@@ -75,7 +73,7 @@ public abstract class Popup extends AbstractPopup {
 		boolean leftPressed = Keyboard.isKeyDown(Keyboard.KEY_LEFT);
 		boolean rightPressed = Keyboard.isKeyDown(Keyboard.KEY_RIGHT);
 		boolean returnPressed = Keyboard.isKeyDown(Keyboard.KEY_RETURN);
-		if (!isKeyPressed) {
+		if (!Commons.get().isKeyPressed()) {
 			if (leftPressed || rightPressed) {
 				for (SELECTION s : SELECTION.values()) {
 					if (!s.equals(currentSelection)) {
@@ -83,11 +81,11 @@ public abstract class Popup extends AbstractPopup {
 						break;
 					}
 				}
-				isKeyPressed = true;
+				Commons.get().setKeyPressed(true);
 				Sounds.get().playCursor();
 			}
 		} else if (!leftPressed && !rightPressed && !returnPressed) {
-			isKeyPressed = false;
+			Commons.get().setKeyPressed(false);
 		}
 	}
 
@@ -128,11 +126,11 @@ public abstract class Popup extends AbstractPopup {
 	}
 
 	private void handleSelectedAction() {
-		if (!isKeyPressed
+		if (!Commons.get().isKeyPressed()
 				&& (Keyboard.isKeyDown(Keyboard.KEY_RETURN) || Mouse
 						.isButtonDown(0)
 						&& isMouseOnSelection(currentSelection))) {
-			isKeyPressed = true;
+			Commons.get().setKeyPressed(true);
 			switch (currentSelection) {
 			case YES:
 				Sounds.get().playAccept();

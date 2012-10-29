@@ -17,12 +17,10 @@ import assets.Sounds;
 import assets.Textures;
 
 public abstract class HighscoreMenu {
-	private boolean isKeyPressed;
 	private float highlightColor;
 	private float highlightColorDelta;
 
 	public HighscoreMenu() {
-		this.isKeyPressed = true;
 		this.highlightColor = 1.0f;
 		this.highlightColorDelta = -1.0f;
 	}
@@ -63,15 +61,15 @@ public abstract class HighscoreMenu {
 	}
 
 	public void update(int delta) {
-		if (!isKeyPressed
+		if (!Commons.get().isKeyPressed()
 				&& (Keyboard.isKeyDown(Keyboard.KEY_RETURN) || Mouse
 						.isButtonDown(0) && isMouseOnBack())) {
-			isKeyPressed = true;
+			Commons.get().setKeyPressed(true);
 			backToMainMenu();
 			Sounds.get().playDecline();
 		}
 		if (!Keyboard.isKeyDown(Keyboard.KEY_RETURN) && !Mouse.isButtonDown(0)) {
-			isKeyPressed = false;
+			Commons.get().setKeyPressed(false);
 		}
 		updateHighlightColor(delta);
 	}

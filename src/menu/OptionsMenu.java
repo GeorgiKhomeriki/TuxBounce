@@ -30,13 +30,11 @@ public abstract class OptionsMenu {
 	}
 
 	private SELECTION currentSelection;
-	private boolean isKeyPressed;
 	private float highlightColor;
 	private float highlightColorDelta;
 
 	public OptionsMenu() {
 		this.currentSelection = SELECTION.RESOLUTION;
-		this.isKeyPressed = true;
 		this.highlightColor = 1.0f;
 		this.highlightColorDelta = -1.0f;
 	}
@@ -150,15 +148,15 @@ public abstract class OptionsMenu {
 		boolean upPressed = Keyboard.isKeyDown(Keyboard.KEY_UP);
 		boolean returnPressed = Keyboard.isKeyDown(Keyboard.KEY_RETURN);
 		boolean mouseClicked = Mouse.isButtonDown(0);
-		if (!isKeyPressed) {
+		if (!Commons.get().isKeyPressed()) {
 			if (downPressed || upPressed) {
 				currentSelection = getNextSelection(currentSelection, upPressed);
-				isKeyPressed = true;
+				Commons.get().setKeyPressed(true);
 				Sounds.get().playCursor();
 			}
 		} else if (!downPressed && !upPressed && !returnPressed
 				&& !mouseClicked) {
-			isKeyPressed = false;
+			Commons.get().setKeyPressed(false);
 		}
 	}
 
@@ -187,11 +185,11 @@ public abstract class OptionsMenu {
 	}
 
 	private void handleSelectedAction() {
-		if (!isKeyPressed
+		if (!Commons.get().isKeyPressed()
 				&& (Keyboard.isKeyDown(Keyboard.KEY_RETURN) || Mouse
 						.isButtonDown(0)
 						&& isMouseOnSelection(currentSelection))) {
-			isKeyPressed = true;
+			Commons.get().setKeyPressed(true);
 			switch (currentSelection) {
 			case RESOLUTION:
 				try {

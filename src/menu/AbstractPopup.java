@@ -59,11 +59,12 @@ public abstract class AbstractPopup {
 		}
 	}
 
-	public boolean getEnabled() {
+	public boolean isEnabled() {
 		return enabled;
 	}
 
 	public void setEnabled(boolean enabled) {
+		Commons.get().setKeyPressed(true);
 		this.enabled = enabled;
 	}
 
