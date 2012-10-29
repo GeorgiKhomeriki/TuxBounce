@@ -23,6 +23,9 @@ import util.Graphics;
 import assets.Fonts;
 import assets.Sounds;
 import assets.Textures;
+import engine.Game;
+import game.GameState;
+import game.Hud;
 
 public abstract class OptionsMenu {
 	private enum SELECTION {
@@ -206,6 +209,9 @@ public abstract class OptionsMenu {
 							glOrtho(0, newMode.getWidth(), 0,
 									newMode.getHeight(), 1, -1);
 							glMatrixMode(GL_MODELVIEW);
+							Hud.get().resize();
+							Game.get().reinit(MenuState.name);
+							Game.get().reinit(GameState.name);
 							break;
 						}
 					}

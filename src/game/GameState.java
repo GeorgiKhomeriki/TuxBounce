@@ -333,13 +333,13 @@ public class GameState implements IGameState {
 
 	private void spawnParticles(Block block) {
 		particles.add(new SimpleExplosion(5, block.getTexture(), block.getX()
-				+ 0.5f * Block.width, block.getY() - 0.5f * Block.height, 0.4f,
+				+ 0.5f * Block.getWidth(), block.getY() - 0.5f * Block.getHeight(), 0.4f,
 				0.4f, 0.4f, 1.0f, 1.0f, 1.0f));
 	}
 
 	private void spawnParticles(Coin coin) {
 		particles.add(new SimpleExplosion(100, Textures.get().getCoinGreen(),
-				coin.getX() + 0.5f * Block.width, coin.getY(), 0.4f, 0.4f,
+				coin.getX() + 0.5f * Block.getWidth(), coin.getY(), 0.4f, 0.4f,
 				0.4f, 1.0f, 1.0f, 1.0f));
 	}
 
@@ -350,7 +350,7 @@ public class GameState implements IGameState {
 				|| block.getType().equals(Block.BlockType.GREY_FACE)
 				|| block.getType().equals(Block.BlockType.BROWN_FACE_BROKEN)) {
 			coins.add(new Coin(block.getType(), block.getX(), block.getY(),
-					Block.width, Block.height, -40.0f));
+					Block.getWidth(), Block.getHeight(), -40.0f));
 		}
 	}
 

@@ -19,9 +19,9 @@ import assets.Fonts;
 
 public class Hud {
 	private static Hud instance;
-	public static final float width = Display.getWidth();
-	public static final float height = Display.getHeight() / 15.0f;
-	public static final float displayHeight = Display.getHeight();
+	public static float width = Display.getWidth();
+	public static float height = Display.getHeight() / 15.0f;
+	public static float displayHeight = Display.getHeight();
 
 	private float lineColor = 0.5f;
 	private float lineColorDelta = 0.3f;
@@ -108,13 +108,15 @@ public class Hud {
 		}
 		lineColor += lineColorDelta / delta;
 	}
+	
+	public void resize() {
+		width = Display.getWidth();
+		height = Display.getHeight() / 15.0f;
+		displayHeight = Display.getHeight();
+	}
 
 	public int getScore() {
 		return score;
-	}
-
-	public void setScore(int score) {
-		this.score = score;
 	}
 
 	public int getLives() {
@@ -124,7 +126,7 @@ public class Hud {
 	public void setLives(int lives) {
 		this.lives = lives;
 	}
-
+	
 	public static Hud get() {
 		if (instance == null) {
 			instance = new Hud();

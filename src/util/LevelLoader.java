@@ -25,8 +25,8 @@ public class LevelLoader {
 					int value = Integer.parseInt(parts[x]);
 					if (value != 0) {
 						BlockType type = getType(value);
-						Block block = new Block(type, x * Block.width,
-								Display.getHeight() - offset - y * Block.height);
+						Block block = new Block(type, x * Block.getWidth(),
+								Display.getHeight() - offset - y * Block.getHeight());
 						blocks.add(block);
 					}
 				}

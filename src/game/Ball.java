@@ -113,13 +113,13 @@ public class Ball {
 	public void bounce(Block block) {
 		// remove 'else' for previous bouncing scheme
 		if (Timer.getTime() - debounceStartTimeY > DEBOUNCE_TIME
-				&& (block.getY() - Block.height < y + 0.5f * hitR || block
+				&& (block.getY() - Block.getHeight() < y + 0.5f * hitR || block
 						.getY() > y - 0.5f * hitR)) {
 			dy = -dy;
 			debounceStartTimeY = Timer.getTime();
 		} else if (Timer.getTime() - debounceStartTimeX > DEBOUNCE_TIME
 				&& (block.getX() < x + 0.5f * hitR || block.getX()
-						+ Block.width > x - 0.5f * hitR)) {
+						+ Block.getWidth() > x - 0.5f * hitR)) {
 			dx = -dx;
 			debounceStartTimeX = Timer.getTime();
 		}

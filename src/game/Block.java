@@ -17,9 +17,6 @@ import assets.Textures;
 
 
 public class Block {
-	public static final float width = Display.getWidth() / 20;
-	public static final float height = Display.getHeight() / 15;
-
 	public enum BlockType {
 		RED, PURPLE, ORANGE, GREY_FACE, GREEN_FACE, BLUE_FACE, RED_FACE, WALL, WALL_BROKEN, BROWN_FACE, BROWN_FACE_BROKEN;
 	}
@@ -45,10 +42,10 @@ public class Block {
 	}
 
 	public void render() {
+		float width = getWidth();
+		float height = getHeight();
 		texture.bind();
-
 		glColor4f(1.0f, 1.0f, 1.0f, opacity);
-
 		glBegin(GL_QUADS);
 		glTexCoord2f(0.0f, 0.0f);
 		glVertex2f(x, y);
@@ -87,6 +84,8 @@ public class Block {
 	}
 
 	public boolean isHit(List<Ball> balls) {
+		float width = getWidth();
+		float height = getHeight();
 		for (Ball ball : balls) {
 			if (x < ball.getX() + 0.5f * ball.getHitR()
 					&& x + width > ball.getX() - 0.5f * ball.getHitR()
@@ -98,7 +97,15 @@ public class Block {
 		}
 		return false;
 	}
-
+	
+	public static float getWidth() {
+		return Display.getWidth() / 20;
+	}
+	
+	public static float getHeight() {
+		return Display.getHeight() / 15;
+	}
+	
 	public float getX() {
 		return x;
 	}
