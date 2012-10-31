@@ -42,7 +42,8 @@ public class LoadingState implements IGameState {
 			Sounds.get();
 			Textures.get();
 			Fonts.get();
-			Sounds.get().setEnabled(false);
+			Sounds.get().setSoundEnabled(false);
+			Sounds.get().setMusicEnabled(false);
 			Game.get().setCurrentState(MenuState.name);
 		}
 		startLoading = true;

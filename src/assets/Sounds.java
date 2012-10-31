@@ -20,10 +20,12 @@ public class Sounds {
 	private Audio deathSound;
 	private Audio music;
 	private Audio menuMusic;
-	private boolean isEnabled;
+	private boolean soundEnabled;
+	private boolean musicEnabled;
 	
 	public Sounds() {
-		isEnabled = true;
+		soundEnabled = true;
+		musicEnabled = true;
 		random = new Random();
 		try {
 			acceptSound = AudioLoader.getAudio("WAV",
@@ -61,49 +63,49 @@ public class Sounds {
 	}
 	
 	public void playAccept() {
-		if(isEnabled)
+		if(soundEnabled)
 			acceptSound.playAsSoundEffect(1.0f, 1.0f, false);
 	}
 	
 	public void playDecline() {
-		if(isEnabled)
+		if(soundEnabled)
 			declineSound.playAsSoundEffect(1.0f, 1.0f, false);
 	}
 	
 	public void playCursor() {
-		if(isEnabled)
+		if(soundEnabled)
 			cursorSound.playAsSoundEffect(1.0f, 1.0f, false);
 	}
 	
 	public void playBoing() {
-		if(isEnabled)
+		if(soundEnabled)
 			boingSound.playAsSoundEffect(0.9f + 0.2f * random.nextFloat(), 0.5f, false);
 	}
 	
 	public void playPoint() {
-		if(isEnabled)
+		if(soundEnabled)
 			pointSound.playAsSoundEffect(0.5f + 0.5f * random.nextFloat(),  0.5f, false);
 	}
 	
 	public void playHit() {
-		if(isEnabled) {
+		if(soundEnabled) {
 			int i = random.nextInt(3);
 			hitSounds[i].playAsSoundEffect(1.0f,  1.0f,  false);
 		}
 	}
 	
 	public void playPointsPowerup() {
-		if(isEnabled)
+		if(soundEnabled)
 			pointsPowerupSound.playAsSoundEffect(1.0f, 0.5f, false);
 	}
 	
 	public void playDeath() {
-		if(isEnabled)
+		if(soundEnabled)
 			deathSound.playAsSoundEffect(1.0f, 1.0f, false);
 	}
 	
 	public void playMusic() {
-		if(isEnabled)
+		if(musicEnabled)
 			music.playAsMusic(1.0f, 1.0f, true);
 	}
 	
@@ -112,7 +114,7 @@ public class Sounds {
 	}
 	
 	public void playMenuMusic() {
-		if(isEnabled)
+		if(musicEnabled)
 			menuMusic.playAsMusic(1.f, 1.0f, true);
 	}
 	
@@ -120,12 +122,30 @@ public class Sounds {
 		menuMusic.stop();
 	}
 	
-	public boolean isEnabled() {
-		return isEnabled;
+	public boolean isSoundEnabled() {
+		return soundEnabled;
 	}
 	
-	public void setEnabled(boolean enable) {
-		isEnabled = enable;
+	public void setSoundEnabled(boolean enabled) {
+		soundEnabled = enabled;
+	}
+	
+	public boolean isMusicEnabled() {
+		return musicEnabled;
+	}
+	
+	public void setMusicEnabled(boolean enabled) {
+		musicEnabled = enabled;
+		if(enabled) {
+			playMenuMusic();
+		} else {
+			stopAllMusic();
+		}
+	}
+	
+	private void stopAllMusic() {
+		music.stop();
+		menuMusic.stop();
 	}
 	
 	public static Sounds get() {

@@ -29,7 +29,7 @@ import game.Hud;
 
 public abstract class OptionsMenu {
 	private enum SELECTION {
-		RESOLUTION, FULLSCREEN, SOUND, BACK
+		RESOLUTION, FULLSCREEN, SOUND, MUSIC, BACK
 	}
 
 	private SELECTION currentSelection;
@@ -65,6 +65,9 @@ public abstract class OptionsMenu {
 		highlightSelection(SELECTION.SOUND);
 		Fonts.get().large()
 				.renderText("SOUND:", x, getSelectionY(SELECTION.SOUND));
+		highlightSelection(SELECTION.MUSIC);
+		Fonts.get().large()
+				.renderText("MUSIC:", x, getSelectionY(SELECTION.MUSIC));
 		highlightSelection(SELECTION.BACK);
 		Fonts.get().large()
 				.renderText("BACK", x, getSelectionY(SELECTION.BACK));
@@ -89,9 +92,12 @@ public abstract class OptionsMenu {
 		}
 		Fonts.get().large()
 				.renderText(fullscreen, x, getSelectionY(SELECTION.FULLSCREEN));
-		String sound = booleanToString(Sounds.get().isEnabled());
+		String sound = booleanToString(Sounds.get().isSoundEnabled());
 		Fonts.get().large()
 				.renderText(sound, x, getSelectionY(SELECTION.SOUND));
+		String music = booleanToString(Sounds.get().isMusicEnabled());
+		Fonts.get().large()
+				.renderText(music, x, getSelectionY(SELECTION.MUSIC));
 	}
 
 	private String booleanToString(boolean b) {
@@ -127,8 +133,11 @@ public abstract class OptionsMenu {
 		case SOUND:
 			y -= Display.getHeight() / 8.0f;
 			break;
-		case BACK:
+		case MUSIC:
 			y -= Display.getHeight() / 5.2f;
+			break;
+		case BACK:
+			y -= Display.getHeight() / 3.4f;
 			break;
 		default:
 			break;
@@ -229,8 +238,12 @@ public abstract class OptionsMenu {
 				}
 				Sounds.get().playAccept();
 				break;
+			case MUSIC:
+				Sounds.get().setMusicEnabled(!Sounds.get().isMusicEnabled());
+				Sounds.get().playAccept();
+				break;
 			case SOUND:
-				Sounds.get().setEnabled(!Sounds.get().isEnabled());
+				Sounds.get().setSoundEnabled(!Sounds.get().isSoundEnabled());
 				Sounds.get().playAccept();
 				break;
 			case BACK:
@@ -250,9 +263,11 @@ public abstract class OptionsMenu {
 		case FULLSCREEN:
 			return up ? SELECTION.RESOLUTION : SELECTION.SOUND;
 		case SOUND:
-			return up ? SELECTION.FULLSCREEN : SELECTION.BACK;
+			return up ? SELECTION.FULLSCREEN : SELECTION.MUSIC;
+		case MUSIC:
+			return up ? SELECTION.SOUND : SELECTION.BACK;
 		case BACK:
-			return up ? SELECTION.SOUND : SELECTION.RESOLUTION;
+			return up ? SELECTION.MUSIC : SELECTION.RESOLUTION;
 		default:
 			return SELECTION.RESOLUTION;
 		}
