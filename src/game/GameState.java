@@ -49,6 +49,7 @@ public class GameState implements IGameState {
 	private Texts texts;
 	private Popup winPopup;
 	private Popup losePopup;
+	private int oldScore;
 
 	// private Lights lights;
 
@@ -75,6 +76,7 @@ public class GameState implements IGameState {
 		texts = new Texts();
 		winPopup.setEnabled(false);
 		losePopup.setEnabled(false);
+		oldScore = Hud.get().getScore();
 		spawnBall();
 	}
 
@@ -91,6 +93,7 @@ public class GameState implements IGameState {
 			@Override
 			public void doYes() {
 				Hud.get().setLives(3);
+				Hud.get().setScore(oldScore);
 				initLevel(level);
 			}
 		};

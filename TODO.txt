@@ -2,11 +2,9 @@ fix timing mistake
 levels / worlds
 options menu - change resolution bug
 font edges bug
-edge bounce bug
 highscore
 light size resolution dependent
 remove printStacktraces!
 fix big delta bug
-reset points to old value on retry
 add win / lose music
 complete victory scenario
