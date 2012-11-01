@@ -30,7 +30,6 @@ import assets.Sounds;
 import assets.Textures;
 import engine.Game;
 import engine.IGameState;
-import engine.Lights;
 import engine.Texts;
 import game.Block.BlockState;
 import game.Block.BlockType;
@@ -52,7 +51,7 @@ public class GameState implements IGameState {
 	private Popup losePopup;
 	private int oldScore;
 
-	private Lights lights;
+	// private Lights lights;
 
 	@Override
 	public String getName() {
@@ -66,7 +65,7 @@ public class GameState implements IGameState {
 	}
 
 	private void initLevel(int level) {
-		lights = new Lights();
+		// lights = new Lights();
 		paddle = new Paddle(100, 10, Display.getWidth() / 6,
 				Display.getHeight() / 20);
 		balls = new ArrayList<Ball>();
@@ -208,7 +207,7 @@ public class GameState implements IGameState {
 		}
 
 		// update light
-		lights.update(paddle, balls);
+		// lights.update(paddle, balls);
 
 		// update blocks
 		for (int i = 0; i < blocks.size(); i++) {
@@ -271,11 +270,13 @@ public class GameState implements IGameState {
 
 		// check for victory
 		if (!winPopup.isEnabled() && blocks.isEmpty()) {
+			Sounds.get().playWin();
 			winPopup.setEnabled(true);
 		}
 
 		// check for defeat
 		if (!losePopup.isEnabled() && Hud.get().getLives() <= 0) {
+			Sounds.get().playLose();
 			losePopup.setEnabled(true);
 		}
 
@@ -337,8 +338,8 @@ public class GameState implements IGameState {
 
 	private void spawnParticles(Block block) {
 		particles.add(new SimpleExplosion(5, block.getTexture(), block.getX()
-				+ 0.5f * Block.getWidth(), block.getY() - 0.5f * Block.getHeight(), 0.4f,
-				0.4f, 0.4f, 1.0f, 1.0f, 1.0f));
+				+ 0.5f * Block.getWidth(), block.getY() - 0.5f
+				* Block.getHeight(), 0.4f, 0.4f, 0.4f, 1.0f, 1.0f, 1.0f));
 	}
 
 	private void spawnParticles(Coin coin) {

@@ -3,7 +3,6 @@ levels / worlds
 options menu - change resolution bug
 font edges bug
 highscore
-remove printStacktraces!
 fix big delta bug
 add win / lose music
 complete victory scenario

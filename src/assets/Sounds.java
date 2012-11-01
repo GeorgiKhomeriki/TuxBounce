@@ -18,6 +18,8 @@ public class Sounds {
 	private Audio[] hitSounds;
 	private Audio pointsPowerupSound;
 	private Audio deathSound;
+	private Audio winSound;
+	private Audio loseSound;
 	private Audio music;
 	private Audio menuMusic;
 	private boolean soundEnabled;
@@ -52,6 +54,11 @@ public class Sounds {
 			
 			deathSound = AudioLoader.getAudio("WAV",
 					ResourceLoader.getResourceAsStream("resources/sounds/stone-on-stone-impact.wav"));
+			
+			winSound = AudioLoader.getAudio("WAV",
+					ResourceLoader.getResourceAsStream("resources/sounds/win.wav"));
+			loseSound = AudioLoader.getAudio("WAV",
+					ResourceLoader.getResourceAsStream("resources/sounds/lose.wav"));
 			
 			music = AudioLoader.getAudio("WAV",
 					ResourceLoader.getResourceAsStream("resources/sounds/loop003-jungle.wav"));
@@ -102,6 +109,16 @@ public class Sounds {
 	public void playDeath() {
 		if(soundEnabled)
 			deathSound.playAsSoundEffect(1.0f, 1.0f, false);
+	}
+	
+	public void playWin() {
+		if(soundEnabled)
+			winSound.playAsSoundEffect(1.0f, 1.0f, false);
+	}
+	
+	public void playLose() {
+		if(soundEnabled)
+			loseSound.playAsSoundEffect(1.0f, 1.0f, false);
 	}
 	
 	public void playMusic() {
