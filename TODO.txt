@@ -4,5 +4,5 @@ options menu - change resolution bug
 font edges bug
 highscore
 fix big delta bug
-add win / lose music
 complete victory scenario
+particle properties, res. dependent

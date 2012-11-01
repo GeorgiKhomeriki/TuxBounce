@@ -300,7 +300,8 @@ public class GameState implements IGameState {
 			break;
 		case RED_FACE:
 			texts.add("EXTRA LIFE", coin.getX(), coin.getY(), 130, true);
-			Hud.get().addLives(1);
+			if(Hud.get().getLives() > 0)
+				Hud.get().addLives(1);
 			break;
 		case BLUE_FACE:
 			texts.add("LONGER PADDLE", coin.getX(), coin.getY(), 130, true);
