@@ -37,7 +37,6 @@ import java.util.List;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.Display;
 
-
 public class Lights {
 	private FloatBuffer matSpecular;
 	private FloatBuffer lightPosition;
@@ -56,7 +55,7 @@ public class Lights {
 		glEnable(GL_COLOR_MATERIAL);
 		glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);
 	}
-	
+
 	private void enableLight(int GL_LIGHT) {
 		glLight(GL_LIGHT, GL_POSITION, lightPosition);
 		glLight(GL_LIGHT, GL_SPECULAR, whiteLight);
@@ -65,7 +64,7 @@ public class Lights {
 	}
 
 	private void initLightArrays() {
-		float z = 50.0f;
+		float z = (Display.getWidth() + Display.getHeight()) / 50.0f;
 		matSpecular = BufferUtils.createFloatBuffer(4);
 		matSpecular.put(1.0f).put(1.0f).put(1.0f).put(1.0f).flip();
 		lightPosition = BufferUtils.createFloatBuffer(4);
@@ -82,25 +81,24 @@ public class Lights {
 				paddle.getY() + paddle.getHeight() / 2.0f);
 		glLight(GL_LIGHT0, GL_POSITION, lightPosition);
 
-		int i=1;
-		for(; i < balls.size() + 1; i++) {
-			if(!glIsEnabled(getLight(i))) {
+		int i = 1;
+		for (; i < balls.size() + 1; i++) {
+			if (!glIsEnabled(getLight(i))) {
 				enableLight(getLight(i));
 			}
 			Ball b = balls.get(i - 1);
-			lightPosition.put(0, b.getX() + b.getR() / 2.0f).put(1,
-					b.getY() + b.getR() / 2.0f);
+			lightPosition.put(0, b.getX()).put(1, b.getY());
 			glLight(getLight(i), GL_POSITION, lightPosition);
 		}
-		for(; i < 8; i++) {
-			if(glIsEnabled(getLight(i))) {
+		for (; i < 8; i++) {
+			if (glIsEnabled(getLight(i))) {
 				glDisable(getLight(i));
 			}
 		}
 	}
-	
+
 	public int getLight(int i) {
-		switch(i) {
+		switch (i) {
 		case 0:
 			return GL_LIGHT0;
 		case 1:

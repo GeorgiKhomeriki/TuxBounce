@@ -30,6 +30,7 @@ import assets.Sounds;
 import assets.Textures;
 import engine.Game;
 import engine.IGameState;
+import engine.Lights;
 import engine.Texts;
 import game.Block.BlockState;
 import game.Block.BlockType;
@@ -51,7 +52,7 @@ public class GameState implements IGameState {
 	private Popup losePopup;
 	private int oldScore;
 
-	// private Lights lights;
+	private Lights lights;
 
 	@Override
 	public String getName() {
@@ -65,7 +66,7 @@ public class GameState implements IGameState {
 	}
 
 	private void initLevel(int level) {
-		// lights = new Lights();
+		lights = new Lights();
 		paddle = new Paddle(100, 10, Display.getWidth() / 6,
 				Display.getHeight() / 20);
 		balls = new ArrayList<Ball>();
@@ -207,7 +208,7 @@ public class GameState implements IGameState {
 		}
 
 		// update light
-		// lights.update(paddle, balls);
+		lights.update(paddle, balls);
 
 		// update blocks
 		for (int i = 0; i < blocks.size(); i++) {
