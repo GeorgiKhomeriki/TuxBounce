@@ -18,19 +18,17 @@ public class Particles {
 	private float startIntensity;
 	private float endIntensity;
 
-	public Particles(int numParticles, Texture texture, float minX, float maxX,
-			float minY, float maxY, float minDx, float maxDx, float minDy,
-			float maxDy, float minAy, float maxAy, float size, int minLife,
-			int maxLife, float startIntensity, float endIntensity) {
+	public Particles(int numParticles, Texture texture, float x, float y,
+			float minDx, float maxDx, float minDy, float maxDy, float minAy,
+			float maxAy, float size, int minLife, int maxLife,
+			float startIntensity, float endIntensity) {
 		this.texture = texture;
 		this.startIntensity = startIntensity;
 		this.endIntensity = endIntensity;
 
 		particles = new ArrayList<Particle>();
-		
+
 		for (int i = 0; i < numParticles; i++) {
-			float x = minX + Random.get().nextFloat() * (maxX - minX);
-			float y = minY + Random.get().nextFloat() * (maxY - minY);
 			float dx = minDx + Random.get().nextFloat() * (maxDx - minDx);
 			float dy = minDy + Random.get().nextFloat() * (maxDy - minDy);
 			float ay = minAy + Random.get().nextFloat() * (maxAy - minAy);

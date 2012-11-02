@@ -10,6 +10,8 @@ import static org.lwjgl.opengl.GL11.glTexCoord2f;
 import static org.lwjgl.opengl.GL11.glTranslatef;
 import static org.lwjgl.opengl.GL11.glVertex2f;
 
+import menu.Commons;
+
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.newdawn.slick.opengl.Texture;
@@ -73,7 +75,9 @@ public class Ball {
 			x = paddle.getX() + paddle.getWidth() / 2.0f;
 			y = paddle.getY() + paddle.getBounceHeight() + 0.5f * r;
 			stickyTimer += delta;
-			if (Mouse.isButtonDown(0) || stickyTimer > STICKY_TIME) {
+			if (Mouse.isButtonDown(0) && !Commons.get().isKeyPressed()
+					|| stickyTimer > STICKY_TIME) {
+				Commons.get().setKeyPressed(true);
 				sticky = false;
 			}
 		} else {
@@ -94,8 +98,8 @@ public class Ball {
 			float newX = x + dx * delta / 300.0f;
 			float newY = y + dy * delta / 300.0f * speedFactor;
 
-			if (newX - 0.5f * hitR < 0 || 
-					newX + 0.5f * hitR > Display.getWidth()) {
+			if (newX - 0.5f * hitR < 0
+					|| newX + 0.5f * hitR > Display.getWidth()) {
 				dx = -dx;
 				newX = x + dx * delta / 300.0f;
 			}
@@ -105,7 +109,7 @@ public class Ball {
 			}
 			x = newX;
 			y = newY;
-			
+
 			angle -= 0.1f * dx;
 		}
 	}

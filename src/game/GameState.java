@@ -13,17 +13,18 @@ import static org.lwjgl.opengl.GL11.glVertex2f;
 import java.util.ArrayList;
 import java.util.List;
 
+import menu.Commons;
 import menu.MenuState;
 import menu.Popup;
 
 import org.lwjgl.input.Keyboard;
+import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.openal.SoundStore;
 import org.newdawn.slick.opengl.Texture;
 
 import particles.Particles;
-import particles.SimpleExplosion;
 import util.LevelLoader;
 import util.Random;
 import assets.Sounds;
@@ -39,7 +40,7 @@ public class GameState implements IGameState {
 	public static final String name = "STATE_GAME";
 
 	public static boolean paused = false;
-	public static int level = 0;
+	public static int level = 1;
 
 	private Paddle paddle;
 	private List<Ball> balls;
@@ -280,11 +281,17 @@ public class GameState implements IGameState {
 			losePopup.setEnabled(true);
 		}
 
-		// check if escape is pressed
-		if (Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) {
+		// check if escape or q is pressed
+		if (Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)
+				|| Keyboard.isKeyDown(Keyboard.KEY_Q)) {
 			GameState.paused = true;
 			Sounds.get().playDecline();
 			Game.get().setCurrentState(MenuState.name);
+		}
+
+		// check mouse clicked
+		if (!Mouse.isButtonDown(0)) {
+			Commons.get().setKeyPressed(false);
 		}
 
 		// polling is required to allow streaming to get a chance to queue
@@ -338,16 +345,31 @@ public class GameState implements IGameState {
 	}
 
 	private void spawnParticles(Block block) {
-		particles.add(new SimpleExplosion(5, block.getTexture(), block.getX()
-				+ 0.5f * Block.getWidth(), block.getY() - 0.5f
-				* Block.getHeight(), 0.4f, 1.0f));
+		spawnParticles(5, block.getTexture(),
+				block.getX() + 0.5f * Block.getWidth(), block.getY() - 0.5f
+						* Block.getHeight());
 	}
 
 	private void spawnParticles(Coin coin) {
-		particles
-				.add(new SimpleExplosion(100, Textures.get().getCoinGreen(),
-						coin.getX() + 0.5f * Block.getWidth(), coin.getY(),
-						0.4f, 1.0f));
+		spawnParticles(100, Textures.get().getCoinGreen(), coin.getX() + 0.5f
+				* Block.getWidth(), coin.getY());
+	}
+
+	private void spawnParticles(int numParticles, Texture texture, float x,
+			float y) {
+		float dx = Display.getWidth() / 36.0f;
+		float minDy = Display.getHeight() / 22.0f;
+		float maxDy = Display.getHeight() / 15.0f;
+		float minAy = -Display.getHeight() / 1000.0f;
+		float maxAy = -Display.getHeight() / 300.0f;
+		float size = Display.getWidth() / 80.0f;
+		int minLife = 50;
+		int maxLife = 150;
+		float startIntensity = 0.4f;
+		float endIntensity = 1.0f;
+		particles.add(new Particles(numParticles, texture, x, y, -dx, dx,
+				minDy, maxDy, minAy, maxAy, size, minLife, maxLife,
+				startIntensity, endIntensity));
 	}
 
 	private void spawnCoin(Block block) {
