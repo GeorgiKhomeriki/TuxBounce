@@ -1,8 +1,6 @@
 fix timing mistake
 levels / worlds
-options menu - change resolution bug
 font edges bug
 highscore
 fix big delta bug
 complete victory scenario
-particle properties, res. dependent

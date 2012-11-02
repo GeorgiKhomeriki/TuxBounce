@@ -85,9 +85,9 @@ public class Hud {
 						/ 17.0f);
 	}
 
-	private String addZeros(int n, int numZeros) {
+	private String addZeros(int n, int numChars) {
 		String s = "" + n;
-		for (int i = s.length(); i < numZeros; i++) {
+		for (int i = s.length(); i < numChars; i++) {
 			s = "0" + s;
 		}
 		return s;

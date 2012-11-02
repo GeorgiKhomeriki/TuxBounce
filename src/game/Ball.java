@@ -115,7 +115,6 @@ public class Ball {
 	}
 
 	public void bounce(Block block) {
-		// remove 'else' for previous bouncing scheme
 		if (Timer.getTime() - debounceStartTimeY > DEBOUNCE_TIME
 				&& (block.getY() - Block.getHeight() < y + 0.5f * hitR || block
 						.getY() > y - 0.5f * hitR)) {
@@ -143,10 +142,6 @@ public class Ball {
 
 	public float getY() {
 		return y;
-	}
-
-	public float getR() {
-		return r;
 	}
 
 	public float getHitR() {

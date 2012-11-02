@@ -5,23 +5,6 @@ import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 
 public class Graphics {
-
-	/**
-	 * Prints the available graphics modes.
-	 * 
-	 * @throws LWJGLException
-	 */
-	public static void printModes() throws LWJGLException {
-		DisplayMode[] modes = Display.getAvailableDisplayModes();
-		for (int i = 0; i < modes.length; i++) {
-			DisplayMode mode = modes[i];
-			System.out
-					.println(mode.getWidth() + "x" + mode.getHeight() + "x"
-							+ mode.getBitsPerPixel() + " "
-							+ mode.getFrequency() + "Hz");
-		}
-	}
-
 	/**
 	 * Compares two display modes.
 	 * 

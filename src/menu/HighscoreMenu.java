@@ -7,11 +7,14 @@ import static org.lwjgl.opengl.GL11.glEnd;
 import static org.lwjgl.opengl.GL11.glTexCoord2f;
 import static org.lwjgl.opengl.GL11.glVertex2f;
 
+import java.util.List;
+
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.newdawn.slick.opengl.Texture;
 
+import util.Data;
 import assets.Fonts;
 import assets.Sounds;
 import assets.Textures;
@@ -19,17 +22,47 @@ import assets.Textures;
 public abstract class HighscoreMenu {
 	private float highlightColor;
 	private float highlightColorDelta;
+	private List<Highscore> highscores;
 
 	public HighscoreMenu() {
 		this.highlightColor = 1.0f;
 		this.highlightColorDelta = -1.0f;
+		this.highscores = Data.readHighscores();
 	}
 
 	public abstract void backToMainMenu();
 
 	public void render(int delta) {
+		renderHighscores();
 		renderBack();
 		renderCursor();
+	}
+
+	private void renderHighscores() {
+		glColor3f(1.0f, 1.0f, 1.0f);
+		float xOffset = 0.15f * Display.getWidth();
+		float yOffset = 0.7f * Display.getHeight();
+		for (int i = 0; i < 10; i++) {
+			String name;
+			int score;
+			if (i < highscores.size()) {
+				Highscore highscore = highscores.get(i);
+				name = highscore.getName();
+				score = highscore.getScore();
+			} else {
+				name = "?";
+				score = 0;
+			}
+			float y = yOffset - i * Fonts.get().large().getCharacterHeight()
+					* 1.2f;
+			Fonts.get().large().renderText(i + " " + name, xOffset, y);
+			Fonts.get()
+					.large()
+					.renderText(
+							String.valueOf(score),
+							xOffset + Fonts.get().large().getCharacterWidth()
+									* 13, y);
+		}
 	}
 
 	private void renderBack() {
