@@ -300,7 +300,7 @@ public class GameState implements IGameState {
 			break;
 		case RED_FACE:
 			texts.add("EXTRA LIFE", coin.getX(), coin.getY(), 130, true);
-			if(Hud.get().getLives() > 0)
+			if (Hud.get().getLives() > 0)
 				Hud.get().addLives(1);
 			break;
 		case BLUE_FACE:
@@ -340,13 +340,14 @@ public class GameState implements IGameState {
 	private void spawnParticles(Block block) {
 		particles.add(new SimpleExplosion(5, block.getTexture(), block.getX()
 				+ 0.5f * Block.getWidth(), block.getY() - 0.5f
-				* Block.getHeight(), 0.4f, 0.4f, 0.4f, 1.0f, 1.0f, 1.0f));
+				* Block.getHeight(), 0.4f, 1.0f));
 	}
 
 	private void spawnParticles(Coin coin) {
-		particles.add(new SimpleExplosion(100, Textures.get().getCoinGreen(),
-				coin.getX() + 0.5f * Block.getWidth(), coin.getY(), 0.4f, 0.4f,
-				0.4f, 1.0f, 1.0f, 1.0f));
+		particles
+				.add(new SimpleExplosion(100, Textures.get().getCoinGreen(),
+						coin.getX() + 0.5f * Block.getWidth(), coin.getY(),
+						0.4f, 1.0f));
 	}
 
 	private void spawnCoin(Block block) {
