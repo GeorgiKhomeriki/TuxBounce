@@ -50,6 +50,7 @@ public class GameState implements IGameState {
 	private Texts texts;
 	private Popup winPopup;
 	private Popup losePopup;
+	private Popup highscorePopup;
 	private int oldScore;
 
 	// private Lights lights;
@@ -90,6 +91,16 @@ public class GameState implements IGameState {
 			}
 		};
 		losePopup = new Popup("TOO BAD!", "WOULD YOU LIKE TO RETRY?",
+				0.5f * Display.getWidth(), 0.333f * Display.getHeight()) {
+			@Override
+			public void doYes() {
+				Hud.get().setLives(3);
+				Hud.get().setScore(oldScore);
+				initLevel(level);
+			}
+		};
+		highscorePopup = new Popup("HIGHSCORE!",
+				"ADD YOUR SCORE TO THE LIST?",
 				0.5f * Display.getWidth(), 0.333f * Display.getHeight()) {
 			@Override
 			public void doYes() {
@@ -142,6 +153,7 @@ public class GameState implements IGameState {
 
 		winPopup.render();
 		losePopup.render();
+		highscorePopup.render();
 	}
 
 	private void renderBackground() {
@@ -268,6 +280,7 @@ public class GameState implements IGameState {
 		// update popups
 		winPopup.update(delta);
 		losePopup.update(delta);
+		highscorePopup.update(delta);
 
 		// check for victory
 		if (!winPopup.isEnabled() && blocks.isEmpty()) {
@@ -276,9 +289,9 @@ public class GameState implements IGameState {
 		}
 
 		// check for defeat
-		if (!losePopup.isEnabled() && Hud.get().getLives() <= 0) {
+		if (!highscorePopup.isEnabled() && Hud.get().getLives() <= 0) {
 			Sounds.get().playLose();
-			losePopup.setEnabled(true);
+			highscorePopup.setEnabled(true);
 		}
 
 		// check if escape or q is pressed
