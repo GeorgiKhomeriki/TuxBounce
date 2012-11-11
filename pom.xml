@@ -21,11 +21,18 @@
 		<dependency>
 			<groupId>slick</groupId>
 			<artifactId>slick</artifactId>
-			<version>13</version>
-			<scope>system</scope>
-			<systemPath>${project.basedir}/lib/slick-util.jar</systemPath>
+			<version>274</version>
 		</dependency>
 	</dependencies>
+	
+	<repositories>
+		<repository>
+			<id>slick</id>
+			<name>slick</name>
+			<url>http://slick.cokeandcode.com/mavenrepo</url>
+		</repository>
+	</repositories>
+	
 	<build>
 		<sourceDirectory>src</sourceDirectory>
 		<plugins>
