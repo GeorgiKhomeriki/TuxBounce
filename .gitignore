@@ -2,4 +2,5 @@
 bin/
 target/
 *~
+*.swp
 .classpath
