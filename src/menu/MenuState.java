@@ -50,6 +50,7 @@ public class MenuState implements IGameState {
 
 			@Override
 			public void showHighscore() {
+				highscoreMenu.loadHighscores();
 				currentMenu.set(MENU.HIGHSCORE);
 			}
 

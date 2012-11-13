@@ -27,6 +27,10 @@ public abstract class HighscoreMenu {
 	public HighscoreMenu() {
 		this.highlightColor = 1.0f;
 		this.highlightColorDelta = -1.0f;
+		loadHighscores();
+	}
+
+	public void loadHighscores() {
 		this.highscores = Config.readHighscores();
 	}
 

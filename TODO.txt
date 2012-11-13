@@ -4,3 +4,4 @@ font edges bug
 highscore
 fix big delta bug
 complete victory scenario
+popup keyboard input bug

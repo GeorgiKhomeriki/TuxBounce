@@ -1,8 +1,6 @@
 package menu;
 
 import static org.lwjgl.opengl.GL11.glColor3f;
-import engine.Game;
-import game.GameState;
 
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
@@ -31,6 +29,7 @@ public abstract class Popup extends AbstractPopup {
 	}
 
 	public abstract void doYes();
+	public abstract void doNo();
 
 	@Override
 	public void renderContent() {
@@ -142,12 +141,6 @@ public abstract class Popup extends AbstractPopup {
 				break;
 			}
 		}
-	}
-
-	private void doNo() {
-		GameState.paused = true;
-		Sounds.get().playDecline();
-		Game.get().setCurrentState(MenuState.name);
 	}
 
 	private void updateHighlightColor(float delta) {

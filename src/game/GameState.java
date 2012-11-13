@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import menu.Commons;
+import menu.Highscore;
 import menu.MenuState;
 import menu.Popup;
 
@@ -25,6 +26,7 @@ import org.newdawn.slick.openal.SoundStore;
 import org.newdawn.slick.opengl.Texture;
 
 import particles.Particles;
+import util.Config;
 import util.LevelLoader;
 import util.Random;
 import assets.Sounds;
@@ -89,6 +91,18 @@ public class GameState implements IGameState {
 			public void doYes() {
 				initLevel(++level);
 			}
+
+			@Override
+			public void doNo() {
+				if (Config.checkIsHighscore(Hud.get().getScore())) {
+					winPopup.setEnabled(false);
+					highscorePopup.setEnabled(true);
+				} else {
+					GameState.paused = true;
+					Sounds.get().playDecline();
+					Game.get().setCurrentState(MenuState.name);
+				}
+			}
 		};
 		losePopup = new Popup("TOO BAD!", "WOULD YOU LIKE TO RETRY?",
 				0.5f * Display.getWidth(), 0.333f * Display.getHeight()) {
@@ -98,15 +112,35 @@ public class GameState implements IGameState {
 				Hud.get().setScore(oldScore);
 				initLevel(level);
 			}
+
+			@Override
+			public void doNo() {
+				if (Config.checkIsHighscore(Hud.get().getScore())) {
+					losePopup.setEnabled(false);
+					highscorePopup.setEnabled(true);
+				} else {
+					GameState.paused = true;
+					Sounds.get().playDecline();
+					Game.get().setCurrentState(MenuState.name);
+				}
+			}
 		};
-		highscorePopup = new Popup("HIGHSCORE!",
-				"ADD YOUR SCORE TO THE LIST?",
+		highscorePopup = new Popup("HIGHSCORE!", "ADD YOUR SCORE TO THE LIST?",
 				0.5f * Display.getWidth(), 0.333f * Display.getHeight()) {
 			@Override
 			public void doYes() {
-				Hud.get().setLives(3);
-				Hud.get().setScore(oldScore);
-				initLevel(level);
+				// TODO: implement me!
+				Config.addNewHighScore(new Highscore("TEST", Hud.get().getScore()));
+				GameState.paused = true;
+				Sounds.get().playAccept();
+				Game.get().setCurrentState(MenuState.name);
+			}
+
+			@Override
+			public void doNo() {
+				GameState.paused = true;
+				Sounds.get().playDecline();
+				Game.get().setCurrentState(MenuState.name);
 			}
 		};
 	}
@@ -289,9 +323,10 @@ public class GameState implements IGameState {
 		}
 
 		// check for defeat
-		if (!highscorePopup.isEnabled() && Hud.get().getLives() <= 0) {
+		if (!losePopup.isEnabled() && !highscorePopup.isEnabled()
+				&& Hud.get().getLives() <= 0) {
 			Sounds.get().playLose();
-			highscorePopup.setEnabled(true);
+			losePopup.setEnabled(true);
 		}
 
 		// check if escape or q is pressed
