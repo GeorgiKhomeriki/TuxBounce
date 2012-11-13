@@ -14,7 +14,7 @@ import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.newdawn.slick.opengl.Texture;
 
-import util.Data;
+import util.Config;
 import assets.Fonts;
 import assets.Sounds;
 import assets.Textures;
@@ -27,7 +27,7 @@ public abstract class HighscoreMenu {
 	public HighscoreMenu() {
 		this.highlightColor = 1.0f;
 		this.highlightColorDelta = -1.0f;
-		this.highscores = Data.readHighscores();
+		this.highscores = Config.readHighscores();
 	}
 
 	public abstract void backToMainMenu();
