@@ -130,7 +130,8 @@ public class GameState implements IGameState {
 			@Override
 			public void doYes() {
 				// TODO: implement me!
-				Config.addNewHighScore(new Highscore("TEST", Hud.get().getScore()));
+				Config.addNewHighScore(new Highscore("TEST", Hud.get()
+						.getScore()));
 				GameState.paused = true;
 				Sounds.get().playAccept();
 				Game.get().setCurrentState(MenuState.name);
@@ -338,7 +339,8 @@ public class GameState implements IGameState {
 		}
 
 		// check mouse clicked
-		if (!Mouse.isButtonDown(0)) {
+		if (!losePopup.isEnabled() && !highscorePopup.isEnabled()
+				&& !winPopup.isEnabled() && !Mouse.isButtonDown(0)) {
 			Commons.get().setKeyPressed(false);
 		}
 

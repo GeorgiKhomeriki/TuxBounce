@@ -94,7 +94,6 @@ public class Config {
 			String filename = home + "/.config/tuxbounce/highscores";
 			Writer out = new BufferedWriter(new FileWriter(filename));
 			for (Highscore hs : highscores) {
-				System.out.println(hs.getName());
 				out.write(hs.getName() + " " + hs.getScore() + "\n");
 			}
 			out.close();
