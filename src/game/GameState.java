@@ -98,7 +98,6 @@ public class GameState implements IGameState {
 					winPopup.setEnabled(false);
 					highscorePopup.setEnabled(true);
 				} else {
-					GameState.paused = true;
 					Sounds.get().playDecline();
 					Game.get().setCurrentState(MenuState.name);
 				}
@@ -119,7 +118,6 @@ public class GameState implements IGameState {
 					losePopup.setEnabled(false);
 					highscorePopup.setEnabled(true);
 				} else {
-					GameState.paused = true;
 					Sounds.get().playDecline();
 					Game.get().setCurrentState(MenuState.name);
 				}
@@ -139,7 +137,6 @@ public class GameState implements IGameState {
 
 			@Override
 			public void doNo() {
-				GameState.paused = true;
 				Sounds.get().playDecline();
 				Game.get().setCurrentState(MenuState.name);
 			}
@@ -318,7 +315,8 @@ public class GameState implements IGameState {
 		highscorePopup.update(delta);
 
 		// check for victory
-		if (!winPopup.isEnabled() && blocks.isEmpty()) {
+		if (!winPopup.isEnabled() && !highscorePopup.isEnabled()
+				&& blocks.isEmpty()) {
 			Sounds.get().playWin();
 			winPopup.setEnabled(true);
 		}
