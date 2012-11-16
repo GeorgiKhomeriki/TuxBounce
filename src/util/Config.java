@@ -13,6 +13,7 @@ import java.util.Scanner;
 import menu.Highscore;
 
 public class Config {
+	private static final int MAX_SCORES = 10;
 
 	public static void createConfig() {
 		String home = System.getProperty("user.home");
@@ -38,7 +39,8 @@ public class Config {
 		try {
 			Scanner s = new Scanner(new File(home
 					+ "/.config/tuxbounce/highscores"));
-			for (; s.hasNextInt(); i++) {
+			for (; s.hasNext(); i++) {
+				System.out.println(s.next());
 				if (s.nextInt() < score) {
 					return true;
 				}
@@ -46,7 +48,7 @@ public class Config {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
-		return i < 10;
+		return i < MAX_SCORES;
 	}
 
 	public static List<Highscore> readHighscores() {
@@ -81,7 +83,7 @@ public class Config {
 				}
 				newScores.add(hs);
 			}
-			if(!added && highscores.size() < 10) {
+			if (!added && highscores.size() < MAX_SCORES - 1) {
 				newScores.add(score);
 			}
 		}
@@ -93,7 +95,8 @@ public class Config {
 			String home = System.getProperty("user.home");
 			String filename = home + "/.config/tuxbounce/highscores";
 			Writer out = new BufferedWriter(new FileWriter(filename));
-			for (Highscore hs : highscores) {
+			for (int i = 0; i < highscores.size() && i < MAX_SCORES; i++) {
+				Highscore hs = highscores.get(i);
 				out.write(hs.getName() + " " + hs.getScore() + "\n");
 			}
 			out.close();
