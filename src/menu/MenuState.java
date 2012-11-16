@@ -23,7 +23,8 @@ import engine.IGameState;
 public class MenuState implements IGameState {
 	public static final String name = "MENU_STATE";
 
-	private final MenuModel currentMenu = new MenuModel(MENU.MAIN);
+	private static final MenuModel currentMenu = new MenuModel(MENU.MAIN);
+
 	private MainMenu mainMenu;
 	private LevelChoiceMenu levelChoiceMenu;
 	private OptionsMenu optionsMenu;
@@ -187,6 +188,11 @@ public class MenuState implements IGameState {
 		// polling is required to allow streaming to get a chance to queue
 		// buffers.
 		SoundStore.get().poll(0);
+	}
+
+	public static void activateHighscoreMenu() {
+		HighscoreMenu.loadHighscores();
+		currentMenu.set(MENU.HIGHSCORE);
 	}
 
 }

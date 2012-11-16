@@ -20,18 +20,15 @@ import assets.Sounds;
 import assets.Textures;
 
 public abstract class HighscoreMenu {
+	private static List<Highscore> highscores;
+	
 	private float highlightColor;
 	private float highlightColorDelta;
-	private List<Highscore> highscores;
 
 	public HighscoreMenu() {
 		this.highlightColor = 1.0f;
 		this.highlightColorDelta = -1.0f;
 		loadHighscores();
-	}
-
-	public void loadHighscores() {
-		this.highscores = Config.readHighscores();
 	}
 
 	public abstract void backToMainMenu();
@@ -131,4 +128,8 @@ public abstract class HighscoreMenu {
 		}
 	}
 
+	public static void loadHighscores() {
+		HighscoreMenu.highscores = Config.readHighscores();
+	}
+	
 }

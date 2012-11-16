@@ -29,6 +29,7 @@ public abstract class Popup extends AbstractPopup {
 	}
 
 	public abstract void doYes();
+
 	public abstract void doNo();
 
 	@Override
@@ -53,7 +54,7 @@ public abstract class Popup extends AbstractPopup {
 						getY() + 0.1f * getHeight());
 	}
 
-	private void highlightSelection(SELECTION selection) {
+	protected void highlightSelection(SELECTION selection) {
 		if (currentSelection.equals(selection))
 			glColor3f(1.0f, highlightColor, 0.0f);
 		else
@@ -83,7 +84,8 @@ public abstract class Popup extends AbstractPopup {
 				Commons.get().setKeyPressed(true);
 				Sounds.get().playCursor();
 			}
-		} else if (!leftPressed && !rightPressed && !returnPressed) {
+		} else if (!leftPressed && !rightPressed && !returnPressed
+				&& !Mouse.isButtonDown(0)) {
 			Commons.get().setKeyPressed(false);
 		}
 	}
@@ -102,7 +104,7 @@ public abstract class Popup extends AbstractPopup {
 		}
 	}
 
-	private boolean isMouseOnSelection(SELECTION selection) {
+	protected boolean isMouseOnSelection(SELECTION selection) {
 		float x = Mouse.getX();
 		float y = Mouse.getY();
 		float loc;
@@ -151,4 +153,13 @@ public abstract class Popup extends AbstractPopup {
 			highlightColor = newColor;
 		}
 	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public String getMessage() {
+		return message;
+	}
+
 }

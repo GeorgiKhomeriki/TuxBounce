@@ -40,7 +40,7 @@ public class Config {
 			Scanner s = new Scanner(new File(home
 					+ "/.config/tuxbounce/highscores"));
 			for (; s.hasNext(); i++) {
-				System.out.println(s.next());
+				s.next();
 				if (s.nextInt() < score) {
 					return true;
 				}

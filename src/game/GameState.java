@@ -15,6 +15,7 @@ import java.util.List;
 
 import menu.Commons;
 import menu.Highscore;
+import menu.InputPopup;
 import menu.MenuState;
 import menu.Popup;
 
@@ -53,6 +54,7 @@ public class GameState implements IGameState {
 	private Popup winPopup;
 	private Popup losePopup;
 	private Popup highscorePopup;
+	private InputPopup inputPopup;
 	private int oldScore;
 
 	// private Lights lights;
@@ -80,6 +82,8 @@ public class GameState implements IGameState {
 		texts = new Texts();
 		winPopup.setEnabled(false);
 		losePopup.setEnabled(false);
+		highscorePopup.setEnabled(false);
+		inputPopup.setEnabled(false);
 		oldScore = Hud.get().getScore();
 		spawnBall();
 	}
@@ -114,11 +118,11 @@ public class GameState implements IGameState {
 
 			@Override
 			public void doNo() {
+				Sounds.get().playDecline();
 				if (Config.checkIsHighscore(Hud.get().getScore())) {
 					losePopup.setEnabled(false);
 					highscorePopup.setEnabled(true);
 				} else {
-					Sounds.get().playDecline();
 					Game.get().setCurrentState(MenuState.name);
 				}
 			}
@@ -127,11 +131,25 @@ public class GameState implements IGameState {
 				0.5f * Display.getWidth(), 0.333f * Display.getHeight()) {
 			@Override
 			public void doYes() {
-				// TODO: implement me!
-				Config.addNewHighScore(new Highscore("TEST", Hud.get()
-						.getScore()));
-				GameState.paused = true;
 				Sounds.get().playAccept();
+				highscorePopup.setEnabled(false);
+				inputPopup.setEnabled(true);
+			}
+
+			@Override
+			public void doNo() {
+				Sounds.get().playDecline();
+				Game.get().setCurrentState(MenuState.name);
+			}
+		};
+		inputPopup = new InputPopup("PLEASE ENTER YOUR NAME:",
+				0.5f * Display.getWidth(), 0.333f * Display.getHeight()) {
+			@Override
+			public void doYes() {
+				Sounds.get().playAccept();
+				Config.addNewHighScore(new Highscore(this.getInput(), Hud.get()
+						.getScore()));
+				MenuState.activateHighscoreMenu();
 				Game.get().setCurrentState(MenuState.name);
 			}
 
@@ -186,6 +204,7 @@ public class GameState implements IGameState {
 		winPopup.render();
 		losePopup.render();
 		highscorePopup.render();
+		inputPopup.render();
 	}
 
 	private void renderBackground() {
@@ -313,24 +332,25 @@ public class GameState implements IGameState {
 		winPopup.update(delta);
 		losePopup.update(delta);
 		highscorePopup.update(delta);
+		inputPopup.update(delta);
 
 		// check for victory
 		if (!winPopup.isEnabled() && !highscorePopup.isEnabled()
-				&& blocks.isEmpty()) {
+				&& !inputPopup.isEnabled() && blocks.isEmpty()) {
 			Sounds.get().playWin();
 			winPopup.setEnabled(true);
 		}
 
 		// check for defeat
 		if (!losePopup.isEnabled() && !highscorePopup.isEnabled()
-				&& Hud.get().getLives() <= 0) {
+				&& !inputPopup.isEnabled() && Hud.get().getLives() <= 0) {
 			Sounds.get().playLose();
 			losePopup.setEnabled(true);
 		}
 
 		// check if escape or q is pressed
-		if (Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)
-				|| Keyboard.isKeyDown(Keyboard.KEY_Q)) {
+		if ((Keyboard.isKeyDown(Keyboard.KEY_ESCAPE) || Keyboard
+				.isKeyDown(Keyboard.KEY_Q)) && !inputPopup.isEnabled()) {
 			GameState.paused = true;
 			Sounds.get().playDecline();
 			Game.get().setCurrentState(MenuState.name);
@@ -338,7 +358,8 @@ public class GameState implements IGameState {
 
 		// check mouse clicked
 		if (!losePopup.isEnabled() && !highscorePopup.isEnabled()
-				&& !winPopup.isEnabled() && !Mouse.isButtonDown(0)) {
+				&& !winPopup.isEnabled() && !inputPopup.isEnabled()
+				&& !Mouse.isButtonDown(0)) {
 			Commons.get().setKeyPressed(false);
 		}
 

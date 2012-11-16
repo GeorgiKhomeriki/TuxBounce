@@ -1,6 +1,5 @@
 fix timing mistake
 levels / worlds
 font edges bug
-highscore
 fix big delta bug
 complete victory scenario
