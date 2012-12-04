@@ -38,8 +38,8 @@ public class Particle {
 	}
 
 	public void update(float delta) {
-		x += dx / delta;
-		y += dy / delta;
+		x += dx * delta;
+		y += dy * delta;
 		dy += ay;
 		age++;
 	}

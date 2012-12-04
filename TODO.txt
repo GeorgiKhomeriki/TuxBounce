@@ -3,3 +3,5 @@ levels / worlds
 font edges bug
 fix big delta bug
 complete victory scenario
+save/load config
+save/load progress

@@ -426,11 +426,11 @@ public class GameState implements IGameState {
 
 	private void spawnParticles(int numParticles, Texture texture, float x,
 			float y) {
-		float dx = Display.getWidth() / 36.0f;
-		float minDy = Display.getHeight() / 22.0f;
-		float maxDy = Display.getHeight() / 15.0f;
-		float minAy = -Display.getHeight() / 1000.0f;
-		float maxAy = -Display.getHeight() / 300.0f;
+		float dx = Display.getWidth() / 8500.0f;
+		float minDy = Display.getHeight() / 4000.0f;
+		float maxDy = Display.getHeight() / 2500.0f;
+		float minAy = -Display.getHeight() / 65000.0f;
+		float maxAy = -Display.getHeight() / 80000.0f;
 		float size = Display.getWidth() / 80.0f;
 		int minLife = 50;
 		int maxLife = 150;
