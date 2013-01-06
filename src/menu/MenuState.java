@@ -29,7 +29,6 @@ public class MenuState implements IGameState {
 	private LevelChoiceMenu levelChoiceMenu;
 	private OptionsMenu optionsMenu;
 	private HighscoreMenu highscoreMenu;
-	private CreditsMenu creditsMenu;
 
 	@Override
 	public String getName() {
@@ -54,11 +53,6 @@ public class MenuState implements IGameState {
 				HighscoreMenu.loadHighscores();
 				currentMenu.set(MENU.HIGHSCORE);
 			}
-
-			@Override
-			public void showCredits() {
-				currentMenu.set(MENU.CREDITS);
-			}
 		};
 
 		levelChoiceMenu = new LevelChoiceMenu() {
@@ -76,13 +70,6 @@ public class MenuState implements IGameState {
 		};
 
 		highscoreMenu = new HighscoreMenu() {
-			@Override
-			public void backToMainMenu() {
-				currentMenu.set(MENU.MAIN);
-			}
-		};
-
-		creditsMenu = new CreditsMenu() {
 			@Override
 			public void backToMainMenu() {
 				currentMenu.set(MENU.MAIN);
@@ -118,9 +105,6 @@ public class MenuState implements IGameState {
 			break;
 		case HIGHSCORE:
 			highscoreMenu.render(delta);
-			break;
-		case CREDITS:
-			creditsMenu.render(delta);
 			break;
 		default:
 			break;
@@ -177,9 +161,6 @@ public class MenuState implements IGameState {
 			break;
 		case HIGHSCORE:
 			highscoreMenu.update(delta);
-			break;
-		case CREDITS:
-			creditsMenu.update(delta);
 			break;
 		default:
 			break;

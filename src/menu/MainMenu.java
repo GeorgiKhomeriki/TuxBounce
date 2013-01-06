@@ -1,26 +1,21 @@
 package menu;
 
-import static org.lwjgl.opengl.GL11.GL_QUADS;
-import static org.lwjgl.opengl.GL11.glBegin;
 import static org.lwjgl.opengl.GL11.glColor3f;
-import static org.lwjgl.opengl.GL11.glEnd;
-import static org.lwjgl.opengl.GL11.glTexCoord2f;
-import static org.lwjgl.opengl.GL11.glVertex2f;
 import engine.Game;
 import game.GameState;
 
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
-import org.newdawn.slick.opengl.Texture;
 
+import util.Graphics;
 import assets.Fonts;
 import assets.Sounds;
 import assets.Textures;
 
 public abstract class MainMenu {
 	private enum SELECTION {
-		CONTINUE, START, OPTIONS, HIGHSCORE, CREDITS, EXIT
+		CONTINUE, START, OPTIONS, HIGHSCORE, EXIT
 	}
 
 	private SELECTION currentSelection;
@@ -38,8 +33,6 @@ public abstract class MainMenu {
 	public abstract void showOptions();
 
 	public abstract void showHighscore();
-
-	public abstract void showCredits();
 
 	public void render(int delta) {
 		renderCursor();
@@ -65,11 +58,6 @@ public abstract class MainMenu {
 				.large()
 				.renderText("HIGHSCORE", Display.getWidth() / 2.0f,
 						getSelectionY(SELECTION.HIGHSCORE));
-		highlightSelection(SELECTION.CREDITS);
-		Fonts.get()
-				.large()
-				.renderText("CREDITS", Display.getWidth() / 2.0f,
-						getSelectionY(SELECTION.CREDITS));
 		highlightSelection(SELECTION.EXIT);
 		Fonts.get()
 				.large()
@@ -89,19 +77,7 @@ public abstract class MainMenu {
 		float height = Display.getHeight() / 18;
 		float x = Display.getWidth() * 0.5f - 1.2f * width;
 		float y = getSelectionY(currentSelection);
-		Texture cursorTexture = Textures.get().getBall();
-		cursorTexture.bind();
-		glColor3f(1.0f, 1.0f, 1.0f);
-		glBegin(GL_QUADS);
-		glTexCoord2f(0.0f, cursorTexture.getHeight());
-		glVertex2f(x, y);
-		glTexCoord2f(cursorTexture.getWidth(), cursorTexture.getHeight());
-		glVertex2f(x + width, y);
-		glTexCoord2f(cursorTexture.getWidth(), 0.0f);
-		glVertex2f(x + width, y + height);
-		glTexCoord2f(0.0f, 0.0f);
-		glVertex2f(x, y + height);
-		glEnd();
+		Graphics.drawQuad(x, y, width, height, Textures.get().getBall(), true);
 	}
 
 	private float getSelectionY(SELECTION selection) {
@@ -116,11 +92,8 @@ public abstract class MainMenu {
 		case HIGHSCORE:
 			y -= Display.getHeight() / 8.0f;
 			break;
-		case CREDITS:
-			y -= Display.getHeight() / 5.2f;
-			break;
 		case EXIT:
-			y -= Display.getHeight() / 3.9f;
+			y -= Display.getHeight() / 5.2f;
 			break;
 		default:
 			break;
@@ -200,9 +173,6 @@ public abstract class MainMenu {
 			case HIGHSCORE:
 				showHighscore();
 				break;
-			case CREDITS:
-				showCredits();
-				break;
 			case EXIT:
 				Game.get().requestShutdown();
 				break;
@@ -222,11 +192,9 @@ public abstract class MainMenu {
 		case OPTIONS:
 			return up ? SELECTION.START : SELECTION.HIGHSCORE;
 		case HIGHSCORE:
-			return up ? SELECTION.OPTIONS : SELECTION.CREDITS;
-		case CREDITS:
-			return up ? SELECTION.HIGHSCORE : SELECTION.EXIT;
+			return up ? SELECTION.OPTIONS : SELECTION.EXIT;
 		case EXIT:
-			return up ? SELECTION.CREDITS
+			return up ? SELECTION.HIGHSCORE
 					: GameState.paused ? SELECTION.CONTINUE : SELECTION.START;
 		default:
 			return SELECTION.START;

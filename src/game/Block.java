@@ -1,20 +1,13 @@
 package game;
 
-import static org.lwjgl.opengl.GL11.GL_QUADS;
-import static org.lwjgl.opengl.GL11.glBegin;
-import static org.lwjgl.opengl.GL11.glColor4f;
-import static org.lwjgl.opengl.GL11.glEnd;
-import static org.lwjgl.opengl.GL11.glTexCoord2f;
-import static org.lwjgl.opengl.GL11.glVertex2f;
-
 import java.util.List;
 
 import org.lwjgl.opengl.Display;
 import org.newdawn.slick.opengl.Texture;
 
+import util.Graphics;
 import assets.Sounds;
 import assets.Textures;
-
 
 public class Block {
 	public enum BlockType {
@@ -42,20 +35,7 @@ public class Block {
 	}
 
 	public void render() {
-		float width = getWidth();
-		float height = getHeight();
-		texture.bind();
-		glColor4f(1.0f, 1.0f, 1.0f, opacity);
-		glBegin(GL_QUADS);
-		glTexCoord2f(0.0f, 0.0f);
-		glVertex2f(x, y);
-		glTexCoord2f(texture.getWidth(), 0.0f);
-		glVertex2f(x + width, y);
-		glTexCoord2f(texture.getWidth(), texture.getHeight());
-		glVertex2f(x + width, y - height);
-		glTexCoord2f(0.0f, texture.getHeight());
-		glVertex2f(x, y - height);
-		glEnd();
+		Graphics.drawQuad(x, y, getWidth(), -getHeight(), texture, opacity);
 	}
 
 	public void update(float delta) {
@@ -97,15 +77,15 @@ public class Block {
 		}
 		return false;
 	}
-	
+
 	public static float getWidth() {
 		return Display.getWidth() / 20;
 	}
-	
+
 	public static float getHeight() {
 		return Display.getHeight() / 15;
 	}
-	
+
 	public float getX() {
 		return x;
 	}

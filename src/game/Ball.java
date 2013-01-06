@@ -1,24 +1,16 @@
 package game;
 
-import static org.lwjgl.opengl.GL11.GL_QUADS;
-import static org.lwjgl.opengl.GL11.glBegin;
-import static org.lwjgl.opengl.GL11.glColor3f;
-import static org.lwjgl.opengl.GL11.glEnd;
 import static org.lwjgl.opengl.GL11.glLoadIdentity;
 import static org.lwjgl.opengl.GL11.glRotatef;
-import static org.lwjgl.opengl.GL11.glTexCoord2f;
 import static org.lwjgl.opengl.GL11.glTranslatef;
-import static org.lwjgl.opengl.GL11.glVertex2f;
-
 import menu.Commons;
 
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
-import org.newdawn.slick.opengl.Texture;
 
-import assets.Textures;
-
+import util.Graphics;
 import util.Timer;
+import assets.Textures;
 
 public class Ball {
 	private static final int DEBOUNCE_TIME = 200;
@@ -54,19 +46,8 @@ public class Ball {
 		glLoadIdentity();
 		glTranslatef(x, y, 0.0f);
 		glRotatef(angle, 0.0f, 0.0f, 1.0f);
-		glColor3f(1.0f, 1.0f, 1.0f);
-		Texture texture = Textures.get().getBall();
-		texture.bind();
-		glBegin(GL_QUADS);
-		glTexCoord2f(0.0f, texture.getHeight());
-		glVertex2f(-0.5f * r, -0.5f * r);
-		glTexCoord2f(texture.getWidth(), texture.getHeight());
-		glVertex2f(0.5f * r, -0.5f * r);
-		glTexCoord2f(texture.getWidth(), 0.0f);
-		glVertex2f(0.5f * r, 0.5f * r);
-		glTexCoord2f(0.0f, 0.0f);
-		glVertex2f(-0.5f * r, 0.5f * r);
-		glEnd();
+		Graphics.drawQuad(-0.5f * r, -0.5f * r, r, r, Textures.get().getBall(),
+				true);
 		glLoadIdentity();
 	}
 

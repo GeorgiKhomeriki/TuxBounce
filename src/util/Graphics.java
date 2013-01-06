@@ -1,8 +1,16 @@
 package util;
 
+import static org.lwjgl.opengl.GL11.GL_QUADS;
+import static org.lwjgl.opengl.GL11.glBegin;
+import static org.lwjgl.opengl.GL11.glColor4f;
+import static org.lwjgl.opengl.GL11.glEnd;
+import static org.lwjgl.opengl.GL11.glTexCoord2f;
+import static org.lwjgl.opengl.GL11.glVertex2f;
+
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
+import org.newdawn.slick.opengl.Texture;
 
 public class Graphics {
 	/**
@@ -93,5 +101,38 @@ public class Graphics {
 			System.out.println("Unable to setup mode " + width + "x" + height
 					+ " fullscreen=" + fullscreen + e);
 		}
+	}
+
+	public static void drawQuad(float x, float y, float width, float height,
+			Texture texture) {
+		drawQuad(x, y, width, height, texture, 1.0f, false);
+	}
+
+	public static void drawQuad(float x, float y, float width, float height,
+			Texture texture, boolean inverseTexture) {
+		drawQuad(x, y, width, height, texture, 1.0f, inverseTexture);
+	}
+
+	public static void drawQuad(float x, float y, float width, float height,
+			Texture texture, float opacity) {
+		drawQuad(x, y, width, height, texture, opacity, false);
+	}
+
+	private static void drawQuad(float x, float y, float width, float height,
+			Texture texture, float opacity, boolean inverseTexture) {
+		texture.bind();
+		glColor4f(1.0f, 1.0f, 1.0f, opacity);
+		glBegin(GL_QUADS);
+		glTexCoord2f(0.0f, inverseTexture ? texture.getHeight() : 0);
+		glVertex2f(x, y);
+		glTexCoord2f(texture.getWidth(), inverseTexture ? texture.getHeight()
+				: 0);
+		glVertex2f(x + width, y);
+		glTexCoord2f(texture.getWidth(),
+				inverseTexture ? 0 : texture.getHeight());
+		glVertex2f(x + width, y + height);
+		glTexCoord2f(0.0f, inverseTexture ? 0 : texture.getHeight());
+		glVertex2f(x, y + height);
+		glEnd();
 	}
 }
