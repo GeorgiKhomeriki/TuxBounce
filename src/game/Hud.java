@@ -2,7 +2,6 @@ package game;
 
 import static org.lwjgl.opengl.GL11.GL_LIGHTING;
 import static org.lwjgl.opengl.GL11.GL_LINES;
-import static org.lwjgl.opengl.GL11.GL_QUADS;
 import static org.lwjgl.opengl.GL11.GL_TEXTURE_2D;
 import static org.lwjgl.opengl.GL11.glBegin;
 import static org.lwjgl.opengl.GL11.glColor3f;
@@ -15,6 +14,7 @@ import static org.lwjgl.opengl.GL11.glVertex2f;
 
 import org.lwjgl.opengl.Display;
 
+import util.Graphics;
 import assets.Fonts;
 
 public class Hud {
@@ -53,12 +53,7 @@ public class Hud {
 	private void renderBackground() {
 		glDisable(GL_TEXTURE_2D);
 		glColor4f(0.0f, 0.0f, 0.0f, 0.5f);
-		glBegin(GL_QUADS);
-		glVertex2f(0.0f, displayHeight);
-		glVertex2f(width, displayHeight);
-		glVertex2f(width, displayHeight - height);
-		glVertex2f(0.0f, displayHeight - height);
-		glEnd();
+		Graphics.drawQuad(0.0f, displayHeight, width, -height);
 
 		glBegin(GL_LINES);
 		glColor3f(1.0f - lineColor, 1.0f - lineColor, 1.0f - lineColor);

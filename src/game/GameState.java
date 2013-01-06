@@ -2,13 +2,8 @@ package game;
 
 import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
 import static org.lwjgl.opengl.GL11.GL_DEPTH_BUFFER_BIT;
-import static org.lwjgl.opengl.GL11.GL_QUADS;
-import static org.lwjgl.opengl.GL11.glBegin;
 import static org.lwjgl.opengl.GL11.glClear;
-import static org.lwjgl.opengl.GL11.glEnd;
 import static org.lwjgl.opengl.GL11.glLoadIdentity;
-import static org.lwjgl.opengl.GL11.glTexCoord2f;
-import static org.lwjgl.opengl.GL11.glVertex2f;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +23,7 @@ import org.newdawn.slick.opengl.Texture;
 
 import particles.Particles;
 import util.Config;
+import util.Graphics;
 import util.LevelLoader;
 import util.Random;
 import assets.Sounds;
@@ -226,16 +222,8 @@ public class GameState implements IGameState {
 						/ (screenHeight / blockSize);
 				float ty1 = texHeight - texHeight * (yi + 1)
 						/ (screenHeight / blockSize);
-				glBegin(GL_QUADS);
-				glTexCoord2f(tx0, ty0);
-				glVertex2f(x, y);
-				glTexCoord2f(tx1, ty0);
-				glVertex2f(x + blockSize, y);
-				glTexCoord2f(tx1, ty1);
-				glVertex2f(x + blockSize, y + blockSize);
-				glTexCoord2f(tx0, ty1);
-				glVertex2f(x, y + blockSize);
-				glEnd();
+				Graphics.drawQuad(x, y, blockSize, blockSize, tx0, ty0, tx1,
+						ty1);
 			}
 		}
 	}

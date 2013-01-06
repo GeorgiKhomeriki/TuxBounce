@@ -103,6 +103,29 @@ public class Graphics {
 		}
 	}
 
+	public static void drawQuad(float x, float y, float width, float height) {
+		glBegin(GL_QUADS);
+		glVertex2f(x, y);
+		glVertex2f(x + width, y);
+		glVertex2f(x + width, y + height);
+		glVertex2f(x, y + height);
+		glEnd();
+	}
+
+	public static void drawQuad(float x, float y, float width, float height,
+			float tx0, float ty0, float tx1, float ty1) {
+		glBegin(GL_QUADS);
+		glTexCoord2f(tx0, ty0);
+		glVertex2f(x, y);
+		glTexCoord2f(tx1, ty0);
+		glVertex2f(x + width, y);
+		glTexCoord2f(tx1, ty1);
+		glVertex2f(x + width, y + height);
+		glTexCoord2f(tx0, ty1);
+		glVertex2f(x, y + height);
+		glEnd();
+	}
+
 	public static void drawQuad(float x, float y, float width, float height,
 			Texture texture) {
 		drawQuad(x, y, width, height, texture, 1.0f, 1.0f, 1.0f, 1.0f, false);
@@ -121,7 +144,8 @@ public class Graphics {
 
 	public static void drawQuad(float x, float y, float width, float height,
 			Texture texture, float intensity, boolean inverseTexture) {
-		drawQuad(x, y, width, height, texture, intensity, intensity, intensity, 1.0f, inverseTexture);
+		drawQuad(x, y, width, height, texture, intensity, intensity, intensity,
+				1.0f, inverseTexture);
 	}
 
 	public static void drawQuad(float x, float y, float width, float height,
