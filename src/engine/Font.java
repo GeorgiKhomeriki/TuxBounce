@@ -1,17 +1,13 @@
 package engine;
 
-import static org.lwjgl.opengl.GL11.GL_QUADS;
-import static org.lwjgl.opengl.GL11.glBegin;
-import static org.lwjgl.opengl.GL11.glEnd;
-import static org.lwjgl.opengl.GL11.glTexCoord2f;
-import static org.lwjgl.opengl.GL11.glVertex2f;
-
 import java.io.IOException;
 
 import org.lwjgl.opengl.Display;
 import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;
 import org.newdawn.slick.util.ResourceLoader;
+
+import util.Graphics;
 
 public class Font {
 	private Texture texture;
@@ -43,18 +39,9 @@ public class Font {
 		for (int i = 0; i < text.length(); i++) {
 			float c = (int) text.charAt(i) - 32;
 			if (c > 0) {
-				glBegin(GL_QUADS);
-				glTexCoord2f(c / numChars * texture.getWidth(),
-						texture.getHeight());
-				glVertex2f(x + i * width, y);
-				glTexCoord2f((c + 1) / numChars * texture.getWidth(),
-						texture.getHeight());
-				glVertex2f(x + i * width + width, y);
-				glTexCoord2f((c + 1) / numChars * texture.getWidth(), 0.0f);
-				glVertex2f(x + i * width + width, y + height);
-				glTexCoord2f(c / numChars * texture.getWidth(), 0.0f);
-				glVertex2f(x + i * width, y + height);
-				glEnd();
+				Graphics.drawQuad(x + i * width, y, width, height, c / numChars
+						* texture.getWidth(), texture.getHeight(), (c + 1)
+						/ numChars * texture.getWidth(), 0.0f);
 			}
 		}
 	}

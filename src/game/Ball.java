@@ -53,46 +53,54 @@ public class Ball {
 
 	public void update(float delta, Paddle paddle) {
 		if (sticky) {
-			x = paddle.getX() + paddle.getWidth() / 2.0f;
-			y = paddle.getY() + paddle.getBounceHeight() + 0.5f * r;
-			stickyTimer += delta;
-			if (Mouse.isButtonDown(0) && !Commons.get().isKeyPressed()
-					|| stickyTimer > STICKY_TIME) {
-				Commons.get().setKeyPressed(true);
-				sticky = false;
-			}
+			updateStickyBall(delta, paddle);
 		} else {
-			long time = Timer.getTime();
-
-			if (time - debounceStartTimeY > DEBOUNCE_TIME) {
-				if (y - 0.5f * hitR <= paddle.getY() + paddle.getHeight()
-						&& y > paddle.getY() && x > paddle.getX()
-						&& x < paddle.getX() + paddle.getWidth()) {
-					dx = (x - (paddle.getX() + 0.5f * paddle.getWidth())) * 3.0f;
-					dy = -dy;
-					paddle.bounce((x - paddle.getX()) / paddle.getWidth());
-					speedFactor += SPEED_UP_DELTA;
-					debounceStartTimeY = time;
-				}
-			}
-
-			float newX = x + dx * delta / 300.0f;
-			float newY = y + dy * delta / 300.0f * speedFactor;
-
-			if (newX - 0.5f * hitR < 0
-					|| newX + 0.5f * hitR > Display.getWidth()) {
-				dx = -dx;
-				newX = x + dx * delta / 300.0f;
-			}
-			if (newY + 0.5f * hitR > Display.getHeight() - Hud.height) {
-				dy = -dy;
-				newY = y + dy * delta / 300.0f * speedFactor;
-			}
-			x = newX;
-			y = newY;
-
-			angle -= 0.1f * dx;
+			updateNormalBall(delta, paddle);
 		}
+	}
+	
+	private void updateStickyBall(float delta, Paddle paddle) {
+		x = paddle.getX() + paddle.getWidth() / 2.0f;
+		y = paddle.getY() + paddle.getBounceHeight() + 0.5f * r;
+		stickyTimer += delta;
+		if (Mouse.isButtonDown(0) && !Commons.get().isKeyPressed()
+				|| stickyTimer > STICKY_TIME) {
+			Commons.get().setKeyPressed(true);
+			sticky = false;
+		}
+	}
+	
+	private void updateNormalBall(float delta, Paddle paddle) {
+		long time = Timer.getTime();
+
+		if (time - debounceStartTimeY > DEBOUNCE_TIME) {
+			if (y - 0.5f * hitR <= paddle.getY() + paddle.getHeight()
+					&& y > paddle.getY() && x > paddle.getX()
+					&& x < paddle.getX() + paddle.getWidth()) {
+				dx = (x - (paddle.getX() + 0.5f * paddle.getWidth())) * 3.0f;
+				dy = -dy;
+				paddle.bounce((x - paddle.getX()) / paddle.getWidth());
+				speedFactor += SPEED_UP_DELTA;
+				debounceStartTimeY = time;
+			}
+		}
+
+		float newX = x + dx * delta / 300.0f;
+		float newY = y + dy * delta / 300.0f * speedFactor;
+
+		if (newX - 0.5f * hitR < 0
+				|| newX + 0.5f * hitR > Display.getWidth()) {
+			dx = -dx;
+			newX = x + dx * delta / 300.0f;
+		}
+		if (newY + 0.5f * hitR > Display.getHeight() - Hud.height) {
+			dy = -dy;
+			newY = y + dy * delta / 300.0f * speedFactor;
+		}
+		x = newX;
+		y = newY;
+
+		angle -= 0.1f * dx;
 	}
 
 	public void bounce(Block block) {

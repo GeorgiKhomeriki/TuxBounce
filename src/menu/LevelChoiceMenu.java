@@ -1,12 +1,6 @@
 package menu;
 
-import static org.lwjgl.opengl.GL11.GL_QUADS;
-import static org.lwjgl.opengl.GL11.glBegin;
 import static org.lwjgl.opengl.GL11.glColor3f;
-import static org.lwjgl.opengl.GL11.glColor4f;
-import static org.lwjgl.opengl.GL11.glEnd;
-import static org.lwjgl.opengl.GL11.glTexCoord2f;
-import static org.lwjgl.opengl.GL11.glVertex2f;
 import engine.Game;
 import game.GameState;
 import game.Hud;
@@ -14,10 +8,8 @@ import game.Hud;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
-import org.newdawn.slick.opengl.Texture;
 
 import util.Graphics;
-
 import assets.Fonts;
 import assets.Sounds;
 import assets.Textures;
@@ -51,19 +43,8 @@ public abstract class LevelChoiceMenu {
 						* 1.1f;
 				int num = i + j * 10 + 1;
 				float alpha = num == selection ? 1.0f : 0.4f;
-				Texture texture = Textures.get().getBlockRed();
-				texture.bind();
-				glColor4f(1.0f, 1.0f, 1.0f, alpha);
-				glBegin(GL_QUADS);
-				glTexCoord2f(0.0f, texture.getHeight());
-				glVertex2f(blockX, blockY);
-				glTexCoord2f(texture.getWidth(), texture.getHeight());
-				glVertex2f(blockX + blockWidth, blockY);
-				glTexCoord2f(texture.getWidth(), 0.0f);
-				glVertex2f(blockX + blockWidth, blockY + blockHeight);
-				glTexCoord2f(0.0f, 0.0f);
-				glVertex2f(blockX, blockY + blockHeight);
-				glEnd();
+				Graphics.drawQuad(blockX, blockY, blockWidth, blockHeight,
+						Textures.get().getBlockRed(), 1.0f, alpha, true);
 				highlightSelection(num);
 				float textX = num > 9 ? blockX - 0.01f * blockWidth : blockX
 						+ 0.2f * blockWidth;

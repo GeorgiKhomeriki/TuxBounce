@@ -143,9 +143,9 @@ public class Graphics {
 	}
 
 	public static void drawQuad(float x, float y, float width, float height,
-			Texture texture, float intensity, boolean inverseTexture) {
+			Texture texture, float intensity, float alpha, boolean inverseTexture) {
 		drawQuad(x, y, width, height, texture, intensity, intensity, intensity,
-				1.0f, inverseTexture);
+				alpha, inverseTexture);
 	}
 
 	public static void drawQuad(float x, float y, float width, float height,

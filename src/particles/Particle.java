@@ -41,7 +41,7 @@ public class Particle {
 	}
 
 	public void render() {
-		Graphics.drawQuad(x, y, size, size, texture, intensity, true);
+		Graphics.drawQuad(x, y, size, size, texture, intensity, 1.0f, true);
 	}
 
 	public boolean isAlive() {
