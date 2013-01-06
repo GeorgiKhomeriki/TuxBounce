@@ -2,30 +2,24 @@ package menu;
 
 import static org.lwjgl.opengl.GL11.GL_MODELVIEW;
 import static org.lwjgl.opengl.GL11.GL_PROJECTION;
-import static org.lwjgl.opengl.GL11.GL_QUADS;
-import static org.lwjgl.opengl.GL11.glBegin;
 import static org.lwjgl.opengl.GL11.glColor3f;
-import static org.lwjgl.opengl.GL11.glEnd;
 import static org.lwjgl.opengl.GL11.glLoadIdentity;
 import static org.lwjgl.opengl.GL11.glMatrixMode;
 import static org.lwjgl.opengl.GL11.glOrtho;
-import static org.lwjgl.opengl.GL11.glTexCoord2f;
-import static org.lwjgl.opengl.GL11.glVertex2f;
+import engine.Game;
+import game.GameState;
+import game.Hud;
 
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
-import org.newdawn.slick.opengl.Texture;
 
 import util.Graphics;
 import assets.Fonts;
 import assets.Sounds;
 import assets.Textures;
-import engine.Game;
-import game.GameState;
-import game.Hud;
 
 public abstract class OptionsMenu {
 	private enum SELECTION {
@@ -109,19 +103,7 @@ public abstract class OptionsMenu {
 		float height = Display.getHeight() / 18;
 		float x = Display.getWidth() * 0.1f - 1.2f * width;
 		float y = getSelectionY(currentSelection);
-		Texture cursorTexture = Textures.get().getBall();
-		cursorTexture.bind();
-		glColor3f(1.0f, 1.0f, 1.0f);
-		glBegin(GL_QUADS);
-		glTexCoord2f(0.0f, cursorTexture.getHeight());
-		glVertex2f(x, y);
-		glTexCoord2f(cursorTexture.getWidth(), cursorTexture.getHeight());
-		glVertex2f(x + width, y);
-		glTexCoord2f(cursorTexture.getWidth(), 0.0f);
-		glVertex2f(x + width, y + height);
-		glTexCoord2f(0.0f, 0.0f);
-		glVertex2f(x, y + height);
-		glEnd();
+		Graphics.drawQuad(x, y, width, height, Textures.get().getBall(), true);
 	}
 
 	private float getSelectionY(SELECTION selection) {

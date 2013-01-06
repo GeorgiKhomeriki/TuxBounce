@@ -1,15 +1,8 @@
 package menu;
 
-import static org.lwjgl.opengl.GL11.GL_QUADS;
-import static org.lwjgl.opengl.GL11.glBegin;
-import static org.lwjgl.opengl.GL11.glColor3f;
-import static org.lwjgl.opengl.GL11.glEnd;
-import static org.lwjgl.opengl.GL11.glTexCoord2f;
-import static org.lwjgl.opengl.GL11.glVertex2f;
-
 import org.lwjgl.opengl.Display;
-import org.newdawn.slick.opengl.Texture;
 
+import util.Graphics;
 import assets.Textures;
 
 public abstract class AbstractPopup {
@@ -28,6 +21,7 @@ public abstract class AbstractPopup {
 	}
 
 	public abstract void renderContent();
+
 	public abstract void updateContent(float delta);
 
 	public void render() {
@@ -38,19 +32,7 @@ public abstract class AbstractPopup {
 	}
 
 	private void renderBg() {
-		Texture bgTexture = Textures.get().getPopup();
-		bgTexture.bind();
-		glColor3f(1.0f, 1.0f, 1.0f);
-		glBegin(GL_QUADS);
-		glTexCoord2f(0.0f, bgTexture.getHeight());
-		glVertex2f(x, y);
-		glTexCoord2f(bgTexture.getWidth(), bgTexture.getHeight());
-		glVertex2f(x + width, y);
-		glTexCoord2f(bgTexture.getWidth(), 0.0f);
-		glVertex2f(x + width, y + height);
-		glTexCoord2f(0.0f, 0.0f);
-		glVertex2f(x, y + height);
-		glEnd();
+		Graphics.drawQuad(x, y, width, height, Textures.get().getPopup(), true);
 	}
 
 	public void update(float delta) {

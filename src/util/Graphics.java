@@ -105,23 +105,30 @@ public class Graphics {
 
 	public static void drawQuad(float x, float y, float width, float height,
 			Texture texture) {
-		drawQuad(x, y, width, height, texture, 1.0f, false);
+		drawQuad(x, y, width, height, texture, 1.0f, 1.0f, 1.0f, 1.0f, false);
 	}
 
 	public static void drawQuad(float x, float y, float width, float height,
 			Texture texture, boolean inverseTexture) {
-		drawQuad(x, y, width, height, texture, 1.0f, inverseTexture);
+		drawQuad(x, y, width, height, texture, 1.0f, 1.0f, 1.0f, 1.0f,
+				inverseTexture);
 	}
 
 	public static void drawQuad(float x, float y, float width, float height,
-			Texture texture, float opacity) {
-		drawQuad(x, y, width, height, texture, opacity, false);
+			Texture texture, float alpha) {
+		drawQuad(x, y, width, height, texture, 1.0f, 1.0f, 1.0f, alpha, false);
 	}
 
-	private static void drawQuad(float x, float y, float width, float height,
-			Texture texture, float opacity, boolean inverseTexture) {
+	public static void drawQuad(float x, float y, float width, float height,
+			Texture texture, float intensity, boolean inverseTexture) {
+		drawQuad(x, y, width, height, texture, intensity, intensity, intensity, 1.0f, inverseTexture);
+	}
+
+	public static void drawQuad(float x, float y, float width, float height,
+			Texture texture, float r, float g, float b, float alpha,
+			boolean inverseTexture) {
 		texture.bind();
-		glColor4f(1.0f, 1.0f, 1.0f, opacity);
+		glColor4f(r, g, b, alpha);
 		glBegin(GL_QUADS);
 		glTexCoord2f(0.0f, inverseTexture ? texture.getHeight() : 0);
 		glVertex2f(x, y);
