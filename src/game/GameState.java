@@ -448,7 +448,7 @@ public class GameState implements IGameState {
 				|| block.getType().equals(Block.BlockType.GREY_FACE)
 				|| block.getType().equals(Block.BlockType.BROWN_FACE_BROKEN)) {
 			coins.add(new Coin(block.getType(), block.getX(), block.getY(),
-					Block.getWidth(), Block.getHeight(), -40.0f));
+					Block.getWidth(), Block.getHeight(), -0.2f));
 		}
 	}
 

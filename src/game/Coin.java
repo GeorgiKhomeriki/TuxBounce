@@ -35,7 +35,7 @@ public class Coin {
 	}
 
 	public void update(float delta) {
-		y += dy / delta;
+		y += dy * delta;
 	}
 
 	public boolean isHit(Paddle paddle) {
