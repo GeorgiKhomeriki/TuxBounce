@@ -20,6 +20,7 @@ public class LoadingState implements IGameState {
 	@Override
 	public void init() {
 		startLoading = false;
+		Config.createConfig();
 	}
 
 	@Override
@@ -46,7 +47,6 @@ public class LoadingState implements IGameState {
 			Sounds.get().setSoundEnabled(false);
 			Sounds.get().setMusicEnabled(false);
 			Game.get().setCurrentState(MenuState.name);
-			Config.createConfig();
 		}
 		startLoading = true;
 	}

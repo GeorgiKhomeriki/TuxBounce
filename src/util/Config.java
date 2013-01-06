@@ -18,18 +18,23 @@ public class Config {
 	public static void createConfig() {
 		String home = System.getProperty("user.home");
 		try {
-			createFile(home + "/.config");
-			createFile(home + "/.config/tuxbounce");
+			createConfigFolder();
 			createFile(home + "/.config/tuxbounce/highscores");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
+	
+	private static void createConfigFolder() {
+		String home = System.getProperty("user.home");
+		File f = new File(home + "/.config/tuxbounce/");
+		f.mkdirs();
+	}
 
 	private static void createFile(String filename) throws IOException {
-		File tbDir = new File(filename);
-		if (!tbDir.exists()) {
-			tbDir.createNewFile();
+		File f = new File(filename);
+		if (!f.exists()) {
+			f.createNewFile();
 		}
 	}
 
