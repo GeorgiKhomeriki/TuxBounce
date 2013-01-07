@@ -69,6 +69,7 @@ public class Game extends AbstractGame {
 
 	public static Game get() {
 		if (instance == null) {
+			Config.createConfig();
 			List<Object> options = Config.loadOptions();
 			if(options.size() > 0) {
 				instance = new Game("Tux Bounce", (Integer)options.get(0), (Integer)options.get(1), (Boolean)options.get(2));

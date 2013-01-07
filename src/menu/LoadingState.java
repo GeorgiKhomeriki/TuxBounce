@@ -22,7 +22,6 @@ public class LoadingState implements IGameState {
 	@Override
 	public void init() {
 		startLoading = false;
-		Config.createConfig();
 	}
 
 	@Override
@@ -47,8 +46,8 @@ public class LoadingState implements IGameState {
 			Textures.get();
 			Fonts.get();
 			List<Object> options = Config.loadOptions();
-			Sounds.get().setSoundEnabled((Boolean) options.get(3));
-			Sounds.get().setMusicEnabled((Boolean) options.get(4));
+			Sounds.get().setSoundEnabled(options.isEmpty() ? true : (Boolean) options.get(3));
+			Sounds.get().setMusicEnabled(options.isEmpty() ? true : (Boolean) options.get(4));
 			Game.get().setCurrentState(MenuState.name);
 		}
 		startLoading = true;
