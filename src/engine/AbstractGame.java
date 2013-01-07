@@ -135,20 +135,5 @@ public abstract class AbstractGame {
 	public void requestShutdown() {
 		shutdownRequested = true;
 	}
-
-	/**
-	 * Accessor for the screen width.
-	 * @return screen width
-	 */
-	public int getScreenWidth() {
-		return screenWidth;
-	}
-
-	/**
-	 * Accessor for the screen height.
-	 * @return screen height
-	 */
-	public int getScreenHeight() {
-		return screenHeight;
-	}
+	
 }

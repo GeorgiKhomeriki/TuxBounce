@@ -1,5 +1,7 @@
 package menu;
 
+import java.util.List;
+
 import util.Config;
 import assets.Fonts;
 import assets.Sounds;
@@ -44,8 +46,9 @@ public class LoadingState implements IGameState {
 			Sounds.get();
 			Textures.get();
 			Fonts.get();
-			Sounds.get().setSoundEnabled(false);
-			Sounds.get().setMusicEnabled(false);
+			List<Object> options = Config.loadOptions();
+			Sounds.get().setSoundEnabled((Boolean) options.get(3));
+			Sounds.get().setMusicEnabled((Boolean) options.get(4));
 			Game.get().setCurrentState(MenuState.name);
 		}
 		startLoading = true;

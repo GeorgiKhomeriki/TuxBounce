@@ -18,15 +18,15 @@ public class Config {
 	public static void createConfig() {
 		String home = System.getProperty("user.home");
 		try {
-			createConfigFolder();
+			createConfigFolder(home);
+			createFile(home + "/.config/tuxbounce/options");
 			createFile(home + "/.config/tuxbounce/highscores");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-	
-	private static void createConfigFolder() {
-		String home = System.getProperty("user.home");
+
+	private static void createConfigFolder(String home) {
 		File f = new File(home + "/.config/tuxbounce/");
 		f.mkdirs();
 	}
@@ -36,6 +36,43 @@ public class Config {
 		if (!f.exists()) {
 			f.createNewFile();
 		}
+	}
+
+	public static void saveOptions(String resolution, boolean fullscreen,
+			boolean sound, boolean music) {
+		String home = System.getProperty("user.home");
+		String filename = home + "/.config/tuxbounce/options";
+		try {
+			Writer out = new BufferedWriter(new FileWriter(filename));
+			out.write(resolution + "\n");
+			out.write(fullscreen + "\n");
+			out.write(sound + "\n");
+			out.write(music + "\n");
+			out.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public static List<Object> loadOptions() {
+		List<Object> options = new ArrayList<Object>();
+		String home = System.getProperty("user.home");
+		try {
+			Scanner s = new Scanner(new File(home
+					+ "/.config/tuxbounce/options"));
+			for (int i = 0; s.hasNextLine(); i++) {
+				if(i == 0) {
+					String[] resParts = s.nextLine().split(" x ");
+					options.add(Integer.parseInt(resParts[0]));
+					options.add(Integer.parseInt(resParts[1]));
+				} else {
+					options.add(Boolean.parseBoolean(s.nextLine()));
+				}
+			}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		return options;
 	}
 
 	public static boolean checkIsHighscore(int score) {

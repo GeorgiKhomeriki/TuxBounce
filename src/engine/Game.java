@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.lwjgl.openal.AL;
 
+import util.Config;
+
 public class Game extends AbstractGame {
 
 	private static Game instance;
@@ -67,11 +69,12 @@ public class Game extends AbstractGame {
 
 	public static Game get() {
 		if (instance == null) {
-			// instance = new Game("Tux Bounce", 1920, 1200, true);
-			instance = new Game("Tux Bounce", 1440, 900, true);
-			// instance = new Game("Tux Bounce", 1024, 768, false);
-			// instance = new Game("Tux Bounce", 800, 600, false);
-			// instance = new Game("Tux Bounce", 640, 480, false);
+			List<Object> options = Config.loadOptions();
+			if(options.size() > 0) {
+				instance = new Game("Tux Bounce", (Integer)options.get(0), (Integer)options.get(1), (Boolean)options.get(2));
+			} else {
+				instance = new Game("Tux Bounce", 800, 600, false);
+			}
 		}
 		return instance;
 	}

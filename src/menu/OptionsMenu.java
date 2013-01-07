@@ -16,6 +16,7 @@ import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 
+import util.Config;
 import util.Graphics;
 import assets.Fonts;
 import assets.Sounds;
@@ -229,6 +230,9 @@ public abstract class OptionsMenu {
 				Sounds.get().playAccept();
 				break;
 			case BACK:
+				Config.saveOptions(Display.getDisplayMode().toString(),
+						Display.isFullscreen(), Sounds.get().isSoundEnabled(),
+						Sounds.get().isMusicEnabled());
 				backToMainMenu();
 				Sounds.get().playDecline();
 				break;
