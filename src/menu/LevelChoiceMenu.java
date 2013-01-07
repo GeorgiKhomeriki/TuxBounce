@@ -42,7 +42,8 @@ public abstract class LevelChoiceMenu {
 				float blockY = 0.6f * Display.getHeight() - j * blockHeight
 						* 1.1f;
 				int num = i + j * 10 + 1;
-				float alpha = num == selection ? 1.0f : 0.4f;
+				float alpha = num <= Commons.get().getLevelProgress() ? 0.8f
+						: 0.4f;
 				Graphics.drawQuad(blockX, blockY, blockWidth, blockHeight,
 						Textures.get().getBlockRed(), 1.0f, alpha, true);
 				highlightSelection(num);
@@ -84,7 +85,7 @@ public abstract class LevelChoiceMenu {
 			boolean isMouseOnBack = isMouseOnBack();
 			if (Keyboard.isKeyDown(Keyboard.KEY_RETURN)
 					|| Mouse.isButtonDown(0) && isMouseOnBack) {
-				if (isMouseOnBack) {
+				if (isMouseOnBack || selection == 0) {
 					backToMainMenu();
 					Sounds.get().playDecline();
 				} else {
@@ -93,17 +94,20 @@ public abstract class LevelChoiceMenu {
 				Commons.get().setKeyPressed(true);
 			} else if (Keyboard.isKeyDown(Keyboard.KEY_LEFT)) {
 				Commons.get().setKeyPressed(true);
-				selection--;
+				selection = selection == 0 ? 1 : selection - 1;
 			} else if (Keyboard.isKeyDown(Keyboard.KEY_RIGHT)) {
 				Commons.get().setKeyPressed(true);
-				selection++;
+				selection = selection == 0 ? 1 : selection + 1;
 			} else if (Keyboard.isKeyDown(Keyboard.KEY_UP)) {
 				Commons.get().setKeyPressed(true);
-				selection -= 10;
+				selection = selection == 0 ? 1 : selection - 10;
 			} else if (Keyboard.isKeyDown(Keyboard.KEY_DOWN)) {
 				Commons.get().setKeyPressed(true);
-				selection += 10;
+				selection = selection == 0 ? 1 : selection + 10;
 			}
+		}
+		if (selection < 0 || selection > 50) {
+			selection = 0;
 		}
 		if (!Keyboard.isKeyDown(Keyboard.KEY_RETURN) && !Mouse.isButtonDown(0)
 				&& !Keyboard.isKeyDown(Keyboard.KEY_LEFT)
@@ -149,12 +153,17 @@ public abstract class LevelChoiceMenu {
 	}
 
 	private void startGame() {
-		backToMainMenu();
-		Sounds.get().playAccept();
-		Hud.get().reset();
-		GameState.level = selection;
-		Game.get().reinit(GameState.name);
-		Game.get().setCurrentState(GameState.name);
+		if (selection <= Commons.get().getLevelProgress()) {
+			backToMainMenu();
+			Sounds.get().playAccept();
+			Hud.get().reset();
+			GameState.level = selection;
+			Game.get().reinit(GameState.name);
+			Game.get().setCurrentState(GameState.name);
+		} else if (!Commons.get().isKeyPressed()) {
+			Sounds.get().playDecline();
+			Commons.get().setKeyPressed(true);
+		}
 	}
 
 	private boolean isMouseOnBack() {

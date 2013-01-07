@@ -95,7 +95,7 @@ public class Config {
 		String filename = home + "/.config/tuxbounce/progress";
 		try {
 			Writer out = new BufferedWriter(new FileWriter(filename));
-			out.write(level);
+			out.write(level + "\n");
 			out.close();
 		} catch (IOException e) {
 			e.printStackTrace();

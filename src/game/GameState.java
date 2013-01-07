@@ -67,6 +67,7 @@ public class GameState implements IGameState {
 	}
 
 	private void initLevel(int level) {
+		saveProgress(level);
 		// lights = new Lights();
 		paddle = new Paddle(100, 10, Display.getWidth() / 6,
 				Display.getHeight() / 20);
@@ -82,6 +83,12 @@ public class GameState implements IGameState {
 		inputPopup.setEnabled(false);
 		oldScore = Hud.get().getScore();
 		spawnBall();
+	}
+	
+	private void saveProgress(int level) {
+		if(level > Commons.get().getLevelProgress() ) {
+			Commons.get().saveLevelProgress(level);
+		} 
 	}
 
 	private void initPopups() {
