@@ -21,6 +21,7 @@ public class Config {
 			createConfigFolder(home);
 			createFile(home + "/.config/tuxbounce/options");
 			createFile(home + "/.config/tuxbounce/highscores");
+			createFile(home + "/.config/tuxbounce/progress");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -69,10 +70,36 @@ public class Config {
 					options.add(Boolean.parseBoolean(s.nextLine()));
 				}
 			}
+			s.close();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
 		return options;
+	}
+
+	public static int loadProgress() {
+		String home = System.getProperty("user.home");
+		int level = 0;
+		try {
+			Scanner s = new Scanner(new File(home + "/.config/tuxbounce/progress"));
+			level = s.hasNextInt() ? s.nextInt() : 0;
+			s.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		return level;
+	}
+	
+	public static void saveProgress(int level) {
+		String home = System.getProperty("user.home");
+		String filename = home + "/.config/tuxbounce/progress";
+		try {
+			Writer out = new BufferedWriter(new FileWriter(filename));
+			out.write(level);
+			out.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public static boolean checkIsHighscore(int score) {
@@ -87,6 +114,7 @@ public class Config {
 					return true;
 				}
 			}
+			s.close();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -104,6 +132,7 @@ public class Config {
 				int score = s.nextInt();
 				highscores.add(new Highscore(name, score));
 			}
+			s.close();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
