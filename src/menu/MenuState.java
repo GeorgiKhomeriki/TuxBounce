@@ -111,8 +111,8 @@ public class MenuState implements IGameState {
 	}
 
 	public void renderLogo() {
-		float x = Display.getWidth() * 0.01f;
-		float y = Display.getHeight() * 0.85f;
+		float x = Display.getWidth() * 0.02f;
+		float y = Display.getHeight() * 0.88f;
 		float width = Display.getWidth() / 2;
 		float height = Display.getHeight() / 10;
 		Graphics.drawQuad(x, y, width, height, Textures.get().getLogo(), true);

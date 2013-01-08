@@ -1,0 +1,73 @@
+CREDITS
+
+Development: Georgi Khomeriki <g.khomeriki@gmail.com>
+Game design: Keti Maglaperidze
+
+Libraries:
+	lwjgl: (http://www.lwjgl.org/)
+	slick-util: (http://www.slick2d.org/)
+
+Assets:
+	http://www.opengameart.org/
+	http://www.freesound.org/
+
+Graphics:
+	Paddle + blocks + coins:
+	Marcus (http://opengameart.org/content/breakout-graphics)
+
+	AngryTux:
+	Gaming4JC (http://opengameart.org/content/angrytux)
+
+	Menu Background:
+	Tamara (http://opengameart.org/content/forest-background-art)
+
+	Game backgrounds:
+	JAP (http://opengameart.org/content/oil-painting-landscapes)
+
+	Fonts:
+	Marc Russell (http://www.spicypixel.net)
+
+	Popup panel:
+	Bart Kelsey (http://opengameart.org/content/sci-fi-ui-panel)
+
+Music:
+	Menu music:
+	kwazi (http://freesound.org/people/kwazi/sounds/34117/)
+
+	Game music:
+	bebeto (http://freesound.org/people/bebeto/sounds/18973/)
+
+Sounds:
+	djembe-hi-3.wav:
+	domingus (http://freesound.org/people/domingus/sounds/54016/)
+
+	djembe-mid-2.wav:
+	domingus (http://freesound.org/people/domingus/sounds/54022/)
+
+	djembe-mid-4.wav:
+	domingus (http://freesound.org/people/domingus/sounds/54024/)
+
+	goblet-g-medium.wav
+	acclivity (http://freesound.org/people/acclivity/sounds/30603/)
+
+	lose.wav:
+	noirenex (http://freesound.org/people/noirenex/sounds/159408/)
+
+	mouthpop.wav:
+	carlSablowEdwards (http://freesound.org/people/carlSablowEdwards/sounds/47498/)
+
+	stone-on-stone-impact.wav:
+	thanvannispen (http://freesound.org/people/thanvannispen/sounds/30012/)
+
+	menu-nav.wav:
+	DJ Chronos (http://freesound.org/people/DJ%20Chronos/sounds/29929/)
+
+	menu-validate.wav:
+	broumbroum (http://freesound.org/people/broumbroum/sounds/50565/)
+
+	menu-back.wav:
+	broumbroum (http://freesound.org/people/broumbroum/sounds/50557/)
+
+Unfortunately, I've lost links to some of the sound effect files (boing.wav and win.wav). Please contact me if you recognize audio that you've created.
+
+For comments and/or adjustments, contact me: <g.khomeriki@gmail.com>

@@ -4,6 +4,5 @@ font edges bug
 fix big delta bug
 complete victory scenario
 fix set fullscreen from windowed mode bug
-save/load progress
 code clean up
 polish game

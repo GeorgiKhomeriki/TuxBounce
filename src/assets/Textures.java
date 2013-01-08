@@ -85,8 +85,8 @@ public class Textures {
 			
 			logo = TextureLoader.getTexture("PNG", ResourceLoader
 					.getResourceAsStream("resources/images/logo.png"));
-			bgMenu = TextureLoader.getTexture("JPG", ResourceLoader
-					.getResourceAsStream("resources/images/menu-bg.jpg"));
+			bgMenu = TextureLoader.getTexture("PNG", ResourceLoader
+					.getResourceAsStream("resources/images/forest.png"));
 			bgGame1 = TextureLoader.getTexture("PNG", ResourceLoader
 					.getResourceAsStream("resources/images/coldmountain.png"));
 			bgGame2 = TextureLoader.getTexture("PNG", ResourceLoader
