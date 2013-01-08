@@ -28,8 +28,10 @@ public class Config {
 	}
 
 	private static void createConfigFolder(String home) {
-		File f = new File(home + "/.config/tuxbounce/");
-		f.mkdirs();
+		File f = new File(home + "/.config/tuxbounce");
+		if(!f.exists()) {
+			f.mkdirs();
+		}
 	}
 
 	private static void createFile(String filename) throws IOException {
