@@ -1,4 +1,5 @@
-fix timing mistake
+fix folder (tuxbounce) creation as file bug 
+fix timing mistake (particles and cube fade-out)
 levels / worlds
 font edges bug
 fix big delta bug

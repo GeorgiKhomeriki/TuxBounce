@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>TuxBounce</groupId>
 	<artifactId>TuxBounce</artifactId>
-	<version>0.01</version>
+	<version>0.6</version>
 
 	<properties>
 		<finalName>${project.artifactId}-${project.version}.jar</finalName>
