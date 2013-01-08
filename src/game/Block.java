@@ -40,7 +40,7 @@ public class Block {
 
 	public void update(float delta) {
 		if (state.equals(BlockState.DYING)) {
-			opacity -= 1.0f / delta;
+			opacity -= delta / 290.0f;
 		}
 
 		if (opacity <= 0.0f) {

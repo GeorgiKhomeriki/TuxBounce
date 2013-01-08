@@ -1,9 +1,9 @@
 fix folder (tuxbounce) creation as file bug 
-fix timing mistake (particles and cube fade-out)
+fix timing mistake (particles are fps dependent...)
 levels / worlds
 font edges bug
 fix big delta bug
 complete victory scenario
 fix set fullscreen from windowed mode bug
 code clean up
-polish game
+change ball bounce code
