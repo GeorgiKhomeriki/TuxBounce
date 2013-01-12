@@ -4,6 +4,5 @@ levels / worlds
 font edges bug
 fix big delta bug
 complete victory scenario
-fix set fullscreen from windowed mode bug
 code clean up
 change ball bounce code

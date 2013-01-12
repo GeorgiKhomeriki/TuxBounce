@@ -82,9 +82,6 @@ public abstract class OptionsMenu {
 		Fonts.get().large()
 				.renderText(resolution, x, getSelectionY(SELECTION.RESOLUTION));
 		String fullscreen = booleanToString(Display.isFullscreen());
-		if (!Display.getDisplayMode().isFullscreenCapable()) {
-			fullscreen = "CHANGE RES.";
-		}
 		Fonts.get().large()
 				.renderText(fullscreen, x, getSelectionY(SELECTION.FULLSCREEN));
 		String sound = booleanToString(Sounds.get().isSoundEnabled());
@@ -213,12 +210,9 @@ public abstract class OptionsMenu {
 				Sounds.get().playAccept();
 				break;
 			case FULLSCREEN:
-				try {
-					if (Display.getDisplayMode().isFullscreenCapable())
-						Display.setFullscreen(!Display.isFullscreen());
-				} catch (LWJGLException e) {
-					e.printStackTrace();
-				}
+				Graphics.setDisplayMode(Display.getDisplayMode().getWidth(),
+						Display.getDisplayMode().getHeight(),
+						!Display.isFullscreen());
 				Sounds.get().playAccept();
 				break;
 			case MUSIC:

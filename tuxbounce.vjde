@@ -1,9 +1,0 @@
-let g:vjde_out_path='.'
-let g:vjde_src_path='src'
-let g:vjde_lib_path='target/TuxBounce-0.01/lib/lwjgl-2.8.4.jar:target/classes'
-let g:vjde_web_app=''
-let g:vjde_test_path=''
-let g:vjde_java_command='java'
-let g:vjde_show_paras=0
-let g:vjde_xml_advance=0
-" vim :ft=vim:
