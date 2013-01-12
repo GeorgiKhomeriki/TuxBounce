@@ -2,7 +2,10 @@ package game;
 
 import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
 import static org.lwjgl.opengl.GL11.GL_DEPTH_BUFFER_BIT;
+import static org.lwjgl.opengl.GL11.GL_LIGHTING;
 import static org.lwjgl.opengl.GL11.glClear;
+import static org.lwjgl.opengl.GL11.glEnable;
+import static org.lwjgl.opengl.GL11.glDisable;
 import static org.lwjgl.opengl.GL11.glLoadIdentity;
 
 import java.util.ArrayList;
@@ -30,6 +33,7 @@ import assets.Sounds;
 import assets.Textures;
 import engine.Game;
 import engine.IGameState;
+import engine.Lights;
 import engine.Texts;
 import game.Block.BlockState;
 import game.Block.BlockType;
@@ -53,7 +57,8 @@ public class GameState implements IGameState {
 	private InputPopup inputPopup;
 	private int oldScore;
 
-	// private Lights lights;
+	private Lights lights;
+	private boolean lightingEnabled;
 
 	@Override
 	public String getName() {
@@ -68,7 +73,8 @@ public class GameState implements IGameState {
 
 	private void initLevel(int level) {
 		saveProgress(level);
-		// lights = new Lights();
+		lights = new Lights();
+		lightingEnabled = Lights.isLightingEnabled(level);
 		paddle = new Paddle(100, 10, Display.getWidth() / 6,
 				Display.getHeight() / 20);
 		balls = new ArrayList<Ball>();
@@ -180,6 +186,9 @@ public class GameState implements IGameState {
 		glLoadIdentity();
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+		if(lightingEnabled)
+			glEnable(GL_LIGHTING);
+		
 		renderBackground();
 
 		paddle.render();
@@ -201,6 +210,9 @@ public class GameState implements IGameState {
 		}
 
 		texts.render();
+		
+		if(lightingEnabled)
+			glDisable(GL_LIGHTING);
 
 		Hud.get().render();
 
@@ -262,7 +274,7 @@ public class GameState implements IGameState {
 		}
 
 		// update light
-		// lights.update(paddle, balls);
+		lights.update(paddle, balls);
 
 		// update blocks
 		for (int i = 0; i < blocks.size(); i++) {

@@ -12,22 +12,20 @@ import static org.lwjgl.opengl.GL11.GL_LIGHT4;
 import static org.lwjgl.opengl.GL11.GL_LIGHT5;
 import static org.lwjgl.opengl.GL11.GL_LIGHT6;
 import static org.lwjgl.opengl.GL11.GL_LIGHT7;
-import static org.lwjgl.opengl.GL11.GL_LIGHTING;
 import static org.lwjgl.opengl.GL11.GL_LIGHT_MODEL_AMBIENT;
 import static org.lwjgl.opengl.GL11.GL_POSITION;
 import static org.lwjgl.opengl.GL11.GL_SHININESS;
 import static org.lwjgl.opengl.GL11.GL_SMOOTH;
 import static org.lwjgl.opengl.GL11.GL_SPECULAR;
 import static org.lwjgl.opengl.GL11.glColorMaterial;
-import static org.lwjgl.opengl.GL11.glEnable;
 import static org.lwjgl.opengl.GL11.glDisable;
+import static org.lwjgl.opengl.GL11.glEnable;
 import static org.lwjgl.opengl.GL11.glIsEnabled;
 import static org.lwjgl.opengl.GL11.glLight;
 import static org.lwjgl.opengl.GL11.glLightModel;
 import static org.lwjgl.opengl.GL11.glMaterial;
 import static org.lwjgl.opengl.GL11.glMaterialf;
 import static org.lwjgl.opengl.GL11.glShadeModel;
-
 import game.Ball;
 import game.Paddle;
 
@@ -51,7 +49,6 @@ public class Lights {
 		enableLight(GL_LIGHT0);
 		enableLight(GL_LIGHT1);
 		glLightModel(GL_LIGHT_MODEL_AMBIENT, lModelAmbient);
-		glEnable(GL_LIGHTING);
 		glEnable(GL_COLOR_MATERIAL);
 		glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);
 	}
@@ -118,5 +115,9 @@ public class Lights {
 		default:
 			return -1;
 		}
+	}
+	
+	public static boolean isLightingEnabled(int level) {
+		return level % 3 == 0;
 	}
 }
