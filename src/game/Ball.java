@@ -69,38 +69,49 @@ public class Ball {
 	}
 
 	private void updateNormalBall(float delta, Paddle paddle) {
-		float newX = x + dx * delta / 300.0f;
-		float newY = y + dy * delta / 300.0f * speedFactor;
+		float newX = getNewX(delta);
+		float newY = getNewY(delta);
 
-		if (!hasBouncedInCurrentFrame) {
-			if (y - 0.5f * hitR <= paddle.getY() + paddle.getHeight()
-					&& y > paddle.getY() && x > paddle.getX()
-					&& x < paddle.getX() + paddle.getWidth()) {
-				dx = (x - (paddle.getX() + 0.5f * paddle.getWidth())) * 3.0f;
-				dy = Math.abs(dy);
-				paddle.bounce((x - paddle.getX()) / paddle.getWidth());
-				speedFactor += SPEED_UP_DELTA;
-				newX = x + dx * delta / 300.0f;
-				newY = y + dy * delta / 300.0f * speedFactor;
+		if (isPaddleHit(newX, newY, paddle)) {
+			dx = (x - (paddle.getX() + 0.5f * paddle.getWidth())) * 3.0f;
+			dy = Math.abs(dy);
+			paddle.bounce((x - paddle.getX()) / paddle.getWidth());
+			speedFactor += SPEED_UP_DELTA;
+			newX = getNewX(delta);
+			newY = getNewY(delta);
+			hasBouncedInCurrentFrame = true;
+		} else {
+			if (newX - 0.5f * hitR < 0
+					|| newX + 0.5f * hitR > Display.getWidth()) {
+				dx = -dx;
+				newX = getNewX(delta);
 				hasBouncedInCurrentFrame = true;
-			} else {
-				if (newX - 0.5f * hitR < 0
-						|| newX + 0.5f * hitR > Display.getWidth()) {
-					dx = -dx;
-					newX = x + dx * delta / 300.0f;
-					hasBouncedInCurrentFrame = true;
-				}
-				if (newY + 0.5f * hitR > Display.getHeight() - Hud.height) {
-					dy = -dy;
-					newY = y + dy * delta / 300.0f * speedFactor;
-					hasBouncedInCurrentFrame = true;
-				}
+			}
+			if (newY + 0.5f * hitR > Display.getHeight() - Hud.height) {
+				dy = -dy;
+				newY = getNewY(delta);
+				hasBouncedInCurrentFrame = true;
 			}
 		}
+		
 		x = newX;
 		y = newY;
 
 		angle -= 0.1f * dx;
+	}
+	
+	private float getNewX(float delta) {
+		return x + dx * delta / 300.0f;
+	}
+	
+	private float getNewY(float delta) {
+		return y + dy * delta / 300.0f * speedFactor;
+	}
+	
+	private boolean isPaddleHit(float x, float y, Paddle paddle) {
+		return y - 0.5f * hitR <= paddle.getY() + paddle.getHeight()
+				&& y > paddle.getY() && x > paddle.getX()
+				&& x < paddle.getX() + paddle.getWidth();
 	}
 
 	public void bounce(Block block) {
