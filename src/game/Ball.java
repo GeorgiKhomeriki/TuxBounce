@@ -77,7 +77,7 @@ public class Ball {
 					&& y > paddle.getY() && x > paddle.getX()
 					&& x < paddle.getX() + paddle.getWidth()) {
 				dx = (x - (paddle.getX() + 0.5f * paddle.getWidth())) * 3.0f;
-				dy = -dy;
+				dy = Math.abs(dy);
 				paddle.bounce((x - paddle.getX()) / paddle.getWidth());
 				speedFactor += SPEED_UP_DELTA;
 				newX = x + dx * delta / 300.0f;
