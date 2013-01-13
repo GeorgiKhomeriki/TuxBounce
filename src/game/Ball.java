@@ -22,12 +22,12 @@ public class Ball {
 	private float hitR;
 	private float dx;
 	private float dy;
-	private long debounceStartTimeX;
 	private long debounceStartTimeY;
 	private boolean sticky;
 	private long stickyTimer;
 	private float angle;
 	private float speedFactor;
+	private boolean hasBouncedInCurrentFrame;
 
 	public Ball(float x, float y, float r, float dx, float dy) {
 		this.x = x;
@@ -40,6 +40,7 @@ public class Ball {
 		this.stickyTimer = 0l;
 		this.angle = 0.0f;
 		this.speedFactor = 1.0f;
+		this.hasBouncedInCurrentFrame = false;
 	}
 
 	public void render() {
@@ -58,7 +59,7 @@ public class Ball {
 			updateNormalBall(delta, paddle);
 		}
 	}
-	
+
 	private void updateStickyBall(float delta, Paddle paddle) {
 		x = paddle.getX() + paddle.getWidth() / 2.0f;
 		y = paddle.getY() + paddle.getBounceHeight() + 0.5f * r;
@@ -69,7 +70,7 @@ public class Ball {
 			sticky = false;
 		}
 	}
-	
+
 	private void updateNormalBall(float delta, Paddle paddle) {
 		long time = Timer.getTime();
 
@@ -88,8 +89,7 @@ public class Ball {
 		float newX = x + dx * delta / 300.0f;
 		float newY = y + dy * delta / 300.0f * speedFactor;
 
-		if (newX - 0.5f * hitR < 0
-				|| newX + 0.5f * hitR > Display.getWidth()) {
+		if (newX - 0.5f * hitR < 0 || newX + 0.5f * hitR > Display.getWidth()) {
 			dx = -dx;
 			newX = x + dx * delta / 300.0f;
 		}
@@ -104,16 +104,26 @@ public class Ball {
 	}
 
 	public void bounce(Block block) {
-		if (Timer.getTime() - debounceStartTimeY > DEBOUNCE_TIME
-				&& (block.getY() - Block.getHeight() < y + 0.5f * hitR || block
-						.getY() > y - 0.5f * hitR)) {
-			dy = -dy;
-			debounceStartTimeY = Timer.getTime();
-		} else if (Timer.getTime() - debounceStartTimeX > DEBOUNCE_TIME
-				&& (block.getX() < x + 0.5f * hitR || block.getX()
-						+ Block.getWidth() > x - 0.5f * hitR)) {
-			dx = -dx;
-			debounceStartTimeX = Timer.getTime();
+		if (!hasBouncedInCurrentFrame) {
+			float hitSizeLeft = Math.abs(block.getX() - (x + 0.5f * hitR));
+			float hitSizeRight = Math.abs((block.getX() + Block.getWidth())
+					- (x - 0.5f * hitR));
+			float hitSizeBelow = Math.abs((block.getY() - Block.getHeight())
+					- (y + 0.5f * hitR));
+			float hitSizeAbove = Math.abs(block.getY() - (y - 0.5f * hitR));
+
+			float hitSizeX = Math.min(hitSizeLeft, hitSizeRight);
+			float hitSizeY = Math.min(hitSizeBelow, hitSizeAbove);
+
+			if (hitSizeX == hitSizeY) {
+				dx = -dx;
+				dy = -dy;
+			} else if (hitSizeX < hitSizeY) {
+				dx = -dx;
+			} else {
+				dy = -dy;
+			}
+			hasBouncedInCurrentFrame = true;
 		}
 	}
 
@@ -135,6 +145,10 @@ public class Ball {
 
 	public float getHitR() {
 		return hitR;
+	}
+
+	public void setHasBouncedInCurrentFrame(boolean hasBounced) {
+		hasBouncedInCurrentFrame = hasBounced;
 	}
 
 }

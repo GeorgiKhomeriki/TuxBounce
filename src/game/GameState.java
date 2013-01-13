@@ -255,6 +255,7 @@ public class GameState implements IGameState {
 		// update balls
 		for (int i = 0; i < balls.size(); i++) {
 			Ball ball = balls.get(i);
+			ball.setHasBouncedInCurrentFrame(false);
 			if (ball.isAlive()) {
 				ball.update(delta, paddle);
 			} else {
