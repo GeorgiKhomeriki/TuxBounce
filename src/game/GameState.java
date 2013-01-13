@@ -251,7 +251,7 @@ public class GameState implements IGameState {
 	public void update(int delta) {
 		// update paddle
 		paddle.update(delta);
-
+		
 		// update balls
 		for (int i = 0; i < balls.size(); i++) {
 			Ball ball = balls.get(i);
@@ -273,10 +273,7 @@ public class GameState implements IGameState {
 				Sounds.get().playDeath();
 			}
 		}
-
-		// update light
-		lights.update(paddle, balls);
-
+		
 		// update blocks
 		for (int i = 0; i < blocks.size(); i++) {
 			Block block = blocks.get(i);
@@ -326,6 +323,9 @@ public class GameState implements IGameState {
 			}
 		}
 
+		// update light
+		lights.update(paddle, balls);
+		
 		// update texts
 		texts.update(delta);
 

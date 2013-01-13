@@ -9,11 +9,9 @@ import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 
 import util.Graphics;
-import util.Timer;
 import assets.Textures;
 
 public class Ball {
-	private static final int DEBOUNCE_TIME = 200;
 	private static final int STICKY_TIME = 4000;
 	private static final float SPEED_UP_DELTA = 0.02f;
 	private float x;
@@ -22,7 +20,6 @@ public class Ball {
 	private float hitR;
 	private float dx;
 	private float dy;
-	private long debounceStartTimeY;
 	private boolean sticky;
 	private long stickyTimer;
 	private float angle;
@@ -72,9 +69,10 @@ public class Ball {
 	}
 
 	private void updateNormalBall(float delta, Paddle paddle) {
-		long time = Timer.getTime();
+		float newX = x + dx * delta / 300.0f;
+		float newY = y + dy * delta / 300.0f * speedFactor;
 
-		if (time - debounceStartTimeY > DEBOUNCE_TIME) {
+		if (!hasBouncedInCurrentFrame) {
 			if (y - 0.5f * hitR <= paddle.getY() + paddle.getHeight()
 					&& y > paddle.getY() && x > paddle.getX()
 					&& x < paddle.getX() + paddle.getWidth()) {
@@ -82,20 +80,22 @@ public class Ball {
 				dy = -dy;
 				paddle.bounce((x - paddle.getX()) / paddle.getWidth());
 				speedFactor += SPEED_UP_DELTA;
-				debounceStartTimeY = time;
+				newX = x + dx * delta / 300.0f;
+				newY = y + dy * delta / 300.0f * speedFactor;
+				hasBouncedInCurrentFrame = true;
+			} else {
+				if (newX - 0.5f * hitR < 0
+						|| newX + 0.5f * hitR > Display.getWidth()) {
+					dx = -dx;
+					newX = x + dx * delta / 300.0f;
+					hasBouncedInCurrentFrame = true;
+				}
+				if (newY + 0.5f * hitR > Display.getHeight() - Hud.height) {
+					dy = -dy;
+					newY = y + dy * delta / 300.0f * speedFactor;
+					hasBouncedInCurrentFrame = true;
+				}
 			}
-		}
-
-		float newX = x + dx * delta / 300.0f;
-		float newY = y + dy * delta / 300.0f * speedFactor;
-
-		if (newX - 0.5f * hitR < 0 || newX + 0.5f * hitR > Display.getWidth()) {
-			dx = -dx;
-			newX = x + dx * delta / 300.0f;
-		}
-		if (newY + 0.5f * hitR > Display.getHeight() - Hud.height) {
-			dy = -dy;
-			newY = y + dy * delta / 300.0f * speedFactor;
 		}
 		x = newX;
 		y = newY;
@@ -105,24 +105,10 @@ public class Ball {
 
 	public void bounce(Block block) {
 		if (!hasBouncedInCurrentFrame) {
-			float hitSizeLeft = Math.abs(block.getX() - (x + 0.5f * hitR));
-			float hitSizeRight = Math.abs((block.getX() + Block.getWidth())
-					- (x - 0.5f * hitR));
-			float hitSizeBelow = Math.abs((block.getY() - Block.getHeight())
-					- (y + 0.5f * hitR));
-			float hitSizeAbove = Math.abs(block.getY() - (y - 0.5f * hitR));
-
-			float hitSizeX = Math.min(hitSizeLeft, hitSizeRight);
-			float hitSizeY = Math.min(hitSizeBelow, hitSizeAbove);
-
-			if (hitSizeX == hitSizeY) {
-				dx = -dx;
-				dy = -dy;
-			} else if (hitSizeX < hitSizeY) {
-				dx = -dx;
-			} else {
-				dy = -dy;
-			}
+			float blockCenterX = block.getX() + 0.5f * Block.getWidth();
+			float blockCenterY = block.getY() - 0.5f * Block.getHeight();
+			dx = x - blockCenterX > 0 ? Math.abs(dx) : -Math.abs(dx);
+			dy = y - blockCenterY > 0 ? Math.abs(dy) : -Math.abs(dy);
 			hasBouncedInCurrentFrame = true;
 		}
 	}

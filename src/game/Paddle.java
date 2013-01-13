@@ -74,16 +74,16 @@ public class Paddle {
 		if (bounceSize <= 0.0f) {
 			bounceHeight = height;
 		} else {
-			bounceIndex += 8.0f / delta;
+			bounceIndex += delta / 34.0f;
 			bounceHeight = this.height + (float) Math.sin(bounceIndex)
 					* bounceSize;
-			bounceSize -= 0.2f;
+			bounceSize -= delta / 85.0f;
 		}
 	}
 
 	public void bounce(float bounceCenter) {
 		this.bounceCenter = bounceCenter;
-		bounceSize = 0.2f * height;
+		bounceSize = 0.25f * height;
 		Sounds.get().playBoing();
 	}
 
