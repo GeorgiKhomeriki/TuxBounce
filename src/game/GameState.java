@@ -90,11 +90,11 @@ public class GameState implements IGameState {
 		oldScore = Hud.get().getScore();
 		spawnBall();
 	}
-	
+
 	private void saveProgress(int level) {
-		if(level > Commons.get().getLevelProgress() ) {
+		if (level > Commons.get().getLevelProgress()) {
 			Commons.get().saveLevelProgress(level);
-		} 
+		}
 	}
 
 	private void initPopups() {
@@ -186,9 +186,9 @@ public class GameState implements IGameState {
 		glLoadIdentity();
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		if(lightingEnabled)
+		if (lightingEnabled)
 			glEnable(GL_LIGHTING);
-		
+
 		renderBackground();
 
 		paddle.render();
@@ -210,8 +210,8 @@ public class GameState implements IGameState {
 		}
 
 		texts.render();
-		
-		if(lightingEnabled)
+
+		if (lightingEnabled)
 			glDisable(GL_LIGHTING);
 
 		Hud.get().render();
@@ -251,7 +251,7 @@ public class GameState implements IGameState {
 	public void update(int delta) {
 		// update paddle
 		paddle.update(delta);
-		
+
 		// update balls
 		for (int i = 0; i < balls.size(); i++) {
 			Ball ball = balls.get(i);
@@ -273,7 +273,7 @@ public class GameState implements IGameState {
 				Sounds.get().playDeath();
 			}
 		}
-		
+
 		// update blocks
 		for (int i = 0; i < blocks.size(); i++) {
 			Block block = blocks.get(i);
@@ -325,7 +325,7 @@ public class GameState implements IGameState {
 
 		// update light
 		lights.update(paddle, balls);
-		
+
 		// update texts
 		texts.update(delta);
 
@@ -452,7 +452,8 @@ public class GameState implements IGameState {
 				|| block.getType().equals(Block.BlockType.GREY_FACE)
 				|| block.getType().equals(Block.BlockType.BROWN_FACE_BROKEN)) {
 			coins.add(new Coin(block.getType(), block.getX(), block.getY(),
-					Block.getWidth(), Block.getHeight(), -0.2f));
+					Block.getWidth(), Block.getHeight(), -0.2f - 0.1f
+							* Random.get().nextFloat()));
 		}
 	}
 
