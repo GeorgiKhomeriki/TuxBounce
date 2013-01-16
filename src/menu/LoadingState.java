@@ -35,17 +35,17 @@ public class LoadingState implements IGameState {
 	}
 
 	@Override
-	public void render(int delta) {
+	public void render(final int delta) {
 		System.out.println("loading...");
 	}
 
 	@Override
-	public void update(int delta) {
+	public void update(final int delta) {
 		if (startLoading) {
 			Sounds.get();
 			Textures.get();
 			Fonts.get();
-			List<Object> options = Config.loadOptions();
+			final List<Object> options = Config.loadOptions();
 			Sounds.get().setSoundEnabled(options.isEmpty() ? true : (Boolean) options.get(3));
 			Sounds.get().setMusicEnabled(options.isEmpty() ? true : (Boolean) options.get(4));
 			Game.get().setCurrentState(MenuState.name);

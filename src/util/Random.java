@@ -2,9 +2,9 @@ package util;
 
 public class Random {
 	private static java.util.Random random;
-	
+
 	public static java.util.Random get() {
-		if(random == null) {
+		if (random == null) {
 			random = new java.util.Random();
 		}
 		return random;

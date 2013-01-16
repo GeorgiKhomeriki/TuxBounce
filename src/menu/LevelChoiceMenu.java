@@ -27,29 +27,29 @@ public abstract class LevelChoiceMenu {
 
 	public abstract void backToMainMenu();
 
-	public void render(int delta) {
+	public void render(final int delta) {
 		renderChoices();
 		renderBack();
 		renderCursor();
 	}
 
 	private void renderChoices() {
-		float blockWidth = getBlockWidth();
-		float blockHeight = getBlockHeight();
+		final float blockWidth = getBlockWidth();
+		final float blockHeight = getBlockHeight();
 		for (int i = 0; i < 10; i++) {
 			float blockX = 0.05f * Display.getWidth() + i * blockWidth * 1.1f;
 			for (int j = 0; j < 5; j++) {
-				float blockY = 0.6f * Display.getHeight() - j * blockHeight
-						* 1.1f;
-				int num = i + j * 10 + 1;
-				float alpha = num <= Commons.get().getLevelProgress() ? 0.8f
+				final float blockY = 0.6f * Display.getHeight() - j
+						* blockHeight * 1.1f;
+				final int num = i + j * 10 + 1;
+				final float alpha = num <= Commons.get().getLevelProgress() ? 0.8f
 						: 0.4f;
 				Graphics.drawQuad(blockX, blockY, blockWidth, blockHeight,
 						Textures.get().getBlockRed(), 1.0f, alpha, true);
 				highlightSelection(num);
-				float textX = num > 9 ? blockX - 0.01f * blockWidth : blockX
-						+ 0.2f * blockWidth;
-				float textY = blockY + 0.3f * blockHeight;
+				final float textX = num > 9 ? blockX - 0.01f * blockWidth
+						: blockX + 0.2f * blockWidth;
+				final float textY = blockY + 0.3f * blockHeight;
 				Fonts.get().large()
 						.renderText(String.valueOf(num), textX, textY);
 			}
@@ -73,16 +73,16 @@ public abstract class LevelChoiceMenu {
 	}
 
 	private void renderCursor() {
-		float width = Display.getWidth() / 24;
-		float height = Display.getHeight() / 18;
-		float x = Display.getWidth() * 0.45f - 1.2f * width;
-		float y = 0.03f * Display.getHeight();
+		final float width = Display.getWidth() / 24;
+		final float height = Display.getHeight() / 18;
+		final float x = Display.getWidth() * 0.45f - 1.2f * width;
+		final float y = 0.03f * Display.getHeight();
 		Graphics.drawQuad(x, y, width, height, Textures.get().getBall(), true);
 	}
 
 	public void update(int delta) {
 		if (!Commons.get().isKeyPressed()) {
-			boolean isMouseOnBack = isMouseOnBack();
+			final boolean isMouseOnBack = isMouseOnBack();
 			if (Keyboard.isKeyDown(Keyboard.KEY_RETURN)
 					|| Mouse.isButtonDown(0) && isMouseOnBack) {
 				if (isMouseOnBack || selection == 0) {
@@ -121,21 +121,21 @@ public abstract class LevelChoiceMenu {
 	}
 
 	private void handleMouse() {
-		boolean startGame = Mouse.isButtonDown(0)
+		final boolean startGame = Mouse.isButtonDown(0)
 				&& !Commons.get().isKeyPressed();
 		if (startGame || Mouse.getDX() != 0 && Mouse.getDY() != 0) {
 			if (isMouseOnBack()) {
 				selection = 0;
 			} else {
-				float blockWidth = getBlockWidth();
-				float blockHeight = getBlockHeight();
-				float mouseX = Mouse.getX();
-				float mouseY = Mouse.getY();
+				final float blockWidth = getBlockWidth();
+				final float blockHeight = getBlockHeight();
+				final float mouseX = Mouse.getX();
+				final float mouseY = Mouse.getY();
 				for (int i = 0; i < 10; i++) {
-					float blockX = 0.05f * Display.getWidth() + i * blockWidth
-							* 1.1f;
+					final float blockX = 0.05f * Display.getWidth() + i
+							* blockWidth * 1.1f;
 					for (int j = 0; j < 5; j++) {
-						float blockY = 0.6f * Display.getHeight() - j
+						final float blockY = 0.6f * Display.getHeight() - j
 								* blockHeight * 1.1f;
 						if (mouseX >= blockX && mouseY >= blockY
 								&& mouseX <= blockX + blockWidth
@@ -166,9 +166,9 @@ public abstract class LevelChoiceMenu {
 		}
 	}
 
-	private boolean isMouseOnBack() {
-		float x = Mouse.getX();
-		float y = Mouse.getY();
+	private final boolean isMouseOnBack() {
+		final float x = Mouse.getX();
+		final float y = Mouse.getY();
 		return x > Display.getWidth() * 0.45f
 				&& x < Display.getWidth() * 0.45f + 4
 						* Fonts.get().large().getCharacterWidth()
@@ -177,8 +177,9 @@ public abstract class LevelChoiceMenu {
 						+ Fonts.get().large().getCharacterHeight();
 	}
 
-	private void updateHighlightColor(float delta) {
-		float newColor = highlightColor + highlightColorDelta * delta / 200;
+	private void updateHighlightColor(final float delta) {
+		final float newColor = highlightColor + highlightColorDelta * delta
+				/ 200;
 		if (newColor < 0.0f || newColor > 1.0f) {
 			highlightColorDelta = -highlightColorDelta;
 		} else {
@@ -186,11 +187,11 @@ public abstract class LevelChoiceMenu {
 		}
 	}
 
-	private float getBlockWidth() {
+	private final float getBlockWidth() {
 		return Display.getWidth() / 12.0f;
 	}
 
-	private float getBlockHeight() {
+	private final float getBlockHeight() {
 		return Display.getHeight() / 10.0f;
 	}
 

@@ -28,7 +28,7 @@ public abstract class HighscoreMenu {
 
 	public abstract void backToMainMenu();
 
-	public void render(int delta) {
+	public void render(final int delta) {
 		renderHighscores();
 		renderBack();
 		renderCursor();
@@ -36,8 +36,8 @@ public abstract class HighscoreMenu {
 
 	private void renderHighscores() {
 		glColor3f(1.0f, 1.0f, 1.0f);
-		float xOffset = 0.15f * Display.getWidth();
-		float yOffset = 0.7f * Display.getHeight();
+		final float xOffset = 0.15f * Display.getWidth();
+		final float yOffset = 0.7f * Display.getHeight();
 		for (int i = 0; i < 10; i++) {
 			String name;
 			int score;
@@ -49,8 +49,8 @@ public abstract class HighscoreMenu {
 				name = "?";
 				score = 0;
 			}
-			float y = yOffset - i * Fonts.get().large().getCharacterHeight()
-					* 1.2f;
+			final float y = yOffset - i
+					* Fonts.get().large().getCharacterHeight() * 1.2f;
 			Fonts.get().large().renderText(i + " " + name, xOffset, y);
 			Fonts.get()
 					.large()
@@ -70,10 +70,10 @@ public abstract class HighscoreMenu {
 	}
 
 	private void renderCursor() {
-		float width = Display.getWidth() / 24;
-		float height = Display.getHeight() / 18;
-		float x = Display.getWidth() * 0.45f - 1.2f * width;
-		float y = 0.03f * Display.getHeight();
+		final float width = Display.getWidth() / 24;
+		final float height = Display.getHeight() / 18;
+		final float x = Display.getWidth() * 0.45f - 1.2f * width;
+		final float y = 0.03f * Display.getHeight();
 		Graphics.drawQuad(x, y, width, height, Textures.get().getBall(), true);
 	}
 
@@ -91,9 +91,9 @@ public abstract class HighscoreMenu {
 		updateHighlightColor(delta);
 	}
 
-	private boolean isMouseOnBack() {
-		float x = Mouse.getX();
-		float y = Mouse.getY();
+	private final boolean isMouseOnBack() {
+		final float x = Mouse.getX();
+		final float y = Mouse.getY();
 		return x > Display.getWidth() * 0.45f
 				&& x < Display.getWidth() * 0.45f + 4
 						* Fonts.get().large().getCharacterWidth()
@@ -103,7 +103,8 @@ public abstract class HighscoreMenu {
 	}
 
 	private void updateHighlightColor(float delta) {
-		float newColor = highlightColor + highlightColorDelta * delta / 200;
+		final float newColor = highlightColor + highlightColorDelta * delta
+				/ 200;
 		if (newColor < 0.0f || newColor > 1.0f) {
 			highlightColorDelta = -highlightColorDelta;
 		} else {

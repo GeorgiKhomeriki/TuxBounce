@@ -16,7 +16,7 @@ public class Config {
 	private static final int MAX_SCORES = 10;
 
 	public static void createConfig() {
-		String home = System.getProperty("user.home");
+		final String home = System.getProperty("user.home");
 		try {
 			createConfigFolder(home);
 			createFile(home + "/.config/tuxbounce/options");
@@ -27,26 +27,26 @@ public class Config {
 		}
 	}
 
-	private static void createConfigFolder(String home) {
-		File f = new File(home + "/.config/tuxbounce");
-		if(!f.exists()) {
+	private static void createConfigFolder(final String home) {
+		final File f = new File(home + "/.config/tuxbounce");
+		if (!f.exists()) {
 			f.mkdirs();
 		}
 	}
 
-	private static void createFile(String filename) throws IOException {
-		File f = new File(filename);
+	private static void createFile(final String filename) throws IOException {
+		final File f = new File(filename);
 		if (!f.exists()) {
 			f.createNewFile();
 		}
 	}
 
-	public static void saveOptions(String resolution, boolean fullscreen,
-			boolean sound, boolean music) {
-		String home = System.getProperty("user.home");
-		String filename = home + "/.config/tuxbounce/options";
+	public static void saveOptions(final String resolution,
+			final boolean fullscreen, final boolean sound, final boolean music) {
+		final String home = System.getProperty("user.home");
+		final String filename = home + "/.config/tuxbounce/options";
 		try {
-			Writer out = new BufferedWriter(new FileWriter(filename));
+			final Writer out = new BufferedWriter(new FileWriter(filename));
 			out.write(resolution + "\n");
 			out.write(fullscreen + "\n");
 			out.write(sound + "\n");
@@ -57,15 +57,15 @@ public class Config {
 		}
 	}
 
-	public static List<Object> loadOptions() {
-		List<Object> options = new ArrayList<Object>();
-		String home = System.getProperty("user.home");
+	public static final List<Object> loadOptions() {
+		final List<Object> options = new ArrayList<Object>();
+		final String home = System.getProperty("user.home");
 		try {
-			Scanner s = new Scanner(new File(home
+			final Scanner s = new Scanner(new File(home
 					+ "/.config/tuxbounce/options"));
 			for (int i = 0; s.hasNextLine(); i++) {
-				if(i == 0) {
-					String[] resParts = s.nextLine().split(" x ");
+				if (i == 0) {
+					final String[] resParts = s.nextLine().split(" x ");
 					options.add(Integer.parseInt(resParts[0]));
 					options.add(Integer.parseInt(resParts[1]));
 				} else {
@@ -79,11 +79,12 @@ public class Config {
 		return options;
 	}
 
-	public static int loadProgress() {
-		String home = System.getProperty("user.home");
+	public static final int loadProgress() {
+		final String home = System.getProperty("user.home");
 		int level = 0;
 		try {
-			Scanner s = new Scanner(new File(home + "/.config/tuxbounce/progress"));
+			final Scanner s = new Scanner(new File(home
+					+ "/.config/tuxbounce/progress"));
 			level = s.hasNextInt() ? s.nextInt() : 0;
 			s.close();
 		} catch (FileNotFoundException e) {
@@ -91,12 +92,12 @@ public class Config {
 		}
 		return level;
 	}
-	
-	public static void saveProgress(int level) {
-		String home = System.getProperty("user.home");
-		String filename = home + "/.config/tuxbounce/progress";
+
+	public static void saveProgress(final int level) {
+		final String home = System.getProperty("user.home");
+		final String filename = home + "/.config/tuxbounce/progress";
 		try {
-			Writer out = new BufferedWriter(new FileWriter(filename));
+			final Writer out = new BufferedWriter(new FileWriter(filename));
 			out.write(level + "\n");
 			out.close();
 		} catch (IOException e) {
@@ -104,11 +105,11 @@ public class Config {
 		}
 	}
 
-	public static boolean checkIsHighscore(int score) {
-		String home = System.getProperty("user.home");
+	public static final boolean checkIsHighscore(final int score) {
+		final String home = System.getProperty("user.home");
 		int i = 0;
 		try {
-			Scanner s = new Scanner(new File(home
+			final Scanner s = new Scanner(new File(home
 					+ "/.config/tuxbounce/highscores"));
 			for (; s.hasNext(); i++) {
 				s.next();
@@ -123,15 +124,15 @@ public class Config {
 		return i < MAX_SCORES;
 	}
 
-	public static List<Highscore> readHighscores() {
-		List<Highscore> highscores = new ArrayList<Highscore>();
+	public static final List<Highscore> readHighscores() {
+		final List<Highscore> highscores = new ArrayList<Highscore>();
 		try {
-			String home = System.getProperty("user.home");
-			Scanner s = new Scanner(new File(home
+			final String home = System.getProperty("user.home");
+			final Scanner s = new Scanner(new File(home
 					+ "/.config/tuxbounce/highscores"));
 			while (s.hasNext()) {
-				String name = s.next();
-				int score = s.nextInt();
+				final String name = s.next();
+				final int score = s.nextInt();
 				highscores.add(new Highscore(name, score));
 			}
 			s.close();
@@ -141,15 +142,15 @@ public class Config {
 		return highscores;
 	}
 
-	public static void addNewHighScore(Highscore score) {
-		List<Highscore> highscores = readHighscores();
-		List<Highscore> newScores = new ArrayList<Highscore>();
+	public static void addNewHighScore(final Highscore score) {
+		final List<Highscore> highscores = readHighscores();
+		final List<Highscore> newScores = new ArrayList<Highscore>();
 		if (highscores.size() == 0) {
 			newScores.add(score);
 		} else {
 			boolean added = false;
 			for (int i = 0; i < highscores.size(); i++) {
-				Highscore hs = highscores.get(i);
+				final Highscore hs = highscores.get(i);
 				if (!added && hs.getScore() < score.getScore()) {
 					newScores.add(score);
 					added = true;
@@ -163,13 +164,13 @@ public class Config {
 		writeHighscores(newScores);
 	}
 
-	private static void writeHighscores(List<Highscore> highscores) {
+	private static void writeHighscores(final List<Highscore> highscores) {
 		try {
-			String home = System.getProperty("user.home");
-			String filename = home + "/.config/tuxbounce/highscores";
-			Writer out = new BufferedWriter(new FileWriter(filename));
+			final String home = System.getProperty("user.home");
+			final String filename = home + "/.config/tuxbounce/highscores";
+			final Writer out = new BufferedWriter(new FileWriter(filename));
 			for (int i = 0; i < highscores.size() && i < MAX_SCORES; i++) {
-				Highscore hs = highscores.get(i);
+				final Highscore hs = highscores.get(i);
 				out.write(hs.getName() + " " + hs.getScore() + "\n");
 			}
 			out.close();

@@ -39,14 +39,14 @@ public abstract class OptionsMenu {
 
 	public abstract void backToMainMenu();
 
-	public void render(int delta) {
+	public void render(final int delta) {
 		renderOptions();
 		renderValues();
 		renderCursor();
 	}
 
 	private void renderOptions() {
-		float x = 0.1f * Display.getWidth();
+		final float x = 0.1f * Display.getWidth();
 		highlightSelection(SELECTION.RESOLUTION);
 		Fonts.get()
 				.large()
@@ -68,7 +68,7 @@ public abstract class OptionsMenu {
 				.renderText("BACK", x, getSelectionY(SELECTION.BACK));
 	}
 
-	private void highlightSelection(SELECTION selection) {
+	private void highlightSelection(final SELECTION selection) {
 		if (currentSelection.equals(selection))
 			glColor3f(1.0f, highlightColor, 0.0f);
 		else
@@ -77,7 +77,7 @@ public abstract class OptionsMenu {
 
 	private void renderValues() {
 		glColor3f(1.0f, 1.0f, 1.0f);
-		float x = 0.5f * Display.getWidth();
+		final float x = 0.5f * Display.getWidth();
 		String resolution = Display.getWidth() + "X" + Display.getHeight();
 		Fonts.get().large()
 				.renderText(resolution, x, getSelectionY(SELECTION.RESOLUTION));
@@ -92,19 +92,19 @@ public abstract class OptionsMenu {
 				.renderText(music, x, getSelectionY(SELECTION.MUSIC));
 	}
 
-	private String booleanToString(boolean b) {
+	private String booleanToString(final boolean b) {
 		return b ? "ON" : "OFF";
 	}
 
 	private void renderCursor() {
-		float width = Display.getWidth() / 24;
-		float height = Display.getHeight() / 18;
-		float x = Display.getWidth() * 0.1f - 1.2f * width;
-		float y = getSelectionY(currentSelection);
+		final float width = Display.getWidth() / 24;
+		final float height = Display.getHeight() / 18;
+		final float x = Display.getWidth() * 0.1f - 1.2f * width;
+		final float y = getSelectionY(currentSelection);
 		Graphics.drawQuad(x, y, width, height, Textures.get().getBall(), true);
 	}
 
-	private float getSelectionY(SELECTION selection) {
+	private float getSelectionY(final SELECTION selection) {
 		float y = Display.getHeight() * 0.6f;
 		switch (selection) {
 		case FULLSCREEN:
@@ -125,7 +125,7 @@ public abstract class OptionsMenu {
 		return y;
 	}
 
-	public void update(int delta) {
+	public void update(final int delta) {
 		updateHighlightColor(delta);
 
 		handleKeyboardInput();
@@ -136,10 +136,10 @@ public abstract class OptionsMenu {
 	}
 
 	private void handleKeyboardInput() {
-		boolean downPressed = Keyboard.isKeyDown(Keyboard.KEY_DOWN);
-		boolean upPressed = Keyboard.isKeyDown(Keyboard.KEY_UP);
-		boolean returnPressed = Keyboard.isKeyDown(Keyboard.KEY_RETURN);
-		boolean mouseClicked = Mouse.isButtonDown(0);
+		final boolean downPressed = Keyboard.isKeyDown(Keyboard.KEY_DOWN);
+		final boolean upPressed = Keyboard.isKeyDown(Keyboard.KEY_UP);
+		final boolean returnPressed = Keyboard.isKeyDown(Keyboard.KEY_RETURN);
+		final boolean mouseClicked = Mouse.isButtonDown(0);
 		if (!Commons.get().isKeyPressed()) {
 			if (downPressed || upPressed) {
 				currentSelection = getNextSelection(currentSelection, upPressed);
@@ -154,7 +154,7 @@ public abstract class OptionsMenu {
 
 	private void handleMouseInput() {
 		if (Mouse.getDX() != 0 || Mouse.getDY() != 0) {
-			for (SELECTION selection : SELECTION.values()) {
+			for (final SELECTION selection : SELECTION.values()) {
 				if (!currentSelection.equals(selection)
 						&& isMouseOnSelection(selection)) {
 					Sounds.get().playCursor();
@@ -165,9 +165,9 @@ public abstract class OptionsMenu {
 		}
 	}
 
-	private boolean isMouseOnSelection(SELECTION selection) {
-		float x = Mouse.getX();
-		float y = Mouse.getY();
+	private final boolean isMouseOnSelection(final SELECTION selection) {
+		final float x = Mouse.getX();
+		final float y = Mouse.getY();
 		return x > 0.1f * Display.getWidth()
 				&& x < 0.1f * Display.getWidth() + 10
 						* Fonts.get().large().getCharacterWidth()
@@ -189,7 +189,7 @@ public abstract class OptionsMenu {
 					for (int i = 0; i < modes.length; i++) {
 						if (Graphics.compareDisplayModes(modes[i],
 								Display.getDisplayMode())) {
-							DisplayMode newMode = i + 1 < modes.length ? modes[i + 1]
+							final DisplayMode newMode = i + 1 < modes.length ? modes[i + 1]
 									: modes[0];
 							Graphics.setDisplayMode(newMode.getWidth(),
 									newMode.getHeight(), Display.isFullscreen());
@@ -236,7 +236,8 @@ public abstract class OptionsMenu {
 		}
 	}
 
-	private SELECTION getNextSelection(SELECTION selection, boolean up) {
+	private final SELECTION getNextSelection(final SELECTION selection,
+			final boolean up) {
 		switch (selection) {
 		case RESOLUTION:
 			return up ? SELECTION.BACK : SELECTION.FULLSCREEN;
@@ -253,8 +254,9 @@ public abstract class OptionsMenu {
 		}
 	}
 
-	private void updateHighlightColor(float delta) {
-		float newColor = highlightColor + highlightColorDelta * delta / 200;
+	private void updateHighlightColor(final float delta) {
+		final float newColor = highlightColor + highlightColorDelta * delta
+				/ 200;
 		if (newColor < 0.0f || newColor > 1.0f) {
 			highlightColorDelta = -highlightColorDelta;
 		} else {

@@ -8,7 +8,7 @@ public class Timer {
 	 * 
 	 * @return time in milliseconds
 	 */
-	public static long getTime() {
+	public static final long getTime() {
 		return (Sys.getTime() * 1000) / Sys.getTimerResolution();
 	}
 }

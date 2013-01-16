@@ -7,15 +7,15 @@ public class MenuModel {
 
 	private MENU menu;
 
-	public MenuModel(MENU menu) {
+	public MenuModel(final MENU menu) {
 		this.menu = menu;
 	}
 
-	public MENU get() {
+	public final MENU get() {
 		return menu;
 	}
 
-	public void set(MENU menu) {
+	public void set(final MENU menu) {
 		Commons.get().setKeyPressed(true);
 		this.menu = menu;
 	}

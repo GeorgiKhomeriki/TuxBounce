@@ -8,7 +8,8 @@ import assets.Fonts;
 public abstract class InputPopup extends Popup {
 	private String input;
 
-	public InputPopup(String message, float width, float height) {
+	public InputPopup(final String message, final float width,
+			final float height) {
 		super("", message, width, height);
 		this.input = "";
 	}
@@ -36,7 +37,7 @@ public abstract class InputPopup extends Popup {
 						getY() + 0.1f * getHeight());
 	}
 
-	private String getInputWithPoints() {
+	private final String getInputWithPoints() {
 		String input = this.input;
 		for (int i = input.length(); i < 13; i++) {
 			input += ".";
@@ -45,9 +46,9 @@ public abstract class InputPopup extends Popup {
 	}
 
 	@Override
-	protected boolean isMouseOnSelection(SELECTION selection) {
-		float x = Mouse.getX();
-		float y = Mouse.getY();
+	protected final boolean isMouseOnSelection(final SELECTION selection) {
+		final float x = Mouse.getX();
+		final float y = Mouse.getY();
 		float loc;
 		float size;
 		if (selection.equals(SELECTION.YES)) {
@@ -68,7 +69,7 @@ public abstract class InputPopup extends Popup {
 	}
 
 	@Override
-	public void updateContent(float delta) {
+	public void updateContent(final float delta) {
 		super.updateContent(delta);
 		updateInput();
 	}
@@ -76,18 +77,18 @@ public abstract class InputPopup extends Popup {
 	private void updateInput() {
 		if (!Commons.get().isKeyPressed()) {
 			while (Keyboard.next()) {
-				char c = Keyboard.getEventCharacter();
+				final char c = Keyboard.getEventCharacter();
 				if (c >= 48 && c <= 57 || c >= 65 && c <= 90 || c >= 97
 						&& c <= 122 && input.length() < 13) {
 					input += String.valueOf(c).toUpperCase();
-				} else if(c == 8 && input.length() > 0) {
-					input = input.substring(0,  input.length()-1);
+				} else if (c == 8 && input.length() > 0) {
+					input = input.substring(0, input.length() - 1);
 				}
 			}
 		}
 	}
-	
-	public String getInput() {
+
+	public final String getInput() {
 		return input;
 	}
 

@@ -13,15 +13,17 @@ import util.Random;
 import assets.Sounds;
 
 public class Particles {
-	private List<Particle> particles;
-	private Texture texture;
-	private float startIntensity;
-	private float endIntensity;
+	private final List<Particle> particles;
+	private final Texture texture;
+	private final float startIntensity;
+	private final float endIntensity;
 
-	public Particles(int numParticles, Texture texture, float x, float y,
-			float minDx, float maxDx, float minDy, float maxDy, float minAy,
-			float maxAy, float size, int minLife, int maxLife,
-			float startIntensity, float endIntensity) {
+	public Particles(final int numParticles, final Texture texture,
+			final float x, final float y, final float minDx, final float maxDx,
+			final float minDy, final float maxDy, final float minAy,
+			final float maxAy, final float size, final int minLife,
+			final int maxLife, final float startIntensity,
+			final float endIntensity) {
 		this.texture = texture;
 		this.startIntensity = startIntensity;
 		this.endIntensity = endIntensity;
@@ -29,18 +31,18 @@ public class Particles {
 		particles = new ArrayList<Particle>();
 
 		for (int i = 0; i < numParticles; i++) {
-			float dx = minDx + Random.get().nextFloat() * (maxDx - minDx);
-			float dy = minDy + Random.get().nextFloat() * (maxDy - minDy);
-			float ay = minAy + Random.get().nextFloat() * (maxAy - minAy);
-			int life = minLife + Random.get().nextInt(maxLife - minLife);
+			final float dx = minDx + Random.get().nextFloat() * (maxDx - minDx);
+			final float dy = minDy + Random.get().nextFloat() * (maxDy - minDy);
+			final float ay = minAy + Random.get().nextFloat() * (maxAy - minAy);
+			final int life = minLife + Random.get().nextInt(maxLife - minLife);
 			particles.add(new Particle(this.texture, x, y, dx, dy, ay, size,
 					life, startIntensity));
 		}
 	}
 
-	public void update(float delta, Paddle paddle, Texts texts) {
+	public void update(final float delta, final Paddle paddle, final Texts texts) {
 		for (int i = 0; i < particles.size(); i++) {
-			Particle particle = particles.get(i);
+			final Particle particle = particles.get(i);
 			if (particle.hasHitPaddle(paddle)) {
 				particles.remove(i);
 				i--;
@@ -49,9 +51,9 @@ public class Particles {
 				Sounds.get().playPoint();
 			} else if (particle.isAlive()) {
 				particle.update(delta);
-				float lifeRatio = (float) (particle.getLife() - particle
+				final float lifeRatio = (float) (particle.getLife() - particle
 						.getAge()) / (float) particle.getLife();
-				float intensity = startIntensity + (1.0f - lifeRatio)
+				final float intensity = startIntensity + (1.0f - lifeRatio)
 						* (endIntensity - startIntensity);
 				particle.setIntensity(intensity);
 			} else {
@@ -62,12 +64,12 @@ public class Particles {
 	}
 
 	public void render() {
-		for (Particle particle : particles) {
+		for (final Particle particle : particles) {
 			particle.render();
 		}
 	}
 
-	public boolean isAlive() {
+	public final boolean isAlive() {
 		return !particles.isEmpty();
 	}
 

@@ -16,10 +16,11 @@ public abstract class Popup extends AbstractPopup {
 	private SELECTION currentSelection;
 	private float highlightColor;
 	private float highlightColorDelta;
-	private String title;
-	private String message;
+	private final String title;
+	private final String message;
 
-	public Popup(String title, String message, float width, float height) {
+	public Popup(final String title, final String message, final float width,
+			final float height) {
 		super(width, height);
 		this.title = title;
 		this.message = message;
@@ -54,7 +55,7 @@ public abstract class Popup extends AbstractPopup {
 						getY() + 0.1f * getHeight());
 	}
 
-	protected void highlightSelection(SELECTION selection) {
+	protected void highlightSelection(final SELECTION selection) {
 		if (currentSelection.equals(selection))
 			glColor3f(1.0f, highlightColor, 0.0f);
 		else
@@ -62,7 +63,7 @@ public abstract class Popup extends AbstractPopup {
 	}
 
 	@Override
-	public void updateContent(float delta) {
+	public void updateContent(final float delta) {
 		updateHighlightColor(delta);
 		handleKeyboardInput();
 		handleMouseInput();
@@ -70,12 +71,12 @@ public abstract class Popup extends AbstractPopup {
 	}
 
 	private void handleKeyboardInput() {
-		boolean leftPressed = Keyboard.isKeyDown(Keyboard.KEY_LEFT);
-		boolean rightPressed = Keyboard.isKeyDown(Keyboard.KEY_RIGHT);
-		boolean returnPressed = Keyboard.isKeyDown(Keyboard.KEY_RETURN);
+		final boolean leftPressed = Keyboard.isKeyDown(Keyboard.KEY_LEFT);
+		final boolean rightPressed = Keyboard.isKeyDown(Keyboard.KEY_RIGHT);
+		final boolean returnPressed = Keyboard.isKeyDown(Keyboard.KEY_RETURN);
 		if (!Commons.get().isKeyPressed()) {
 			if (leftPressed || rightPressed) {
-				for (SELECTION s : SELECTION.values()) {
+				for (final SELECTION s : SELECTION.values()) {
 					if (!s.equals(currentSelection)) {
 						currentSelection = s;
 						break;
@@ -105,8 +106,8 @@ public abstract class Popup extends AbstractPopup {
 	}
 
 	protected boolean isMouseOnSelection(SELECTION selection) {
-		float x = Mouse.getX();
-		float y = Mouse.getY();
+		final float x = Mouse.getX();
+		final float y = Mouse.getY();
 		float loc;
 		float size;
 		if (selection.equals(SELECTION.YES)) {
@@ -145,8 +146,9 @@ public abstract class Popup extends AbstractPopup {
 		}
 	}
 
-	private void updateHighlightColor(float delta) {
-		float newColor = highlightColor + highlightColorDelta * delta / 200;
+	private void updateHighlightColor(final float delta) {
+		final float newColor = highlightColor + highlightColorDelta * delta
+				/ 200;
 		if (newColor < 0.0f || newColor > 1.0f) {
 			highlightColorDelta = -highlightColorDelta;
 		} else {
@@ -154,11 +156,11 @@ public abstract class Popup extends AbstractPopup {
 		}
 	}
 
-	public String getTitle() {
+	public final String getTitle() {
 		return title;
 	}
 
-	public String getMessage() {
+	public final String getMessage() {
 		return message;
 	}
 

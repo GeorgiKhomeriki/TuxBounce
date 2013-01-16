@@ -13,19 +13,19 @@ import org.lwjgl.opengl.Display;
 
 public class LevelLoader {
 
-	public static List<Block> load(String file, float offset) {
-		List<Block> blocks = new ArrayList<Block>();
+	public static final List<Block> load(final String file, final float offset) {
+		final List<Block> blocks = new ArrayList<Block>();
 
 		try {
-			Scanner s = new Scanner(new File(file));
+			final Scanner s = new Scanner(new File(file));
 			for (int y = 0; s.hasNextLine(); y++) {
-				String line = s.nextLine();
-				String[] parts = line.split(" ");
+				final String line = s.nextLine();
+				final String[] parts = line.split(" ");
 				for (int x = 0; x < parts.length; x++) {
-					int value = Integer.parseInt(parts[x]);
+					final int value = Integer.parseInt(parts[x]);
 					if (value != 0) {
-						BlockType type = getType(value);
-						Block block = new Block(type, x * Block.getWidth(),
+						final BlockType type = getType(value);
+						final Block block = new Block(type, x * Block.getWidth(),
 								Display.getHeight() - offset - y * Block.getHeight());
 						blocks.add(block);
 					}
@@ -38,7 +38,7 @@ public class LevelLoader {
 		return blocks;
 	}
 
-	private static BlockType getType(int value) {
+	private static final BlockType getType(final int value) {
 		switch (value) {
 		case 1:
 			return BlockType.RED;

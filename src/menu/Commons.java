@@ -16,20 +16,20 @@ public class Commons {
 		return keyPressed;
 	}
 	
-	public void setKeyPressed(boolean keyPressed) {
+	public void setKeyPressed(final boolean keyPressed) {
 		this.keyPressed = keyPressed;
 	}
 	
-	public int getLevelProgress() {
+	public final int getLevelProgress() {
 		return levelProgress;
 	}
 
-	public void saveLevelProgress(int level) {
+	public void saveLevelProgress(final int level) {
 		Config.saveProgress(level);
 		this.levelProgress = level;
 	}
 
-	public static Commons get() {
+	public final static Commons get() {
 		if(instance == null) {
 			instance = new Commons();
 		}

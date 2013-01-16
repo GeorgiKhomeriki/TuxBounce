@@ -6,13 +6,13 @@ import util.Graphics;
 import assets.Textures;
 
 public abstract class AbstractPopup {
+	private final float x;
+	private final float y;
+	private final float width;
+	private final float height;
 	private boolean enabled;
-	private float x;
-	private float y;
-	private float width;
-	private float height;
 
-	public AbstractPopup(float width, float height) {
+	public AbstractPopup(final float width, final float height) {
 		this.width = width;
 		this.height = height;
 		this.x = 0.5f * Display.getWidth() - 0.5f * width;
@@ -22,7 +22,7 @@ public abstract class AbstractPopup {
 
 	public abstract void renderContent();
 
-	public abstract void updateContent(float delta);
+	public abstract void updateContent(final float delta);
 
 	public void render() {
 		if (enabled) {
@@ -35,34 +35,34 @@ public abstract class AbstractPopup {
 		Graphics.drawQuad(x, y, width, height, Textures.get().getPopup(), true);
 	}
 
-	public void update(float delta) {
+	public void update(final float delta) {
 		if (enabled) {
 			updateContent(delta);
 		}
 	}
 
-	public boolean isEnabled() {
+	public final boolean isEnabled() {
 		return enabled;
 	}
 
-	public void setEnabled(boolean enabled) {
+	public void setEnabled(final boolean enabled) {
 		Commons.get().setKeyPressed(true);
 		this.enabled = enabled;
 	}
 
-	public float getX() {
+	public final float getX() {
 		return x;
 	}
 
-	public float getY() {
+	public final float getY() {
 		return y;
 	}
 
-	public float getWidth() {
+	public final float getWidth() {
 		return width;
 	}
 
-	public float getHeight() {
+	public final float getHeight() {
 		return height;
 	}
 

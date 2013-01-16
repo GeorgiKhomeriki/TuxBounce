@@ -1,19 +1,19 @@
 package menu;
 
 public class Highscore {
-	private String name;
-	private int score;
+	private final String name;
+	private final int score;
 
-	public Highscore(String name, int score) {
+	public Highscore(final String name, final int score) {
 		this.name = name;
 		this.score = score;
 	}
 
-	public String getName() {
+	public final String getName() {
 		return name;
 	}
 
-	public int getScore() {
+	public final int getScore() {
 		return score;
 	}
 }

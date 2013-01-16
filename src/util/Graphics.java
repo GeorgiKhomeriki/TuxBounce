@@ -22,7 +22,8 @@ public class Graphics {
 	 *            DisplayMode two
 	 * @return true iff d1 equals d2
 	 */
-	public static boolean compareDisplayModes(DisplayMode d1, DisplayMode d2) {
+	public static final boolean compareDisplayModes(final DisplayMode d1,
+			final DisplayMode d2) {
 		return d1.getWidth() == d2.getWidth()
 				&& d1.getHeight() == d2.getHeight()
 				&& d1.getFrequency() == d2.getFrequency();
@@ -38,7 +39,8 @@ public class Graphics {
 	 * @param fullscreen
 	 *            True if we want fullscreen mode
 	 */
-	public static void setDisplayMode(int width, int height, boolean fullscreen) {
+	public static void setDisplayMode(final int width, final int height,
+			final boolean fullscreen) {
 
 		// return if requested DisplayMode is already set
 		if ((Display.getDisplayMode().getWidth() == width)
@@ -51,11 +53,11 @@ public class Graphics {
 			DisplayMode targetDisplayMode = null;
 
 			if (fullscreen) {
-				DisplayMode[] modes = Display.getAvailableDisplayModes();
+				final DisplayMode[] modes = Display.getAvailableDisplayModes();
 				int freq = 0;
 
 				for (int i = 0; i < modes.length; i++) {
-					DisplayMode current = modes[i];
+					final DisplayMode current = modes[i];
 
 					if ((current.getWidth() == width)
 							&& (current.getHeight() == height)) {
@@ -103,7 +105,8 @@ public class Graphics {
 		}
 	}
 
-	public static void drawQuad(float x, float y, float width, float height) {
+	public static void drawQuad(final float x, final float y,
+			final float width, final float height) {
 		glBegin(GL_QUADS);
 		glVertex2f(x, y);
 		glVertex2f(x + width, y);
@@ -112,8 +115,9 @@ public class Graphics {
 		glEnd();
 	}
 
-	public static void drawQuad(float x, float y, float width, float height,
-			float tx0, float ty0, float tx1, float ty1) {
+	public static void drawQuad(final float x, final float y,
+			final float width, final float height, final float tx0,
+			final float ty0, final float tx1, final float ty1) {
 		glBegin(GL_QUADS);
 		glTexCoord2f(tx0, ty0);
 		glVertex2f(x, y);
@@ -126,30 +130,35 @@ public class Graphics {
 		glEnd();
 	}
 
-	public static void drawQuad(float x, float y, float width, float height,
-			Texture texture) {
+	public static void drawQuad(final float x, final float y,
+			final float width, final float height, final Texture texture) {
 		drawQuad(x, y, width, height, texture, 1.0f, 1.0f, 1.0f, 1.0f, false);
 	}
 
-	public static void drawQuad(float x, float y, float width, float height,
-			Texture texture, boolean inverseTexture) {
+	public static void drawQuad(final float x, final float y,
+			final float width, final float height, final Texture texture,
+			final boolean inverseTexture) {
 		drawQuad(x, y, width, height, texture, 1.0f, 1.0f, 1.0f, 1.0f,
 				inverseTexture);
 	}
 
-	public static void drawQuad(float x, float y, float width, float height,
-			Texture texture, float alpha) {
+	public static void drawQuad(final float x, final float y,
+			final float width, final float height, final Texture texture,
+			final float alpha) {
 		drawQuad(x, y, width, height, texture, 1.0f, 1.0f, 1.0f, alpha, false);
 	}
 
-	public static void drawQuad(float x, float y, float width, float height,
-			Texture texture, float intensity, float alpha, boolean inverseTexture) {
+	public static void drawQuad(final float x, final float y,
+			final float width, final float height, final Texture texture,
+			final float intensity, final float alpha,
+			final boolean inverseTexture) {
 		drawQuad(x, y, width, height, texture, intensity, intensity, intensity,
 				alpha, inverseTexture);
 	}
 
-	public static void drawQuad(float x, float y, float width, float height,
-			Texture texture, float r, float g, float b, float alpha,
+	public static void drawQuad(final float x, final float y,
+			final float width, final float height, final Texture texture,
+			final float r, final float g, final float b, final float alpha,
 			boolean inverseTexture) {
 		texture.bind();
 		glColor4f(r, g, b, alpha);

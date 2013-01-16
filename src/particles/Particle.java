@@ -8,19 +8,20 @@ import org.newdawn.slick.opengl.Texture;
 import util.Graphics;
 
 public class Particle {
-	private Texture texture;
+	private final Texture texture;
 	private float x;
 	private float y;
-	private float dx;
+	private final float dx;
 	private float dy;
-	private float ay;
-	private float size;
-	private int life;
+	private final float ay;
+	private final float size;
+	private final int life;
 	private int age;
 	private float intensity;
 
-	public Particle(Texture texture, float x, float y, float dx, float dy,
-			float ay, float size, int life, float intensity) {
+	public Particle(final Texture texture, final float x, final float y,
+			final float dx, final float dy, final float ay, final float size, final int life,
+			final float intensity) {
 		this.texture = texture;
 		this.x = x;
 		this.y = y;
@@ -33,7 +34,7 @@ public class Particle {
 		this.intensity = intensity;
 	}
 
-	public void update(float delta) {
+	public void update(final float delta) {
 		x += dx * delta;
 		y += dy * delta;
 		dy += ay;
@@ -44,34 +45,34 @@ public class Particle {
 		Graphics.drawQuad(x, y, size, size, texture, intensity, 1.0f, true);
 	}
 
-	public boolean isAlive() {
+	public final boolean isAlive() {
 		return x >= 0 && x <= Display.getWidth() && y >= 0;
 	}
 
-	public boolean hasHitPaddle(Paddle paddle) {
+	public final boolean hasHitPaddle(final Paddle paddle) {
 		return dy < 0.0f && x < paddle.getX() + paddle.getWidth()
 				&& x + size > paddle.getX()
 				&& y - size < paddle.getY() + paddle.getHeight()
 				&& y > paddle.getHeight();
 	}
 
-	public float getX() {
+	public final float getX() {
 		return x;
 	}
 
-	public float getY() {
+	public final float getY() {
 		return y;
 	}
 
-	public int getLife() {
+	public final int getLife() {
 		return life;
 	}
 
-	public int getAge() {
+	public final int getAge() {
 		return age;
 	}
 
-	public void setIntensity(float intensity) {
+	public void setIntensity(final float intensity) {
 		this.intensity = intensity;
 	}
 

@@ -25,7 +25,7 @@ public class MenuState implements IGameState {
 	private HighscoreMenu highscoreMenu;
 
 	@Override
-	public String getName() {
+	public final String getName() {
 		return name;
 	}
 
@@ -82,7 +82,7 @@ public class MenuState implements IGameState {
 	}
 
 	@Override
-	public void render(int delta) {
+	public void render(final int delta) {
 		glLoadIdentity();
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		renderBg();
@@ -111,15 +111,15 @@ public class MenuState implements IGameState {
 	}
 
 	public void renderLogo() {
-		float x = Display.getWidth() * 0.02f;
-		float y = Display.getHeight() * 0.88f;
-		float width = Display.getWidth() / 2;
-		float height = Display.getHeight() / 10;
+		final float x = Display.getWidth() * 0.02f;
+		final float y = Display.getHeight() * 0.88f;
+		final float width = Display.getWidth() / 2;
+		final float height = Display.getHeight() / 10;
 		Graphics.drawQuad(x, y, width, height, Textures.get().getLogo(), true);
 	}
 
 	@Override
-	public void update(int delta) {
+	public void update(final int delta) {
 		switch (currentMenu.get()) {
 		case MAIN:
 			mainMenu.update(delta);
