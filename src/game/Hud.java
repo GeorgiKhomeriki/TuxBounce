@@ -80,7 +80,7 @@ public class Hud {
 						/ 17.0f);
 	}
 
-	private String addZeros(int n, int numChars) {
+	private final String addZeros(final int n, final int numChars) {
 		String s = "" + n;
 		for (int i = s.length(); i < numChars; i++) {
 			s = "0" + s;
@@ -88,15 +88,15 @@ public class Hud {
 		return s;
 	}
 
-	public void addPoints(int delta) {
+	public void addPoints(final int delta) {
 		score += delta;
 	}
 	
-	public void addLives(int delta) {
+	public void addLives(final int delta) {
 		lives += delta;
 	}
 
-	public void update(float delta) {
+	public void update(final float delta) {
 		if (lineColor <= 0.0f || lineColor >= 1.0f) {
 			lineColor = (int) lineColor;
 			lineColorDelta = -lineColorDelta;
@@ -114,7 +114,7 @@ public class Hud {
 		return score;
 	}
 	
-	public void setScore(int score) {
+	public void setScore(final int score) {
 		this.score = score;
 	}
 
@@ -122,11 +122,11 @@ public class Hud {
 		return lives;
 	}
 
-	public void setLives(int lives) {
+	public void setLives(final int lives) {
 		this.lives = lives;
 	}
 	
-	public static Hud get() {
+	public final static Hud get() {
 		if (instance == null) {
 			instance = new Hud();
 		}

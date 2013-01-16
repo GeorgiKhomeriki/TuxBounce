@@ -71,7 +71,7 @@ public class GameState implements IGameState {
 		initLevel(level);
 	}
 
-	private void initLevel(int level) {
+	private void initLevel(final int level) {
 		saveProgress(level);
 		lights = new Lights();
 		lightingEnabled = Lights.isLightingEnabled(level);
@@ -91,7 +91,7 @@ public class GameState implements IGameState {
 		spawnBall();
 	}
 
-	private void saveProgress(int level) {
+	private void saveProgress(final int level) {
 		if (level > Commons.get().getLevelProgress()) {
 			Commons.get().saveLevelProgress(level);
 		}
@@ -193,19 +193,19 @@ public class GameState implements IGameState {
 
 		paddle.render();
 
-		for (Ball ball : balls) {
+		for (final Ball ball : balls) {
 			ball.render();
 		}
 
-		for (Block block : blocks) {
+		for (final Block block : blocks) {
 			block.render();
 		}
 
-		for (Particles p : particles) {
+		for (final Particles p : particles) {
 			p.render();
 		}
 
-		for (Coin c : coins) {
+		for (final Coin c : coins) {
 			c.render();
 		}
 
@@ -223,23 +223,24 @@ public class GameState implements IGameState {
 	}
 
 	private void renderBackground() {
-		Texture bgTexture = Textures.get().getBgGame1();
-		float screenWidth = Display.getWidth();
-		float screenHeight = Display.getHeight();
-		float texWidth = bgTexture.getWidth();
-		float texHeight = bgTexture.getHeight();
-		float blockSize = 40.0f;
+		final Texture bgTexture = Textures.get().getBgGame1();
+		final float screenWidth = Display.getWidth();
+		final float screenHeight = Display.getHeight();
+		final float texWidth = bgTexture.getWidth();
+		final float texHeight = bgTexture.getHeight();
+		final float blockSize = 40.0f;
 		bgTexture.bind();
 		Color.white.bind();
 		for (float x = 0; x < screenWidth; x += blockSize) {
-			float xi = x / blockSize;
+			final float xi = x / blockSize;
 			for (float y = 0; y < screenHeight; y += blockSize) {
-				float yi = y / blockSize;
-				float tx0 = texWidth * xi / (screenWidth / blockSize);
-				float tx1 = texWidth * (xi + 1) / (screenWidth / blockSize);
-				float ty0 = texHeight - texHeight * yi
+				final float yi = y / blockSize;
+				final float tx0 = texWidth * xi / (screenWidth / blockSize);
+				final float tx1 = texWidth * (xi + 1)
+						/ (screenWidth / blockSize);
+				final float ty0 = texHeight - texHeight * yi
 						/ (screenHeight / blockSize);
-				float ty1 = texHeight - texHeight * (yi + 1)
+				final float ty1 = texHeight - texHeight * (yi + 1)
 						/ (screenHeight / blockSize);
 				Graphics.drawQuad(x, y, blockSize, blockSize, tx0, ty0, tx1,
 						ty1);
@@ -254,7 +255,7 @@ public class GameState implements IGameState {
 
 		// update balls
 		for (int i = 0; i < balls.size(); i++) {
-			Ball ball = balls.get(i);
+			final Ball ball = balls.get(i);
 			ball.setHasBouncedInCurrentFrame(false);
 			if (ball.isAlive()) {
 				ball.update(delta, paddle);
@@ -276,7 +277,7 @@ public class GameState implements IGameState {
 
 		// update blocks
 		for (int i = 0; i < blocks.size(); i++) {
-			Block block = blocks.get(i);
+			final Block block = blocks.get(i);
 			if (block.getState().equals(BlockState.ALIVE) && block.isHit(balls)) {
 				if (!block.getType().equals(BlockType.WALL)
 						&& !block.getType().equals(BlockType.BROWN_FACE)) {
@@ -295,7 +296,7 @@ public class GameState implements IGameState {
 
 		// update particles
 		for (int i = 0; i < particles.size(); i++) {
-			Particles p = particles.get(i);
+			final Particles p = particles.get(i);
 			if (p.isAlive()) {
 				p.update(delta, paddle, texts);
 			} else {
@@ -306,7 +307,7 @@ public class GameState implements IGameState {
 
 		// update coins
 		for (int i = 0; i < coins.size(); i++) {
-			Coin c = coins.get(i);
+			final Coin c = coins.get(i);
 			if (c.isAlive()) {
 				if (c.isHit(paddle)) {
 					Hud.get().addPoints(10);
@@ -372,7 +373,7 @@ public class GameState implements IGameState {
 		SoundStore.get().poll(0);
 	}
 
-	private void doPowerup(Coin coin) {
+	private void doPowerup(final Coin coin) {
 		switch (coin.getType()) {
 		case GREY_FACE:
 			texts.add("MULTI TUX", coin.getX(), coin.getY(), 130, true);
@@ -408,7 +409,7 @@ public class GameState implements IGameState {
 	}
 
 	private void spawnBall() {
-		for (Ball ball : balls) {
+		for (final Ball ball : balls) {
 			if (ball.isSticky())
 				return;
 		}
@@ -417,35 +418,35 @@ public class GameState implements IGameState {
 				-Display.getHeight() / 6));
 	}
 
-	private void spawnParticles(Block block) {
+	private void spawnParticles(final Block block) {
 		spawnParticles(5, block.getTexture(),
 				block.getX() + 0.5f * Block.getWidth(), block.getY() - 0.5f
 						* Block.getHeight());
 	}
 
-	private void spawnParticles(Coin coin) {
+	private void spawnParticles(final Coin coin) {
 		spawnParticles(100, Textures.get().getCoinGreen(), coin.getX() + 0.5f
 				* Block.getWidth(), coin.getY());
 	}
 
-	private void spawnParticles(int numParticles, Texture texture, float x,
-			float y) {
-		float dx = Display.getWidth() / 8500.0f;
-		float minDy = Display.getHeight() / 4000.0f;
-		float maxDy = Display.getHeight() / 2500.0f;
-		float minAy = -Display.getHeight() / 65000.0f;
-		float maxAy = -Display.getHeight() / 80000.0f;
-		float size = Display.getWidth() / 80.0f;
-		int minLife = 50;
-		int maxLife = 150;
-		float startIntensity = 0.4f;
-		float endIntensity = 1.0f;
+	private void spawnParticles(final int numParticles, final Texture texture,
+			final float x, final float y) {
+		final float dx = Display.getWidth() / 8500.0f;
+		final float minDy = Display.getHeight() / 4000.0f;
+		final float maxDy = Display.getHeight() / 2500.0f;
+		final float minAy = -Display.getHeight() / 65000.0f;
+		final float maxAy = -Display.getHeight() / 80000.0f;
+		final float size = Display.getWidth() / 80.0f;
+		final int minLife = 50;
+		final int maxLife = 150;
+		final float startIntensity = 0.4f;
+		final float endIntensity = 1.0f;
 		particles.add(new Particles(numParticles, texture, x, y, -dx, dx,
 				minDy, maxDy, minAy, maxAy, size, minLife, maxLife,
 				startIntensity, endIntensity));
 	}
 
-	private void spawnCoin(Block block) {
+	private void spawnCoin(final Block block) {
 		if (block.getType().equals(Block.BlockType.BLUE_FACE)
 				|| block.getType().equals(Block.BlockType.RED_FACE)
 				|| block.getType().equals(Block.BlockType.GREEN_FACE)

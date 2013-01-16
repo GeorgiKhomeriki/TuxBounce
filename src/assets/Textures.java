@@ -10,101 +10,75 @@ import org.newdawn.slick.util.ResourceLoader;
 
 public class Textures {
 	private static Textures instance;
-	
-	private Texture paddle;
-	private Texture ball;
-	
-	private Texture blockRed;
-	private Texture blockPurple;
-	private Texture blockOrange;
-	private Texture blockGreyFace;
-	private Texture blockGreenFace;
-	private Texture blockBlueFace;
-	private Texture blockRedFace;
-	private Texture blockWall;
-	private Texture blockWallBroken;
-	private Texture blockBrownFace;
-	private Texture blockBrownFaceBroken;
-	
-	private Texture coinBlue;
-	private Texture coinGreen;
-	private Texture coinGrey;
-	private Texture coinRed;
-	private Texture coinPotion;
-	
-	private Texture logo;
-	private Texture bgMenu;
-	private Texture bgGame1;
-	private Texture bgGame2;
-	private Texture bgGame3;
-	private Texture bgGame4;
-	
-	private Texture popup;
-	
-	
-	public Textures() {
-		try {
-			paddle = TextureLoader.getTexture("PNG", ResourceLoader
-					.getResourceAsStream("resources/images/paddle.png"));
-			ball = TextureLoader.getTexture("PNG", ResourceLoader
-					.getResourceAsStream("resources/images/tux.png"));
-			
-			blockRed = TextureLoader.getTexture("PNG", ResourceLoader
-					.getResourceAsStream("resources/images/blockRed.png"));
-			blockPurple = TextureLoader.getTexture("PNG", ResourceLoader
-					.getResourceAsStream("resources/images/blockPurple.png"));
-			blockOrange = TextureLoader.getTexture("PNG", ResourceLoader
-					.getResourceAsStream("resources/images/blockOrange.png"));
-			blockGreyFace = TextureLoader.getTexture("PNG", ResourceLoader
-					.getResourceAsStream("resources/images/blockFaceGrey.png"));
-			blockGreenFace = TextureLoader.getTexture("PNG", ResourceLoader
-					.getResourceAsStream("resources/images/blockFaceGreen.png"));
-			blockBlueFace = TextureLoader.getTexture("PNG", ResourceLoader
-					.getResourceAsStream("resources/images/blockFaceBlue.png"));
-			blockRedFace = TextureLoader.getTexture("PNG", ResourceLoader
-					.getResourceAsStream("resources/images/blockFaceRed.png"));
-			blockWall = TextureLoader.getTexture("PNG", ResourceLoader
-					.getResourceAsStream("resources/images/blockWall1.png"));
-			blockWallBroken = TextureLoader.getTexture("PNG", ResourceLoader
-					.getResourceAsStream("resources/images/blockWall2.png"));
-			blockBrownFace = TextureLoader.getTexture("PNG", ResourceLoader
-					.getResourceAsStream("resources/images/blockFaceBrown1.png"));
-			blockBrownFaceBroken = TextureLoader.getTexture("PNG", ResourceLoader
-					.getResourceAsStream("resources/images/blockFaceBrown2.png"));
-			
-			coinBlue = TextureLoader.getTexture("PNG", ResourceLoader
-					.getResourceAsStream("resources/images/coinBlue.png"));
-			coinGreen = TextureLoader.getTexture("PNG", ResourceLoader
-					.getResourceAsStream("resources/images/coinGreen.png"));
-			coinGrey = TextureLoader.getTexture("PNG", ResourceLoader
-					.getResourceAsStream("resources/images/coinGrey.png"));
-			coinRed = TextureLoader.getTexture("PNG", ResourceLoader
-					.getResourceAsStream("resources/images/coinRed.png"));
-			coinPotion = TextureLoader.getTexture("PNG", ResourceLoader
-					.getResourceAsStream("resources/images/coinPotion.png"));
-			
-			logo = TextureLoader.getTexture("PNG", ResourceLoader
-					.getResourceAsStream("resources/images/logo.png"));
-			bgMenu = TextureLoader.getTexture("PNG", ResourceLoader
-					.getResourceAsStream("resources/images/forest.png"));
-			bgGame1 = TextureLoader.getTexture("PNG", ResourceLoader
-					.getResourceAsStream("resources/images/coldmountain.png"));
-			bgGame2 = TextureLoader.getTexture("PNG", ResourceLoader
-					.getResourceAsStream("resources/images/sunsetintheswamp.png"));
-			bgGame3 = TextureLoader.getTexture("PNG", ResourceLoader
-					.getResourceAsStream("resources/images/cloudsinthedesert.png"));
-			bgGame4 = TextureLoader.getTexture("PNG", ResourceLoader
-					.getResourceAsStream("resources/images/wizardtower.png"));
-			
-			popup = TextureLoader.getTexture("PNG", ResourceLoader
-					.getResourceAsStream("resources/images/futureui.png"));
-			
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+
+	private final Texture paddle;
+	private final Texture ball;
+
+	private final Texture blockRed;
+	private final Texture blockPurple;
+	private final Texture blockOrange;
+	private final Texture blockGreyFace;
+	private final Texture blockGreenFace;
+	private final Texture blockBlueFace;
+	private final Texture blockRedFace;
+	private final Texture blockWall;
+	private final Texture blockWallBroken;
+	private final Texture blockBrownFace;
+	private final Texture blockBrownFaceBroken;
+
+	private final Texture coinBlue;
+	private final Texture coinGreen;
+	private final Texture coinGrey;
+	private final Texture coinRed;
+	private final Texture coinPotion;
+
+	private final Texture logo;
+	private final Texture bgMenu;
+	private final Texture bgGame1;
+	private final Texture bgGame2;
+	private final Texture bgGame3;
+	private final Texture bgGame4;
+
+	private final Texture popup;
+
+	public Textures() throws IOException {
+		paddle = loadTexture("resources/images/paddle.png");
+		ball = loadTexture("resources/images/tux.png");
+
+		blockRed = loadTexture("resources/images/blockRed.png");
+		blockPurple = loadTexture("resources/images/blockPurple.png");
+		blockOrange = loadTexture("resources/images/blockOrange.png");
+		blockGreyFace = loadTexture("resources/images/blockFaceGrey.png");
+		blockGreenFace = loadTexture("resources/images/blockFaceGreen.png");
+		blockBlueFace = loadTexture("resources/images/blockFaceBlue.png");
+		blockRedFace = loadTexture("resources/images/blockFaceRed.png");
+		blockWall = loadTexture("resources/images/blockWall1.png");
+		blockWallBroken = loadTexture("resources/images/blockWall2.png");
+		blockBrownFace = loadTexture("resources/images/blockFaceBrown1.png");
+		blockBrownFaceBroken = loadTexture("resources/images/blockFaceBrown2.png");
+
+		coinBlue = loadTexture("resources/images/coinBlue.png");
+		coinGreen = loadTexture("resources/images/coinGreen.png");
+		coinGrey = loadTexture("resources/images/coinGrey.png");
+		coinRed = loadTexture("resources/images/coinRed.png");
+		coinPotion = loadTexture("resources/images/coinPotion.png");
+
+		logo = loadTexture("resources/images/logo.png");
+		bgMenu = loadTexture("resources/images/forest.png");
+		bgGame1 = loadTexture("resources/images/coldmountain.png");
+		bgGame2 = loadTexture("resources/images/sunsetintheswamp.png");
+		bgGame3 = loadTexture("resources/images/cloudsinthedesert.png");
+		bgGame4 = loadTexture("resources/images/wizardtower.png");
+
+		popup = loadTexture("resources/images/futureui.png");
 	}
-	
-	public Texture getBlockTexture(BlockType type) {
+
+	private final Texture loadTexture(final String file) throws IOException {
+		return TextureLoader.getTexture("PNG",
+				ResourceLoader.getResourceAsStream(file));
+	}
+
+	public final Texture getBlockTexture(final BlockType type) {
 		switch (type) {
 		case RED:
 			return blockRed;
@@ -132,8 +106,8 @@ public class Textures {
 			return null;
 		}
 	}
-	
-	public Texture getCoinTexture(BlockType type) {
+
+	public final Texture getCoinTexture(final BlockType type) {
 		switch (type) {
 		case BLUE_FACE:
 			return coinBlue;
@@ -149,110 +123,114 @@ public class Textures {
 			return null;
 		}
 	}
-		
-	public Texture getPaddle() {
+
+	public final Texture getPaddle() {
 		return paddle;
 	}
 
-	public Texture getBall() {
+	public final Texture getBall() {
 		return ball;
 	}
 
-	public Texture getBlockRed() {
+	public final Texture getBlockRed() {
 		return blockRed;
 	}
 
-	public Texture getBlockPurple() {
+	public final Texture getBlockPurple() {
 		return blockPurple;
 	}
 
-	public Texture getBlockOrange() {
+	public final Texture getBlockOrange() {
 		return blockOrange;
 	}
 
-	public Texture getBlockGreyFace() {
+	public final Texture getBlockGreyFace() {
 		return blockGreyFace;
 	}
 
-	public Texture getBlockGreenFace() {
+	public final Texture getBlockGreenFace() {
 		return blockGreenFace;
 	}
 
-	public Texture getBlockBlueFace() {
+	public final Texture getBlockBlueFace() {
 		return blockBlueFace;
 	}
 
-	public Texture getBlockRedFace() {
+	public final Texture getBlockRedFace() {
 		return blockRedFace;
 	}
 
-	public Texture getBlockWall() {
+	public final Texture getBlockWall() {
 		return blockWall;
 	}
 
-	public Texture getBlockWallBroken() {
+	public final Texture getBlockWallBroken() {
 		return blockWallBroken;
 	}
 
-	public Texture getBlockBrownFace() {
+	public final Texture getBlockBrownFace() {
 		return blockBrownFace;
 	}
 
-	public Texture getBlockBrownFaceBroken() {
+	public final Texture getBlockBrownFaceBroken() {
 		return blockBrownFaceBroken;
 	}
 
-	public Texture getCoinBlue() {
+	public final Texture getCoinBlue() {
 		return coinBlue;
 	}
 
-	public Texture getCoinGreen() {
+	public final Texture getCoinGreen() {
 		return coinGreen;
 	}
 
-	public Texture getCoinGrey() {
+	public final Texture getCoinGrey() {
 		return coinGrey;
 	}
 
-	public Texture getCoinRed() {
+	public final Texture getCoinRed() {
 		return coinRed;
 	}
 
-	public Texture getCoinPotion() {
+	public final Texture getCoinPotion() {
 		return coinPotion;
 	}
 
-	public Texture getLogo() {
+	public final Texture getLogo() {
 		return logo;
 	}
 
-	public Texture getBgMenu() {
+	public final Texture getBgMenu() {
 		return bgMenu;
 	}
 
-	public Texture getBgGame1() {
+	public final Texture getBgGame1() {
 		return bgGame1;
 	}
 
-	public Texture getBgGame2() {
+	public final Texture getBgGame2() {
 		return bgGame2;
 	}
 
-	public Texture getBgGame3() {
+	public final Texture getBgGame3() {
 		return bgGame3;
 	}
 
-	public Texture getBgGame4() {
+	public final Texture getBgGame4() {
 		return bgGame4;
 	}
 
-	public Texture getPopup() {
+	public final Texture getPopup() {
 		return popup;
 	}
 
-	public static Textures get() {
-		if(instance==null) {
-			instance = new Textures();
+	public final static Textures get() {
+		if (instance == null) {
+			try {
+				instance = new Textures();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 		return instance;
 	}

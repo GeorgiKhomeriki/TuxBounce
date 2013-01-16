@@ -8,15 +8,15 @@ import util.Graphics;
 import assets.Textures;
 
 public class Coin {
-	private BlockType type;
-	private float x;
+	private final BlockType type;
+	private final float x;
 	private float y;
-	private float width;
-	private float height;
-	private float dy;
+	private final float width;
+	private final float height;
+	private final float dy;
 
-	public Coin(BlockType type, float x, float y, float width, float height,
-			float dy) {
+	public Coin(final BlockType type, final float x, final float y,
+			final float width, final float height, final float dy) {
 		this.type = type;
 		this.x = x;
 		this.y = y;
@@ -25,11 +25,11 @@ public class Coin {
 		this.dy = dy;
 	}
 
-	public void update(float delta) {
+	public void update(final float delta) {
 		y += dy * delta;
 	}
 
-	public boolean isHit(Paddle paddle) {
+	public final boolean isHit(final Paddle paddle) {
 		return x < paddle.getX() + paddle.getWidth()
 				&& x + width > paddle.getX()
 				&& y - height < paddle.getY() + paddle.getHeight()
@@ -41,19 +41,19 @@ public class Coin {
 				Textures.get().getCoinTexture(type));
 	}
 
-	public boolean isAlive() {
+	public final boolean isAlive() {
 		return x >= 0 && x <= Display.getWidth() && y >= 0;
 	}
 
-	public BlockType getType() {
+	public final BlockType getType() {
 		return type;
 	}
 
-	public float getX() {
+	public final float getX() {
 		return x;
 	}
 
-	public float getY() {
+	public final float getY() {
 		return y;
 	}
 

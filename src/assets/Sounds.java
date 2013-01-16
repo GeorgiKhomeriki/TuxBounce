@@ -1,173 +1,166 @@
 package assets;
 
 import java.io.IOException;
-import java.util.Random;
 
 import org.newdawn.slick.openal.Audio;
 import org.newdawn.slick.openal.AudioLoader;
 import org.newdawn.slick.util.ResourceLoader;
 
+import util.Random;
+
 public class Sounds {
 	private static Sounds instance;
-	private Random random;
-	private Audio acceptSound;
-	private Audio declineSound;
-	private Audio cursorSound;
-	private Audio boingSound;
-	private Audio pointSound;
-	private Audio[] hitSounds;
-	private Audio pointsPowerupSound;
-	private Audio deathSound;
-	private Audio winSound;
-	private Audio loseSound;
-	private Audio music;
-	private Audio menuMusic;
+
+	private final Audio acceptSound;
+	private final Audio declineSound;
+	private final Audio cursorSound;
+	private final Audio boingSound;
+	private final Audio pointSound;
+	private final Audio[] hitSounds;
+	private final Audio pointsPowerupSound;
+	private final Audio deathSound;
+	private final Audio winSound;
+	private final Audio loseSound;
+	private final Audio music;
+	private final Audio menuMusic;
+
 	private boolean soundEnabled;
 	private boolean musicEnabled;
-	
-	public Sounds() {
+
+	public Sounds() throws IOException {
 		soundEnabled = true;
 		musicEnabled = true;
-		random = new Random();
-		try {
-			acceptSound = AudioLoader.getAudio("WAV",
-					ResourceLoader.getResourceAsStream("resources/sounds/menu-validate.wav"));
-			declineSound = AudioLoader.getAudio("WAV",
-					ResourceLoader.getResourceAsStream("resources/sounds/menu-back.wav"));
-			cursorSound = AudioLoader.getAudio("WAV",
-					ResourceLoader.getResourceAsStream("resources/sounds/menu-nav.wav"));
-			boingSound = AudioLoader.getAudio("WAV",
-					ResourceLoader.getResourceAsStream("resources/sounds/boing.wav"));
-			pointSound = AudioLoader.getAudio("WAV",
-					ResourceLoader.getResourceAsStream("resources/sounds/mouthpop.wav"));
-			
-			hitSounds = new Audio[3];
-			hitSounds[0] = AudioLoader.getAudio("WAV",
-					ResourceLoader.getResourceAsStream("resources/sounds/djembe-mid-4.wav"));
-			hitSounds[1] = AudioLoader.getAudio("WAV",
-					ResourceLoader.getResourceAsStream("resources/sounds/djembe-hi-3.wav"));
-			hitSounds[2] = AudioLoader.getAudio("WAV",
-					ResourceLoader.getResourceAsStream("resources/sounds/djembe-mid-2.wav"));
-			
-			pointsPowerupSound = AudioLoader.getAudio("WAV",
-					ResourceLoader.getResourceAsStream("resources/sounds/goblet-g-medium.wav"));
-			
-			deathSound = AudioLoader.getAudio("WAV",
-					ResourceLoader.getResourceAsStream("resources/sounds/stone-on-stone-impact.wav"));
-			
-			winSound = AudioLoader.getAudio("WAV",
-					ResourceLoader.getResourceAsStream("resources/sounds/win.wav"));
-			loseSound = AudioLoader.getAudio("WAV",
-					ResourceLoader.getResourceAsStream("resources/sounds/lose.wav"));
-			
-			music = AudioLoader.getAudio("WAV",
-					ResourceLoader.getResourceAsStream("resources/sounds/loop003-jungle.wav"));
-			menuMusic = AudioLoader.getAudio("WAV",
-					ResourceLoader.getResourceAsStream("resources/sounds/przeszkadzajki.wav"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+
+		acceptSound = loadAudio("resources/sounds/menu-validate.wav");
+		declineSound = loadAudio("resources/sounds/menu-back.wav");
+		cursorSound = loadAudio("resources/sounds/menu-nav.wav");
+		boingSound = loadAudio("resources/sounds/boing.wav");
+		pointSound = loadAudio("resources/sounds/mouthpop.wav");
+
+		hitSounds = new Audio[3];
+		hitSounds[0] = loadAudio("resources/sounds/djembe-mid-4.wav");
+		hitSounds[1] = loadAudio("resources/sounds/djembe-hi-3.wav");
+		hitSounds[2] = loadAudio("resources/sounds/djembe-mid-2.wav");
+
+		pointsPowerupSound = loadAudio("resources/sounds/goblet-g-medium.wav");
+		deathSound = loadAudio("resources/sounds/stone-on-stone-impact.wav");
+		winSound = loadAudio("resources/sounds/win.wav");
+		loseSound = loadAudio("resources/sounds/lose.wav");
+
+		music = loadAudio("resources/sounds/loop003-jungle.wav");
+		menuMusic = loadAudio("resources/sounds/przeszkadzajki.wav");
 	}
-	
+
+	private final Audio loadAudio(final String file) throws IOException {
+		return AudioLoader.getAudio("WAV",
+				ResourceLoader.getResourceAsStream(file));
+	}
+
 	public void playAccept() {
-		if(soundEnabled)
+		if (soundEnabled)
 			acceptSound.playAsSoundEffect(1.0f, 1.0f, false);
 	}
-	
+
 	public void playDecline() {
-		if(soundEnabled)
+		if (soundEnabled)
 			declineSound.playAsSoundEffect(1.0f, 1.0f, false);
 	}
-	
+
 	public void playCursor() {
-		if(soundEnabled)
+		if (soundEnabled)
 			cursorSound.playAsSoundEffect(1.0f, 1.0f, false);
 	}
-	
+
 	public void playBoing() {
-		if(soundEnabled)
-			boingSound.playAsSoundEffect(0.9f + 0.2f * random.nextFloat(), 0.5f, false);
+		if (soundEnabled)
+			boingSound.playAsSoundEffect(
+					0.9f + 0.2f * Random.get().nextFloat(), 0.5f, false);
 	}
-	
+
 	public void playPoint() {
-		if(soundEnabled)
-			pointSound.playAsSoundEffect(0.5f + 0.5f * random.nextFloat(),  0.5f, false);
+		if (soundEnabled)
+			pointSound.playAsSoundEffect(
+					0.5f + 0.5f * Random.get().nextFloat(), 0.5f, false);
 	}
-	
+
 	public void playHit() {
-		if(soundEnabled) {
-			int i = random.nextInt(3);
-			hitSounds[i].playAsSoundEffect(1.0f,  1.0f,  false);
+		if (soundEnabled) {
+			int i = Random.get().nextInt(3);
+			hitSounds[i].playAsSoundEffect(1.0f, 1.0f, false);
 		}
 	}
-	
+
 	public void playPointsPowerup() {
-		if(soundEnabled)
+		if (soundEnabled)
 			pointsPowerupSound.playAsSoundEffect(1.0f, 0.5f, false);
 	}
-	
+
 	public void playDeath() {
-		if(soundEnabled)
+		if (soundEnabled)
 			deathSound.playAsSoundEffect(1.0f, 1.0f, false);
 	}
-	
+
 	public void playWin() {
-		if(soundEnabled)
+		if (soundEnabled)
 			winSound.playAsSoundEffect(1.0f, 1.0f, false);
 	}
-	
+
 	public void playLose() {
-		if(soundEnabled)
+		if (soundEnabled)
 			loseSound.playAsSoundEffect(1.0f, 1.0f, false);
 	}
-	
+
 	public void playMusic() {
-		if(musicEnabled)
+		if (musicEnabled)
 			music.playAsMusic(1.0f, 1.0f, true);
 	}
-	
+
 	public void stopMusic() {
 		music.stop();
 	}
-	
+
 	public void playMenuMusic() {
-		if(musicEnabled)
+		if (musicEnabled)
 			menuMusic.playAsMusic(1.f, 1.0f, true);
 	}
-	
+
 	public void stopMenuMusic() {
 		menuMusic.stop();
 	}
-	
-	public boolean isSoundEnabled() {
+
+	public final boolean isSoundEnabled() {
 		return soundEnabled;
 	}
-	
-	public void setSoundEnabled(boolean enabled) {
+
+	public void setSoundEnabled(final boolean enabled) {
 		soundEnabled = enabled;
 	}
-	
-	public boolean isMusicEnabled() {
+
+	public final boolean isMusicEnabled() {
 		return musicEnabled;
 	}
-	
-	public void setMusicEnabled(boolean enabled) {
+
+	public void setMusicEnabled(final boolean enabled) {
 		musicEnabled = enabled;
-		if(enabled) {
+		if (enabled) {
 			playMenuMusic();
 		} else {
 			stopAllMusic();
 		}
 	}
-	
+
 	private void stopAllMusic() {
 		music.stop();
 		menuMusic.stop();
 	}
-	
-	public static Sounds get() {
-		if(instance == null) {
-			instance = new Sounds();
+
+	public final static Sounds get() {
+		if (instance == null) {
+			try {
+				instance = new Sounds();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 		return instance;
 	}

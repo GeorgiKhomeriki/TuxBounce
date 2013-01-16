@@ -10,32 +10,25 @@ import org.newdawn.slick.util.ResourceLoader;
 import util.Graphics;
 
 public class Font {
-	private Texture texture;
-	private int numChars;
-	private float widthScale;
-	private float heightScale;
+	private final Texture texture;
+	private final int numChars;
+	private final float widthScale;
+	private final float heightScale;
 
-	public Font(String file, int numChars, int pixels) {
-		try {
-			texture = TextureLoader.getTexture("PNG",
-					ResourceLoader.getResourceAsStream(file));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+	public Font(final String file, final int numChars, final int pixels)
+			throws IOException {
+		texture = TextureLoader.getTexture("PNG",
+				ResourceLoader.getResourceAsStream(file));
 		this.numChars = numChars;
-		if (pixels == 16) {
-			widthScale = 30.0f;
-			heightScale = 20.0f;
-		} else if (pixels == 8) {
-			widthScale = 80.0f;
-			heightScale = 45.0f;
-		}
+		// pixels should be 8 or 16
+		widthScale = pixels == 16 ? 30.0f : 80.0f;
+		heightScale = pixels == 16 ? 20.0f : 45.0f;
 	}
 
-	public void renderText(String text, float x, float y) {
+	public void renderText(final String text, final float x, final float y) {
 		texture.bind();
-		float width = Display.getWidth() / widthScale;
-		float height = Display.getHeight() / heightScale;
+		final float width = Display.getWidth() / widthScale;
+		final float height = Display.getHeight() / heightScale;
 		for (int i = 0; i < text.length(); i++) {
 			float c = (int) text.charAt(i) - 32;
 			if (c > 0) {
@@ -46,11 +39,11 @@ public class Font {
 		}
 	}
 
-	public float getCharacterWidth() {
+	public final float getCharacterWidth() {
 		return Display.getWidth() / widthScale;
 	}
 
-	public float getCharacterHeight() {
+	public final float getCharacterHeight() {
 		return Display.getHeight() / heightScale;
 	}
 

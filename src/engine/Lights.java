@@ -61,7 +61,7 @@ public class Lights {
 	}
 
 	private void initLightArrays() {
-		float z = (Display.getWidth() + Display.getHeight()) / 50.0f;
+		final float z = (Display.getWidth() + Display.getHeight()) / 50.0f;
 		matSpecular = BufferUtils.createFloatBuffer(4);
 		matSpecular.put(1.0f).put(1.0f).put(1.0f).put(1.0f).flip();
 		lightPosition = BufferUtils.createFloatBuffer(4);
@@ -94,7 +94,7 @@ public class Lights {
 		}
 	}
 
-	public int getLight(int i) {
+	public final int getLight(int i) {
 		switch (i) {
 		case 0:
 			return GL_LIGHT0;
@@ -116,8 +116,8 @@ public class Lights {
 			return -1;
 		}
 	}
-	
-	public static boolean isLightingEnabled(int level) {
+
+	public final static boolean isLightingEnabled(int level) {
 		return level % 3 == 0;
 	}
 }

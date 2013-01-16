@@ -14,7 +14,6 @@ import org.newdawn.slick.opengl.Texture;
 import assets.Sounds;
 import assets.Textures;
 
-
 public class Paddle {
 	private float x;
 	private float y;
@@ -25,7 +24,8 @@ public class Paddle {
 	private float bounceHeight;
 	private float bounceCenter;
 
-	public Paddle(float x, float y, float width, float height) {
+	public Paddle(final float x, final float y, final float width,
+			final float height) {
 		this.x = x;
 		this.y = y;
 		this.width = width;
@@ -62,7 +62,7 @@ public class Paddle {
 		glEnd();
 	}
 
-	public void update(float delta) {
+	public void update(final float delta) {
 		x = Mouse.getX() - width / 2;
 
 		if (x < 0.0f) {
@@ -81,33 +81,33 @@ public class Paddle {
 		}
 	}
 
-	public void bounce(float bounceCenter) {
+	public void bounce(final float bounceCenter) {
 		this.bounceCenter = bounceCenter;
 		bounceSize = 0.25f * height;
 		Sounds.get().playBoing();
 	}
 
-	public float getX() {
+	public final float getX() {
 		return x;
 	}
 
-	public float getY() {
+	public final float getY() {
 		return y;
 	}
 
-	public float getWidth() {
+	public final float getWidth() {
 		return width;
 	}
 
-	public void setWidth(float width) {
+	public void setWidth(final float width) {
 		this.width = width;
 	}
 
-	public float getBounceHeight() {
+	public final float getBounceHeight() {
 		return bounceHeight;
 	}
 
-	public float getHeight() {
+	public final float getHeight() {
 		return height;
 	}
 

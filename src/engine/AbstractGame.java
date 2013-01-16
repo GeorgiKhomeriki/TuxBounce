@@ -21,9 +21,12 @@ import util.Timer;
 
 public abstract class AbstractGame {
 	/** screen parameters */
-	private int screenWidth;
-	private int screenHeight;
-	private boolean fullscreen;
+	private final int screenWidth;
+	private final int screenHeight;
+	private final boolean fullscreen;
+
+	/** window title */
+	private final String title;
 
 	/** time at last frame */
 	private long lastFrame;
@@ -34,14 +37,11 @@ public abstract class AbstractGame {
 	/** last fps time */
 	private long lastFPS;
 
-	/** window title */
-	private String title;
-	
 	/** shutdown request */
-	private static boolean shutdownRequested = false;
+	private boolean shutdownRequested = false;
 
-	public AbstractGame(String title, int screenWidth, int screenHeight,
-			boolean fullscreen) {
+	public AbstractGame(final String title, final int screenWidth,
+			final int screenHeight, final boolean fullscreen) {
 		Display.setTitle(title);
 
 		this.title = title;
@@ -69,8 +69,8 @@ public abstract class AbstractGame {
 		lastFPS = Timer.getTime();
 
 		while (!Display.isCloseRequested() && !shutdownRequested) {
-			int delta = getDelta();
-			if(delta > 0) {
+			final int delta = getDelta();
+			if (delta > 0) {
 				update(delta);
 				updateFPS();
 			}
@@ -85,7 +85,7 @@ public abstract class AbstractGame {
 
 	protected abstract void init();
 
-	protected abstract void update(int delta);
+	protected abstract void update(final int delta);
 
 	protected abstract void shutdown();
 
@@ -97,7 +97,7 @@ public abstract class AbstractGame {
 		glLoadIdentity();
 		glOrtho(0, screenWidth, 0, screenHeight, 1, -1);
 		glMatrixMode(GL_MODELVIEW);
-		
+
 		glClearColor(0.1f, 0.2f, 0.5f, 1.0f);
 		glEnable(GL_TEXTURE_2D);
 		glEnable(GL_BLEND);
@@ -121,19 +121,19 @@ public abstract class AbstractGame {
 	 * 
 	 * @return milliseconds passed since last frame
 	 */
-	public int getDelta() {
-		long time = Timer.getTime();
-		int delta = (int) (time - lastFrame);
+	public final int getDelta() {
+		final long time = Timer.getTime();
+		final int delta = (int) (time - lastFrame);
 		lastFrame = time;
 
 		return delta;
 	}
-	
+
 	/**
 	 * Request to shutdown the game.
 	 */
 	public void requestShutdown() {
 		shutdownRequested = true;
 	}
-	
+
 }

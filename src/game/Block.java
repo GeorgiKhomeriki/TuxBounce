@@ -18,14 +18,14 @@ public class Block {
 		ALIVE, DEAD, DYING;
 	}
 
-	private float x;
-	private float y;
+	private final float x;
+	private final float y;
 	private float opacity;
 	private Texture texture;
 	private BlockState state;
 	private BlockType type;
 
-	public Block(BlockType type, float x, float y) {
+	public Block(final BlockType type, final float x, final float y) {
 		this.x = x;
 		this.y = y;
 		this.opacity = 1.0f;
@@ -38,7 +38,7 @@ public class Block {
 		Graphics.drawQuad(x, y, getWidth(), -getHeight(), texture, opacity);
 	}
 
-	public void update(float delta) {
+	public void update(final float delta) {
 		if (state.equals(BlockState.DYING)) {
 			opacity -= delta / 290.0f;
 		}
@@ -63,50 +63,48 @@ public class Block {
 		Sounds.get().playHit();
 	}
 
-	public boolean isHit(List<Ball> balls) {
-		float width = getWidth();
-		float height = getHeight();
+	public final boolean isHit(final List<Ball> balls) {
 		for (Ball ball : balls) {
 			if (x < ball.getX() + 0.5f * ball.getHitR()
-					&& x + width > ball.getX() - 0.5f * ball.getHitR()
-					&& y - height < ball.getY() + 0.5f * ball.getHitR()
+					&& x + getWidth() > ball.getX() - 0.5f * ball.getHitR()
+					&& y - getHeight() < ball.getY() + 0.5f * ball.getHitR()
 					&& y > ball.getY() - 0.5f * ball.getHitR()) {
-				ball.bounce(this);
+				ball.bounce(this); // evil
 				return true;
 			}
 		}
 		return false;
 	}
 
-	public static float getWidth() {
+	public static final float getWidth() {
 		return Display.getWidth() / 20;
 	}
 
-	public static float getHeight() {
+	public static final float getHeight() {
 		return Display.getHeight() / 15;
 	}
 
-	public float getX() {
+	public final float getX() {
 		return x;
 	}
 
-	public float getY() {
+	public final float getY() {
 		return y;
 	}
 
-	public BlockState getState() {
+	public final BlockState getState() {
 		return state;
 	}
 
-	public Texture getTexture() {
+	public final Texture getTexture() {
 		return texture;
 	}
 
-	public BlockType getType() {
+	public final BlockType getType() {
 		return type;
 	}
 
-	public void setType(BlockType type) {
+	public void setType(final BlockType type) {
 		this.type = type;
 		this.texture = Textures.get().getBlockTexture(type);
 	}

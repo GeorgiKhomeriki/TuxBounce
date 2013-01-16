@@ -49,7 +49,7 @@ public class Ball {
 		glLoadIdentity();
 	}
 
-	public void update(float delta, Paddle paddle) {
+	public void update(final float delta, Paddle paddle) {
 		if (sticky) {
 			updateStickyBall(delta, paddle);
 		} else {
@@ -57,7 +57,7 @@ public class Ball {
 		}
 	}
 
-	private void updateStickyBall(float delta, Paddle paddle) {
+	private void updateStickyBall(final float delta, Paddle paddle) {
 		x = paddle.getX() + paddle.getWidth() / 2.0f;
 		y = paddle.getY() + paddle.getBounceHeight() + 0.5f * r;
 		stickyTimer += delta;
@@ -68,7 +68,7 @@ public class Ball {
 		}
 	}
 
-	private void updateNormalBall(float delta, Paddle paddle) {
+	private void updateNormalBall(final float delta, Paddle paddle) {
 		float newX = getNewX(delta);
 		float newY = getNewY(delta);
 
@@ -93,22 +93,22 @@ public class Ball {
 				hasBouncedInCurrentFrame = true;
 			}
 		}
-		
+
 		x = newX;
 		y = newY;
 
 		angle -= 0.1f * dx;
 	}
-	
-	private float getNewX(float delta) {
+
+	private final float getNewX(float delta) {
 		return x + dx * delta / 300.0f;
 	}
-	
-	private float getNewY(float delta) {
+
+	private final float getNewY(float delta) {
 		return y + dy * delta / 300.0f * speedFactor;
 	}
-	
-	private boolean isPaddleHit(float x, float y, Paddle paddle) {
+
+	private final boolean isPaddleHit(float x, float y, Paddle paddle) {
 		return y - 0.5f * hitR <= paddle.getY() + paddle.getHeight()
 				&& y > paddle.getY() && x > paddle.getX()
 				&& x < paddle.getX() + paddle.getWidth();
