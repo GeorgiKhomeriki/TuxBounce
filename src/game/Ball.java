@@ -16,8 +16,8 @@ public class Ball {
 	private static final float SPEED_UP_DELTA = 0.02f;
 	private float x;
 	private float y;
-	private float r;
-	private float hitR;
+	private final float r;
+	private final float hitR;
 	private float dx;
 	private float dy;
 	private boolean sticky;
@@ -26,7 +26,8 @@ public class Ball {
 	private float speedFactor;
 	private boolean hasBouncedInCurrentFrame;
 
-	public Ball(float x, float y, float r, float dx, float dy) {
+	public Ball(final float x, final float y, final float r, final float dx,
+			final float dy) {
 		this.x = x;
 		this.y = y;
 		this.r = r;
@@ -49,7 +50,7 @@ public class Ball {
 		glLoadIdentity();
 	}
 
-	public void update(final float delta, Paddle paddle) {
+	public void update(final float delta, final Paddle paddle) {
 		if (sticky) {
 			updateStickyBall(delta, paddle);
 		} else {
@@ -57,7 +58,7 @@ public class Ball {
 		}
 	}
 
-	private void updateStickyBall(final float delta, Paddle paddle) {
+	private void updateStickyBall(final float delta, final Paddle paddle) {
 		x = paddle.getX() + paddle.getWidth() / 2.0f;
 		y = paddle.getY() + paddle.getBounceHeight() + 0.5f * r;
 		stickyTimer += delta;
@@ -68,7 +69,7 @@ public class Ball {
 		}
 	}
 
-	private void updateNormalBall(final float delta, Paddle paddle) {
+	private void updateNormalBall(final float delta, final Paddle paddle) {
 		float newX = getNewX(delta);
 		float newY = getNewY(delta);
 
@@ -100,21 +101,22 @@ public class Ball {
 		angle -= 0.1f * dx;
 	}
 
-	private final float getNewX(float delta) {
+	private final float getNewX(final float delta) {
 		return x + dx * delta / 300.0f;
 	}
 
-	private final float getNewY(float delta) {
+	private final float getNewY(final float delta) {
 		return y + dy * delta / 300.0f * speedFactor;
 	}
 
-	private final boolean isPaddleHit(float x, float y, Paddle paddle) {
+	private final boolean isPaddleHit(final float x, final float y,
+			final Paddle paddle) {
 		return y - 0.5f * hitR <= paddle.getY() + paddle.getHeight()
 				&& y > paddle.getY() && x > paddle.getX()
 				&& x < paddle.getX() + paddle.getWidth();
 	}
 
-	public void bounce(Block block) {
+	public void bounce(final Block block) {
 		if (!hasBouncedInCurrentFrame) {
 			float blockCenterX = block.getX() + 0.5f * Block.getWidth();
 			float blockCenterY = block.getY() - 0.5f * Block.getHeight();
@@ -144,7 +146,7 @@ public class Ball {
 		return hitR;
 	}
 
-	public void setHasBouncedInCurrentFrame(boolean hasBounced) {
+	public void setHasBouncedInCurrentFrame(final boolean hasBounced) {
 		hasBouncedInCurrentFrame = hasBounced;
 	}
 
